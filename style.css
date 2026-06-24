@@ -260,8 +260,6 @@ p {
 /* 1. 統一管理圖片樣式，刪除原本零散的 .shop-image 設定 */
 .image-pair img {
   width: 100%;
-  /* 如果原本設定為 300px，建議改用 aspect-ratio 維持比例，避免不同螢幕寬度下高度異常 */
-  aspect-ratio: 4 / 5; 
   object-fit: cover;
   object-position: center;
   
