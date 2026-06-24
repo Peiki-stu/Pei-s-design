@@ -268,7 +268,12 @@ p {
   );
   border: 1px solid var(--line-soft);
 }
-
+.shop-image {
+  width: 100%;       /* 填滿容器寬度 */
+  height: 300px;     /* 設定一個固定的高度，你可以依需求調整 */
+  object-fit: cover; /* 關鍵！這會讓圖片裁切掉多餘部分以填滿框框，但不會變形 */
+  object-position: center; /* 確保圖片是以中心點作為裁切基準 */
+}
 .buy-links {
   margin-top: var(--space-sm);
   display: flex;
