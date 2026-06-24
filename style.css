@@ -257,22 +257,21 @@ p {
   margin-bottom: var(--space-md);
 }
 
+/* 1. 統一管理圖片樣式，刪除原本零散的 .shop-image 設定 */
 .image-pair img {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  /* 如果原本設定為 300px，建議改用 aspect-ratio 維持比例，避免不同螢幕寬度下高度異常 */
+  aspect-ratio: 4 / 5; 
   object-fit: cover;
+  object-position: center;
+  
+  /* 你的裝飾性樣式保持不變 */
   background: linear-gradient(
     135deg,
     rgba(150, 113, 85, 0.12),
     rgba(253, 251, 244, 0.35)
   );
   border: 1px solid var(--line-soft);
-}
-.shop-image {
-  width: 100%;       /* 填滿容器寬度 */
-  height: 300px;     /* 設定一個固定的高度，你可以依需求調整 */
-  object-fit: cover; /* 關鍵！這會讓圖片裁切掉多餘部分以填滿框框，但不會變形 */
-  object-position: center; /* 確保圖片是以中心點作為裁切基準 */
 }
 .buy-links {
   margin-top: var(--space-sm);
