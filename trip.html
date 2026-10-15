@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>台北住宿行程規劃 ｜ 11/13 五 - 11/16 一</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    :root {
+      --color-page: #D7D5CB;
+      --color-paper: #F4F1E9;
+      --color-ink: #2C3028;
+      --color-muted: #7A7D74;
+      --color-green: #56664C;
+      --color-border: #A3A196;
+      --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --spring-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    body {
+      margin: 0;
+      background-color: var(--color-page);
+      color: var(--color-ink);
+      font-family: "Helvetica Neue", Helvetica, "PingFang TC", "Heiti TC", "Microsoft JhengHei", -apple-system, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    /* Spring micro-interactions */
+    .btn-spring {
+      transition: transform 0.15s var(--spring), background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-spring:hover {
+      transform: scale(1.02) translateY(-1px);
+    }
+    .btn-spring:active {
+      transform: scale(0.96) translateY(1px);
+    }
+
+    /* Perforated ticket edge with circular punch-outs */
+    .ticket-section {
+      position: relative;
+      background: var(--color-paper);
+    }
+
+    .ticket-perforation {
+      position: relative;
+      border-top: 2px dashed var(--color-border);
+    }
+
+    .ticket-perforation::before,
+    .ticket-perforation::after {
+      content: "";
+      position: absolute;
+      top: -12px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: var(--color-page);
+      z-index: 10;
+      box-shadow: inset 0 1px 2px rgba(44, 48, 40, 0.12);
+    }
+    .ticket-perforation::before {
+      left: -12px;
+    }
+    .ticket-perforation::after {
+      right: -12px;
+    }
+
+    /* Accordion Drawer */
+    .accordion-content {
+      overflow: hidden;
+      transition: max-height 0.45s var(--spring-smooth), opacity 0.3s ease;
+      max-height: 2800px;
+      opacity: 1;
+    }
+    .accordion-content.collapsed {
+      max-height: 0 !important;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .chevron-icon {
+      transition: transform 0.35s var(--spring);
+    }
+    .collapsed-chevron {
+      transform: rotate(-90deg);
+    }
+
+    /* Barcode styling */
+    .ticket-barcode {
+      height: 36px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--color-ink) 0,
+        var(--color-ink) 2px,
+        transparent 2px,
+        transparent 4px,
+        var(--color-ink) 4px,
+        var(--color-ink) 5px,
+        transparent 5px,
+        transparent 8px,
+        var(--color-ink) 8px,
+        var(--color-ink) 11px,
+        transparent 11px,
+        transparent 13px,
+        var(--color-ink) 13px,
+        var(--color-ink) 14px,
+        transparent 14px,
+        transparent 17px,
+        var(--color-ink) 17px,
+        var(--color-ink) 20px
+      );
+      opacity: 0.65;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    @media print {
+      body { background: #fff !important; padding: 0 !important; }
+      .no-print { display: none !important; }
+      .ticket-stack { box-shadow: none !important; max-width: 100% !important; }
+      .ticket-perforation::before, .ticket-perforation::after { display: none !important; }
+      .accordion-content { max-height: none !important; opacity: 1 !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen text-[#2C3028] antialiased selection:bg-[#56664C] selection:text-[#F4F1E9] pb-24">
+
+  <!-- ================= STICKY TOP NAVIGATION BAR ================= -->
+  <header class="sticky top-0 z-40 w-full bg-[#EAE8E0]/95 backdrop-blur-md border-b border-[#A3A196]/60 shadow-xs no-print">
+    <div class="max-w-xl mx-auto px-4 h-14 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-[#56664C] text-[#F4F1E9] flex items-center justify-center shadow-xs">
+          <i data-lucide="ticket" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <h1 class="text-sm font-bold tracking-wide text-[#2C3028]">台北旅行行程車票</h1>
+          <p class="text-[10px] text-[#7A7D74]">11/13 五 - 11/16 一</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="toggleAllAccordions()" class="btn-spring px-2.5 py-1 text-xs font-semibold rounded-lg bg-[#F4F1E9] border border-[#A3A196] text-[#7A7D74] hover:text-[#2C3028] flex items-center gap-1">
+          <i data-lucide="chevrons-up-down" class="w-3.5 h-3.5"></i>
+          <span id="toggleAllText">全部收合</span>
+        </button>
+        <button onclick="window.print()" class="btn-spring p-1.5 rounded-lg bg-[#F4F1E9] border border-[#A3A196] text-[#7A7D74] hover:text-[#2C3028]" title="列印或另存PDF">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Category Pill Links -->
+    <div class="border-t border-[#A3A196]/30 bg-[#DFDDD4]/80 px-3 py-1.5 overflow-x-auto no-scrollbar">
+      <div class="max-w-xl mx-auto flex items-center gap-1.5 text-xs">
+        <button onclick="scrollToEl('header-ticket')" class="btn-spring px-2.5 py-1 rounded-md font-bold bg-[#F4F1E9] border border-[#A3A196]/70 text-[#2C3028] shadow-2xs whitespace-nowrap">
+          首頁
+        </button>
+        <button onclick="scrollToEl('stay-a')" class="btn-spring px-2.5 py-1 rounded-md font-semibold bg-[#F4F1E9]/80 border border-[#A3A196]/60 text-[#7A7D74] hover:text-[#2C3028] whitespace-nowrap flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#56664C]"></span> A 暖寓
+        </button>
+        <button onclick="scrollToEl('stay-b')" class="btn-spring px-2.5 py-1 rounded-md font-semibold bg-[#F4F1E9]/80 border border-[#A3A196]/60 text-[#7A7D74] hover:text-[#2C3028] whitespace-nowrap flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#56664C]"></span> B 拾光行旅
+        </button>
+        <button onclick="scrollToEl('day-1')" class="btn-spring px-2.5 py-1 rounded-md font-semibold bg-[#F4F1E9]/80 border border-[#A3A196]/60 text-[#7A7D74] hover:text-[#2C3028] whitespace-nowrap">
+          Day 1 饗 ajoy
+        </button>
+        <button onclick="scrollToEl('day-2')" class="btn-spring px-2.5 py-1 rounded-md font-semibold bg-[#F4F1E9]/80 border border-[#A3A196]/60 text-[#7A7D74] hover:text-[#2C3028] whitespace-nowrap">
+          Day 2 阿夢
+        </button>
+        <button onclick="scrollToEl('day-3')" class="btn-spring px-2.5 py-1 rounded-md font-semibold bg-[#F4F1E9]/80 border border-[#A3A196]/60 text-[#7A7D74] hover:text-[#2C3028] whitespace-nowrap">
+          Day 3 換宿/頒獎
+        </button>
+        <button onclick="scrollToEl('day-4')" class="btn-spring px-2.5 py-1 rounded-md font-semibold bg-[#F4F1E9]/80 border border-[#A3A196]/60 text-[#7A7D74] hover:text-[#2C3028] whitespace-nowrap">
+          Day 4 賦歸
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN TICKET STACK ================= -->
+  <main class="w-full max-w-[600px] mx-auto px-3.5 pt-5 sm:pt-7">
+    <div class="ticket-stack w-full rounded-2xl shadow-xl overflow-hidden border border-[#A3A196]/80 bg-[#F4F1E9]">
+      
+      <!-- ================= HEADER TICKET ================= -->
+      <header id="header-ticket" class="ticket-section p-6 sm:p-8 border-t-[12px] border-[#56664C]">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-widest text-[#2C3028] leading-tight">
+              台北住宿行程規劃
+            </h1>
+            <p class="text-sm font-semibold text-[#7A7D74] mt-1.5 tracking-wide flex items-center gap-1.5">
+              <i data-lucide="calendar" class="w-4 h-4 text-[#56664C]"></i>
+              11／13 五 至 11／16 一
+            </p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <span class="inline-block px-2.5 py-1 rounded-full border border-[#56664C]/30 bg-[#56664C]/10 text-[#56664C] text-[11px] font-bold tracking-wider">
+              PASS 2026
+            </span>
+            <span class="block text-[10px] text-[#7A7D74] mt-1 tracking-widest">TAIPEI VOYAGE</span>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3.5 border-t border-dashed border-[#A3A196]/60 flex items-center justify-between text-xs text-[#7A7D74]">
+          <span class="flex items-center gap-1.5">
+            <i data-lucide="users" class="w-3.5 h-3.5 text-[#56664C]"></i> 主要成員：綺、妤、蓁
+          </span>
+          <span class="font-bold text-[#56664C]">2 住宿 • 4 日旅程</span>
+        </div>
+      </header>
+
+      <!-- ================= STAY A ================= -->
+      <section id="stay-a" class="ticket-section ticket-perforation p-5 sm:p-8">
+        <div class="flex items-center justify-between cursor-pointer group" onclick="toggleAccordion('stay-a-content', 'stay-a-chevron')">
+          <div class="flex items-center gap-2.5 flex-wrap">
+            <span class="w-6 h-6 rounded bg-[#56664C] text-[#F4F1E9] text-xs font-bold flex items-center justify-center font-mono">A</span>
+            <h2 class="text-lg sm:text-xl font-bold text-[#2C3028]">A 住宿確認</h2>
+            <span class="text-xs font-bold text-[#56664C] bg-[#56664C]/10 px-2 py-0.5 rounded">11／13 五 至 11／15 日</span>
+          </div>
+          <button id="stay-a-chevron" class="chevron-icon p-1 text-[#7A7D74] group-hover:text-[#2C3028]">
+            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div id="stay-a-content" class="accordion-content pt-5 space-y-3.5">
+          <div class="flex items-start justify-between gap-3 pb-3 border-b border-[#A3A196]/30">
+            <div>
+              <span class="text-xs font-bold text-[#7A7D74] uppercase block">住宿名稱</span>
+              <p class="text-lg font-bold text-[#2C3028] mt-0.5">Warm Houses 暖寓</p>
+            </div>
+            <a href="https://maps.app.goo.gl/JEbXLyJsM5b6DYw46" target="_blank" rel="noopener" class="btn-spring px-3 py-1.5 rounded-lg bg-[#56664C] text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-2xs">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 地圖導航
+            </a>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm">
+            <div>
+              <span class="text-[#7A7D74] block font-bold mb-0.5">入住方式</span>
+              <span class="font-medium text-[#2C3028]">自助入住</span>
+            </div>
+            <div>
+              <span class="text-[#7A7D74] block font-bold mb-0.5">主要住客</span>
+              <span class="font-medium text-[#2C3028]">綺、妤、蓁</span>
+            </div>
+            <div class="col-span-2">
+              <span class="text-[#7A7D74] block font-bold mb-0.5">房型</span>
+              <span class="font-medium text-[#2C3028]">三人房</span>
+            </div>
+            <div>
+              <span class="text-[#7A7D74] block font-bold mb-0.5">進房時間</span>
+              <span class="font-medium text-[#2C3028]">11/13 五 16:00 後</span>
+            </div>
+            <div>
+              <span class="text-[#7A7D74] block font-bold mb-0.5">退房時間</span>
+              <span class="font-medium text-[#2C3028]">11/15 日 11:00 前</span>
+            </div>
+          </div>
+
+          <div class="bg-[#ECE9DF] p-3 rounded-xl text-xs sm:text-sm text-[#2C3028] whitespace-pre-line leading-relaxed border border-[#A3A196]/40">
+            ⚠️ 備註事項：無電梯、無每日清潔服務 / 行天宮捷運站走路 6 分鐘
+          </div>
+
+          <div class="pt-2 border-t border-[#A3A196]/30 flex items-baseline justify-between">
+            <span class="text-xs font-bold text-[#7A7D74] uppercase">兩晚總金額 (稅費已含)</span>
+            <p class="text-lg font-black text-[#56664C]">NTD 6,825 <span class="text-xs font-normal text-[#7A7D74]">（預定尚未扣款）</span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= STAY B ================= -->
+      <section id="stay-b" class="ticket-section ticket-perforation p-5 sm:p-8">
+        <div class="flex items-center justify-between cursor-pointer group" onclick="toggleAccordion('stay-b-content', 'stay-b-chevron')">
+          <div class="flex items-center gap-2.5 flex-wrap">
+            <span class="w-6 h-6 rounded bg-[#56664C] text-[#F4F1E9] text-xs font-bold flex items-center justify-center font-mono">B</span>
+            <h2 class="text-lg sm:text-xl font-bold text-[#2C3028]">B 住宿確認</h2>
+            <span class="text-xs font-bold text-[#56664C] bg-[#56664C]/10 px-2 py-0.5 rounded">11/15 日 至 11/16 一</span>
+          </div>
+          <button id="stay-b-chevron" class="chevron-icon p-1 text-[#7A7D74] group-hover:text-[#2C3028]">
+            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div id="stay-b-content" class="accordion-content pt-5 space-y-3.5">
+          <div class="flex items-start justify-between gap-3 pb-3 border-b border-[#A3A196]/30">
+            <div>
+              <span class="text-xs font-bold text-[#7A7D74] uppercase block">住宿名稱</span>
+              <p class="text-lg font-bold text-[#2C3028] mt-0.5">拾光行旅</p>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=%E6%8B%BE%E5%85%89%E8%A1%8C%E6%97%85" target="_blank" rel="noopener" class="btn-spring px-3 py-1.5 rounded-lg bg-[#56664C] text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-2xs">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 地圖導航
+            </a>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm">
+            <div>
+              <span class="text-[#7A7D74] block font-bold mb-0.5">入住方式</span>
+              <span class="font-medium text-[#2C3028]">櫃台辦理 / 自助入住</span>
+            </div>
+            <div>
+              <span class="text-[#7A7D74] block font-bold mb-0.5">主要住客</span>
+              <span class="font-medium text-[#2C3028]">綺、妤、蓁</span>
+            </div>
+            <div class="col-span-2">
+              <span class="text-[#7A7D74] block font-bold mb-0.5">房型與原價</span>
+              <span class="font-medium text-[#2C3028]">「豪華三人房」早鳥房價：2,480 元</span>
+            </div>
+            <div>
+              <span class="text-[#7A7D74] block font-bold mb-0.5">進房時間</span>
+              <span class="font-medium text-[#2C3028]">11/15 日 15:00 後</span>
+            </div>
+            <div>
+              <span class="text-[#7A7D74] block font-bold mb-0.5">退房時間</span>
+              <span class="font-medium text-[#2C3028]">11/16 一 11:00 前</span>
+            </div>
+          </div>
+
+          <div class="bg-[#ECE9DF] p-3 rounded-xl text-xs sm:text-sm text-[#2C3028] whitespace-pre-line leading-relaxed border border-[#A3A196]/40">
+            🎁 補助優惠折抵：
+            －國旅補助平日住宿券 $800
+            －Taiwan pass 平日住宿抵用券 $1,500
+          </div>
+
+          <div class="pt-2 border-t border-[#A3A196]/30 flex items-baseline justify-between">
+            <div>
+              <span class="text-xs font-bold text-[#7A7D74] uppercase block">實付總金額</span>
+              <span class="text-[11px] text-[#7A7D74]">($2,480 - $2,300 折抵)</span>
+            </div>
+            <p class="text-xl font-black text-[#56664C]">NTD 180 <span class="text-xs font-normal text-[#7A7D74]">（預定尚未扣款）</span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DAY 1 ================= -->
+      <section id="day-1" class="ticket-section ticket-perforation p-5 sm:p-8">
+        <div class="flex items-center justify-between cursor-pointer group" onclick="toggleAccordion('day-1-content', 'day-1-chevron')">
+          <div class="flex items-center gap-2.5 flex-wrap">
+            <span class="px-2.5 py-0.5 rounded bg-[#56664C] text-[#F4F1E9] text-xs font-extrabold font-mono">DAY 1</span>
+            <span class="text-sm font-bold text-[#56664C]">11/13 五</span>
+            <span class="text-xs text-[#7A7D74] bg-[#A3A196]/20 px-2 py-0.5 rounded-full">無打掃無電梯</span>
+          </div>
+          <button id="day-1-chevron" class="chevron-icon p-1 text-[#7A7D74] group-hover:text-[#2C3028]">
+            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div id="day-1-content" class="accordion-content pt-5 space-y-4">
+          <div class="bg-[#ECE9DF] p-4 rounded-xl text-sm font-medium whitespace-pre-line leading-relaxed text-[#2C3028] border border-[#A3A196]/40">
+            ✨ 夢幻午餐：饗 ajoy 餐卷
+            🕒 16:00 後入住 Warm Houses 暖寓（行天宮站步行 6 分鐘）
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <!-- Landmark 1 -->
+            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
+              <div>
+                <div class="flex items-start justify-between gap-1">
+                  <h4 class="font-bold text-sm text-[#2C3028]">饗 ajoy</h4>
+                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
+                </div>
+                <p class="text-xs text-[#7A7D74] mt-0.5">台北 101 大樓 86 樓</p>
+              </div>
+              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
+                <a href="https://www.google.com/maps/search/?api=1&query=%E9%A5%97%20ajoy" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 開啟地圖
+                </a>
+                <button onclick="copyAddress('台北101 饗 ajoy')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Landmark 2 -->
+            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
+              <div>
+                <div class="flex items-start justify-between gap-1">
+                  <h4 class="font-bold text-sm text-[#2C3028]">Warm Houses 暖寓</h4>
+                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
+                </div>
+                <p class="text-xs text-[#7A7D74] mt-0.5">台北市中山區民權東路二段（行天宮站）</p>
+              </div>
+              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
+                <a href="https://maps.app.goo.gl/JEbXLyJsM5b6DYw46" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 開啟地圖
+                </a>
+                <button onclick="copyAddress('台北市中山區民權東路二段 Warm Houses 暖寓')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DAY 2 ================= -->
+      <section id="day-2" class="ticket-section ticket-perforation p-5 sm:p-8">
+        <div class="flex items-center justify-between cursor-pointer group" onclick="toggleAccordion('day-2-content', 'day-2-chevron')">
+          <div class="flex items-center gap-2.5 flex-wrap">
+            <span class="px-2.5 py-0.5 rounded bg-[#56664C] text-[#F4F1E9] text-xs font-extrabold font-mono">DAY 2</span>
+            <span class="text-sm font-bold text-[#56664C]">11/14 六</span>
+            <span class="text-xs text-[#7A7D74] bg-[#A3A196]/20 px-2 py-0.5 rounded-full">市區探索</span>
+          </div>
+          <button id="day-2-chevron" class="chevron-icon p-1 text-[#7A7D74] group-hover:text-[#2C3028]">
+            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div id="day-2-content" class="accordion-content pt-5 space-y-4">
+          <div class="bg-[#ECE9DF] p-4 rounded-xl text-sm font-medium whitespace-pre-line leading-relaxed text-[#2C3028] border border-[#A3A196]/40">
+            🍽️ 今日美食名單：
+            • 阿夢咖啡廳：義大利麵、創意料理（追蹤很久的私廚）
+            • 青春雞：潮流怪怪店、有賣炸雞
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <!-- Landmark 1 -->
+            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
+              <div>
+                <div class="flex items-start justify-between gap-1">
+                  <h4 class="font-bold text-sm text-[#2C3028]">阿夢咖啡廳</h4>
+                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
+                </div>
+                <p class="text-xs text-[#7A7D74] mt-0.5">西門站搭公車至三元街約 10 分鐘</p>
+              </div>
+              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
+                <a href="https://www.google.com/maps/search/?api=1&query=%E9%98%BF%E5%A4%A2%E5%92%96%E5%95%A1%E5%BB%B3" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 開啟地圖
+                </a>
+                <button onclick="copyAddress('阿夢咖啡廳')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Landmark 2 -->
+            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
+              <div>
+                <div class="flex items-start justify-between gap-1">
+                  <h4 class="font-bold text-sm text-[#2C3028]">青春雞</h4>
+                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
+                </div>
+                <p class="text-xs text-[#7A7D74] mt-0.5">潮流怪怪店 • 炸雞</p>
+              </div>
+              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
+                <a href="https://www.google.com/maps/search/?api=1&query=%E9%9D%92%E6%98%A5%E9%9B%9E" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 開啟地圖
+                </a>
+                <button onclick="copyAddress('青春雞')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DAY 3 ================= -->
+      <section id="day-3" class="ticket-section ticket-perforation p-5 sm:p-8">
+        <div class="flex items-center justify-between cursor-pointer group" onclick="toggleAccordion('day-3-content', 'day-3-chevron')">
+          <div class="flex items-center gap-2.5 flex-wrap">
+            <span class="px-2.5 py-0.5 rounded bg-[#56664C] text-[#F4F1E9] text-xs font-extrabold font-mono">DAY 3</span>
+            <span class="text-sm font-bold text-[#56664C]">11/15 日</span>
+            <span class="text-xs text-[#7A7D74] bg-[#A3A196]/20 px-2 py-0.5 rounded-full">今日退房換宿 • 頒獎典禮</span>
+          </div>
+          <button id="day-3-chevron" class="chevron-icon p-1 text-[#7A7D74] group-hover:text-[#2C3028]">
+            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div id="day-3-content" class="accordion-content pt-5 space-y-4">
+          <div class="bg-[#ECE9DF] p-4 rounded-xl text-sm font-medium whitespace-pre-line leading-relaxed text-[#2C3028] border border-[#A3A196]/40">
+            🧳 11:00 前退房 行李寄放
+            🚕 交通：搭車約 15 ~ 20 分鐘
+            🏆 11:30 - 14:30 徐州庭園 頒獎典禮
+            🏨 15:00 後可入住 拾光行旅
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <!-- Landmark 1 -->
+            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
+              <div>
+                <div class="flex items-start justify-between gap-1">
+                  <h4 class="font-bold text-sm text-[#2C3028]">徐州路2號庭園會館</h4>
+                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
+                </div>
+                <p class="text-xs text-[#7A7D74] mt-0.5">台北市中正區徐州路 2 號</p>
+              </div>
+              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
+                <a href="https://www.google.com/maps/search/?api=1&query=%E5%BE%90%E5%B7%9E%E8%B7%AF2%E8%99%9F%E5%BA%AD%E5%9C%92%E6%9C%83%E9%A4%A8" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 開啟地圖
+                </a>
+                <button onclick="copyAddress('台北市中正區徐州路2號')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Landmark 2 -->
+            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
+              <div>
+                <div class="flex items-start justify-between gap-1">
+                  <h4 class="font-bold text-sm text-[#2C3028]">拾光行旅</h4>
+                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
+                </div>
+                <p class="text-xs text-[#7A7D74] mt-0.5">台北市大同區</p>
+              </div>
+              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
+                <a href="https://www.google.com/maps/search/?api=1&query=%E6%8B%BE%E5%85%89%E8%A1%8C%E6%97%85" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 開啟地圖
+                </a>
+                <button onclick="copyAddress('拾光行旅')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DAY 4 ================= -->
+      <section id="day-4" class="ticket-section ticket-perforation p-5 sm:p-8">
+        <div class="flex items-center justify-between cursor-pointer group" onclick="toggleAccordion('day-4-content', 'day-4-chevron')">
+          <div class="flex items-center gap-2.5 flex-wrap">
+            <span class="px-2.5 py-0.5 rounded bg-[#56664C] text-[#F4F1E9] text-xs font-extrabold font-mono">DAY 4</span>
+            <span class="text-sm font-bold text-[#56664C]">11/16 一</span>
+            <span class="text-xs text-[#7A7D74] bg-[#A3A196]/20 px-2 py-0.5 rounded-full">賦歸返程</span>
+          </div>
+          <button id="day-4-chevron" class="chevron-icon p-1 text-[#7A7D74] group-hover:text-[#2C3028]">
+            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div id="day-4-content" class="accordion-content pt-5 space-y-4">
+          <div class="bg-[#ECE9DF] p-4 rounded-xl text-sm font-medium whitespace-pre-line leading-relaxed text-[#2C3028] border border-[#A3A196]/40">
+            🧳 11:00 前退房
+            🛍️ 台北車站周邊伴手禮採買、午餐巡禮後啟程賦歸
+          </div>
+
+          <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
+            <div>
+              <div class="flex items-start justify-between gap-1">
+                <h4 class="font-bold text-sm text-[#2C3028]">台北車站 / 伴手禮名店</h4>
+                <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
+              </div>
+              <p class="text-xs text-[#7A7D74] mt-0.5">台北市中正區北平西路 3 號</p>
+            </div>
+            <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
+              <a href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E8%BB%8A%E7%AB%99" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 開啟地圖
+              </a>
+              <button onclick="copyAddress('台北車站')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= FOOTER STUB ================= -->
+      <footer class="ticket-section ticket-perforation p-6 sm:p-7 bg-[#EFECE3] border-b border-[#A3A196] rounded-b-2xl">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <div class="flex items-center gap-3">
+            <div class="ticket-barcode w-28 hidden sm:block"></div>
+            <div>
+              <p class="text-xs font-bold tracking-widest text-[#2C3028]">TAIPEI VOYAGE PASS</p>
+              <p class="text-[11px] text-[#7A7D74]">祝旅途愉快 • Happy travels</p>
+            </div>
+          </div>
+          <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="btn-spring text-xs font-bold text-[#56664C] hover:underline flex items-center gap-1">
+            <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i> 回到頂端
+          </button>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 opacity-0 translate-y-3">
+    <div class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#2C3028] text-[#F4F1E9] text-xs font-semibold shadow-xl border border-[#A3A196]/30">
+      <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+      <span id="toastMsg">已複製地址！</span>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function scrollToEl(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        // Automatically expand section if collapsed
+        const content = el.querySelector('.accordion-content');
+        if (content && content.classList.contains('collapsed')) {
+          content.classList.remove('collapsed');
+          const chevron = el.querySelector('.chevron-icon');
+          if (chevron) chevron.classList.remove('collapsed-chevron');
+        }
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function toggleAccordion(contentId, chevronId) {
+      const content = document.getElementById(contentId);
+      const chevron = document.getElementById(chevronId);
+      if (content) {
+        content.classList.toggle('collapsed');
+      }
+      if (chevron) {
+        chevron.classList.toggle('collapsed-chevron');
+      }
+    }
+
+    let isAllCollapsed = false;
+    function toggleAllAccordions() {
+      isAllCollapsed = !isAllCollapsed;
+      const btnText = document.getElementById('toggleAllText');
+      if (btnText) btnText.textContent = isAllCollapsed ? '全部展開' : '全部收合';
+
+      document.querySelectorAll('.accordion-content').forEach(el => {
+        if (isAllCollapsed) {
+          el.classList.add('collapsed');
+        } else {
+          el.classList.remove('collapsed');
+        }
+      });
+      document.querySelectorAll('.chevron-icon').forEach(ch => {
+        if (isAllCollapsed) {
+          ch.classList.add('collapsed-chevron');
+        } else {
+          ch.classList.remove('collapsed-chevron');
+        }
+      });
+    }
+
+    function copyAddress(text) {
+      if (!navigator.clipboard) return;
+      navigator.clipboard.writeText(text).then(() => {
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toastMsg');
+        if (toast && toastMsg) {
+          toastMsg.textContent = `已複製地址：${text}`;
+          toast.classList.remove('opacity-0', 'translate-y-3');
+          toast.classList.add('opacity-100', 'translate-y-0');
+          setTimeout(() => {
+            toast.classList.add('opacity-0', 'translate-y-3');
+            toast.classList.remove('opacity-100', 'translate-y-0');
+          }, 2200);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
