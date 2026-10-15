@@ -37,7 +37,7 @@
 
     /* Spring micro-interactions */
     .btn-spring {
-      transition: transform 0.15s var(--spring), background-color 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.15s var(--spring), background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
     .btn-spring:hover {
       transform: scale(1.02) translateY(-1px);
@@ -131,6 +131,15 @@
       scrollbar-width: none;
     }
 
+    /* Highlight pulse for nearby recommended landmarks */
+    .recommend-badge {
+      animation: pulse-subtle 2s infinite ease-in-out;
+    }
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.75; }
+    }
+
     @media print {
       body { background: #fff !important; padding: 0 !important; }
       .no-print { display: none !important; }
@@ -182,14 +191,62 @@
           Day 1 饗 ajoy
         </button>
         <button onclick="scrollToEl('day-2')" class="btn-spring px-2.5 py-1 rounded-md font-semibold bg-[#F4F1E9]/80 border border-[#A3A196]/60 text-[#7A7D74] hover:text-[#2C3028] whitespace-nowrap">
-          Day 2 逛街/夜市
+          Day 2 中山/美食
         </button>
         <button onclick="scrollToEl('day-3')" class="btn-spring px-2.5 py-1 rounded-md font-semibold bg-[#F4F1E9]/80 border border-[#A3A196]/60 text-[#7A7D74] hover:text-[#2C3028] whitespace-nowrap">
-          Day 3 頒獎/換宿/大稻埕
+          Day 3 頒獎/換宿/寧夏
         </button>
         <button onclick="scrollToEl('day-4')" class="btn-spring px-2.5 py-1 rounded-md font-semibold bg-[#F4F1E9]/80 border border-[#A3A196]/60 text-[#7A7D74] hover:text-[#2C3028] whitespace-nowrap">
-          Day 4 快樂回家
+          Day 4 大稻埕/退房
         </button>
+      </div>
+    </div>
+
+    <!-- ================= ANCHOR POINT ROUTE & NEARBY RECOMMENDER BAR ================= -->
+    <div class="border-t border-[#A3A196]/40 bg-[#E8E5DC] px-3.5 py-2.5">
+      <div class="max-w-xl mx-auto flex flex-col gap-2">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-[#56664C]">
+            <i data-lucide="navigation-2" class="w-4 h-4"></i>
+            <span>出發定位點連線 & 推薦：</span>
+          </div>
+          
+          <!-- Nearby filter toggle -->
+          <button id="filterNearbyBtn" onclick="toggleNearbyFilter()" class="btn-spring text-[11px] font-bold px-2.5 py-1 rounded-full border border-[#56664C]/50 text-[#56664C] bg-white/70 hover:bg-[#56664C] hover:text-white flex items-center gap-1">
+            <i data-lucide="sparkles" class="w-3 h-3"></i>
+            <span id="filterNearbyText">高亮推薦最近地點</span>
+          </button>
+        </div>
+
+        <!-- Anchor Preset Selector Pills -->
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs pt-0.5">
+          <button onclick="setAnchor('stayA')" id="anchor-stayA" class="anchor-btn btn-spring px-2.5 py-1 rounded-lg font-bold bg-[#56664C] text-white shadow-2xs whitespace-nowrap flex items-center gap-1">
+            <i data-lucide="hotel" class="w-3 h-3"></i> 暖寓 (中山/行天宮)
+          </button>
+          <button onclick="setAnchor('stayB')" id="anchor-stayB" class="anchor-btn btn-spring px-2.5 py-1 rounded-lg font-medium bg-[#F4F1E9] border border-[#A3A196] text-[#7A7D74] hover:text-[#2C3028] whitespace-nowrap flex items-center gap-1">
+            <i data-lucide="hotel" class="w-3 h-3"></i> 拾光行旅 (大同區)
+          </button>
+          <button onclick="setAnchor('gps')" id="anchor-gps" class="anchor-btn btn-spring px-2.5 py-1 rounded-lg font-medium bg-[#F4F1E9] border border-[#A3A196] text-[#7A7D74] hover:text-[#2C3028] whitespace-nowrap flex items-center gap-1">
+            <i data-lucide="locate-fixed" class="w-3 h-3 text-emerald-600"></i> 我的 GPS 位置
+          </button>
+          <button onclick="setAnchor('taipei101')" id="anchor-taipei101" class="anchor-btn btn-spring px-2.5 py-1 rounded-lg font-medium bg-[#F4F1E9] border border-[#A3A196] text-[#7A7D74] hover:text-[#2C3028] whitespace-nowrap">
+            台北 101
+          </button>
+          <button onclick="setAnchor('zhongshan')" id="anchor-zhongshan" class="anchor-btn btn-spring px-2.5 py-1 rounded-lg font-medium bg-[#F4F1E9] border border-[#A3A196] text-[#7A7D74] hover:text-[#2C3028] whitespace-nowrap">
+            中山站/赤峰街
+          </button>
+          <button onclick="setAnchor('mainStation')" id="anchor-mainStation" class="anchor-btn btn-spring px-2.5 py-1 rounded-lg font-medium bg-[#F4F1E9] border border-[#A3A196] text-[#7A7D74] hover:text-[#2C3028] whitespace-nowrap">
+            台北車站
+          </button>
+        </div>
+
+        <div id="anchorStatusText" class="text-[11px] text-[#7A7D74] flex items-center justify-between">
+          <span class="flex items-center gap-1">
+            <i data-lucide="map-pin" class="w-3 h-3 text-[#56664C]"></i>
+            當前出發點：<strong id="currentAnchorLabel" class="text-[#2C3028]">Warm Houses 暖寓</strong>
+          </span>
+          <span class="text-[10px] text-[#56664C]">點擊地點卡片上的「路線連線」可直達 Google 導航</span>
+        </div>
       </div>
     </div>
   </header>
@@ -245,9 +302,14 @@
               <span class="text-xs font-bold text-[#7A7D74] uppercase block">住宿名稱</span>
               <p class="text-lg font-bold text-[#2C3028] mt-0.5">Warm Houses 暖寓</p>
             </div>
-            <a href="https://maps.app.goo.gl/JEbXLyJsM5b6DYw46" target="_blank" rel="noopener" class="btn-spring px-3 py-1.5 rounded-lg bg-[#56664C] text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-2xs">
-              <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 地圖導航
-            </a>
+            <div class="flex items-center gap-1.5">
+              <button onclick="setAnchor('stayA')" class="btn-spring px-2.5 py-1.5 rounded-lg bg-[#56664C]/15 text-[#56664C] hover:bg-[#56664C] hover:text-white text-xs font-bold inline-flex items-center gap-1">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 設為出發點
+              </button>
+              <a href="https://maps.app.goo.gl/JEbXLyJsM5b6DYw46" target="_blank" rel="noopener" class="btn-spring px-3 py-1.5 rounded-lg bg-[#56664C] text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-2xs">
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i> 地圖
+              </a>
+            </div>
           </div>
 
           <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm">
@@ -303,9 +365,14 @@
               <span class="text-xs font-bold text-[#7A7D74] uppercase block">住宿名稱</span>
               <p class="text-lg font-bold text-[#2C3028] mt-0.5">拾光行旅</p>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=%E6%8B%BE%E5%85%89%E8%A1%8C%E6%97%85" target="_blank" rel="noopener" class="btn-spring px-3 py-1.5 rounded-lg bg-[#56664C] text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-2xs">
-              <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 地圖導航
-            </a>
+            <div class="flex items-center gap-1.5">
+              <button onclick="setAnchor('stayB')" class="btn-spring px-2.5 py-1.5 rounded-lg bg-[#56664C]/15 text-[#56664C] hover:bg-[#56664C] hover:text-white text-xs font-bold inline-flex items-center gap-1">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 設為出發點
+              </button>
+              <a href="https://www.google.com/maps/search/?api=1&query=%E6%8B%BE%E5%85%89%E8%A1%8C%E6%97%85" target="_blank" rel="noopener" class="btn-spring px-3 py-1.5 rounded-lg bg-[#56664C] text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-2xs">
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i> 地圖
+              </a>
+            </div>
           </div>
 
           <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm">
@@ -364,46 +431,13 @@
           <div class="bg-[#ECE9DF] p-4 rounded-xl text-sm font-medium whitespace-pre-line leading-relaxed text-[#2C3028] border border-[#A3A196]/40">
             ✨ 夢幻午餐：饗 ajoy 餐卷
             🕒 16:00 後入住 Warm Houses 暖寓（行天宮站走 6 分）
+            🚶 附近逛逛：
+            • 信義 青春雞 潮流怪怪店 有賣炸雞
+            • 古亭 阿夢咖啡廳 義大利麵 創意料理（追蹤很久的私廚）
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <!-- Landmark 1 -->
-            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
-              <div>
-                <div class="flex items-start justify-between gap-1">
-                  <h4 class="font-bold text-sm text-[#2C3028]">饗 ajoy</h4>
-                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
-                </div>
-                <p class="text-xs text-[#7A7D74] mt-0.5">台北 101 大樓 86 樓</p>
-              </div>
-              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
-                <a href="https://www.google.com/maps/search/?api=1&query=%E9%A5%97%20ajoy" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 地圖連結
-                </a>
-                <button onclick="copyAddress('台北101 饗 ajoy')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
-                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Landmark 2 -->
-            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
-              <div>
-                <div class="flex items-start justify-between gap-1">
-                  <h4 class="font-bold text-sm text-[#2C3028]">Warm Houses 暖寓</h4>
-                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
-                </div>
-                <p class="text-xs text-[#7A7D74] mt-0.5">台北市中山區民權東路二段</p>
-              </div>
-              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
-                <a href="https://www.google.com/maps/search/?api=1&query=Warm%20Houses%20%E6%9A%96%E5%AF%93" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 地圖連結
-                </a>
-                <button onclick="copyAddress('台北市中山區民權東路二段 Warm Houses 暖寓')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
-                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
-            </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="day-1-landmarks">
+            <!-- Dynamically populated/enhanced landmarks -->
           </div>
         </div>
       </section>
@@ -424,70 +458,19 @@
         <div id="day-2-content" class="accordion-content pt-5 space-y-4">
           <div class="bg-[#ECE9DF] p-4 rounded-xl text-sm font-medium whitespace-pre-line leading-relaxed text-[#2C3028] border border-[#A3A196]/40">
             🌟 逛街名單：
-            中山站、赤峰街、公館商圈、臨江/通化夜市
+            中山區、赤峰街、臨江/通化夜市
 
             🌟 美食私藏：
-            • 阿夢咖啡廳：義大利麵、創意料理（追蹤很久的私廚）
-            • 青春雞：潮流怪怪店、有賣炸雞
+            • 東輝韓食館：馬鈴薯豬骨、銅板烤肉 CP值高
+            • 川 Kawa 干貝燉飯
+            • よる-Yoru by Dennis Wang
+            • 塩琉 拉麵
+            • 阿洋義式冰淇淋
+            • 遠了點：士林 東京家庭義大利麵
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <!-- Landmark 1 -->
-            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
-              <div>
-                <div class="flex items-start justify-between gap-1">
-                  <h4 class="font-bold text-sm text-[#2C3028]">臨江 / 通化夜市</h4>
-                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
-                </div>
-                <p class="text-xs text-[#7A7D74] mt-0.5">捷運信義安和站</p>
-              </div>
-              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
-                <a href="https://www.google.com/maps/search/?api=1&query=%E8%87%A8%E6%B1%9F%2F%E9%80%9A%E5%8C%96%E5%A4%9C%E5%B8%82" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 地圖連結
-                </a>
-                <button onclick="copyAddress('臨江/通化夜市（信義安和站）')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
-                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Landmark 2 -->
-            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
-              <div>
-                <div class="flex items-start justify-between gap-1">
-                  <h4 class="font-bold text-sm text-[#2C3028]">青春雞</h4>
-                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
-                </div>
-                <p class="text-xs text-[#7A7D74] mt-0.5">吳興街（偏遠了一點）• 潮流怪怪店 炸雞</p>
-              </div>
-              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
-                <a href="https://www.google.com/maps/search/?api=1&query=%E9%9D%92%E6%98%A5%E9%9B%9E" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 地圖連結
-                </a>
-                <button onclick="copyAddress('青春雞 吳興街')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
-                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Landmark 3 -->
-            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs sm:col-span-2">
-              <div>
-                <div class="flex items-start justify-between gap-1">
-                  <h4 class="font-bold text-sm text-[#2C3028]">阿夢咖啡廳</h4>
-                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
-                </div>
-                <p class="text-xs text-[#7A7D74] mt-0.5">西門站搭公車至三元街約 10 分鐘 • 義大利麵 創意料理私廚</p>
-              </div>
-              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
-                <a href="https://www.google.com/maps/search/?api=1&query=%E9%98%BF%E5%A4%A2%E5%92%96%E5%95%A1%E5%BB%B3" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 地圖連結
-                </a>
-                <button onclick="copyAddress('阿夢咖啡廳')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
-                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
-            </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="day-2-landmarks">
+            <!-- Dynamically populated/enhanced landmarks -->
           </div>
         </div>
       </section>
@@ -511,86 +494,12 @@
             🚕 交通：搭車約 15 ~ 20 分鐘
             🏆 11:30 - 14:30 徐州庭園 頒獎典禮
             🏨 15:00 後可入住 拾光行旅
-            ⛵ 大稻埕碼頭、老街、文青小店
             🍢 寧夏夜市巡禮
+            🍕 披薩有張臉 / Solo Pizza Napoletana 台北店
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <!-- Landmark 1 -->
-            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
-              <div>
-                <div class="flex items-start justify-between gap-1">
-                  <h4 class="font-bold text-sm text-[#2C3028]">徐州路2號庭園會館</h4>
-                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
-                </div>
-                <p class="text-xs text-[#7A7D74] mt-0.5">台北市中正區徐州路 2 號</p>
-              </div>
-              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
-                <a href="https://www.google.com/maps/search/?api=1&query=%E5%BE%90%E5%B7%9E%E8%B7%AF2%E8%99%9F%E5%BA%AD%E5%9C%92%E6%9C%83%E9%A4%A8" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 地圖連結
-                </a>
-                <button onclick="copyAddress('台北市中正區徐州路2號')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
-                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Landmark 2 -->
-            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
-              <div>
-                <div class="flex items-start justify-between gap-1">
-                  <h4 class="font-bold text-sm text-[#2C3028]">拾光行旅</h4>
-                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
-                </div>
-                <p class="text-xs text-[#7A7D74] mt-0.5">台北市大同區</p>
-              </div>
-              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
-                <a href="https://www.google.com/maps/search/?api=1&query=%E6%8B%BE%E5%85%89%E8%A1%8C%E6%97%85" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 地圖連結
-                </a>
-                <button onclick="copyAddress('拾光行旅')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
-                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Landmark 3 -->
-            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
-              <div>
-                <div class="flex items-start justify-between gap-1">
-                  <h4 class="font-bold text-sm text-[#2C3028]">寧夏夜市</h4>
-                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
-                </div>
-                <p class="text-xs text-[#7A7D74] mt-0.5">台北市大同區寧夏路</p>
-              </div>
-              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
-                <a href="https://www.google.com/maps/search/?api=1&query=%E5%AF%A7%E5%A4%8F%E5%A4%9C%E5%B8%82" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 地圖連結
-                </a>
-                <button onclick="copyAddress('台北市大同區寧夏夜市')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
-                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Landmark 4 -->
-            <div class="p-3 bg-white/70 rounded-xl border border-[#A3A196]/50 flex flex-col justify-between gap-2.5 shadow-2xs">
-              <div>
-                <div class="flex items-start justify-between gap-1">
-                  <h4 class="font-bold text-sm text-[#2C3028]">大稻埕老街</h4>
-                  <span class="w-2 h-2 rounded-full bg-[#56664C] mt-1.5 flex-shrink-0"></span>
-                </div>
-                <p class="text-xs text-[#7A7D74] mt-0.5">台北市大同區迪化街周邊</p>
-              </div>
-              <div class="flex items-center gap-2 pt-2 border-t border-[#A3A196]/30">
-                <a href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E7%A8%BB%E5%9F%95%E8%80%81%E8%A1%97" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2.5 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1.5">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 地圖連結
-                </a>
-                <button onclick="copyAddress('大稻埕老街 迪化街')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
-                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
-            </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="day-3-landmarks">
+            <!-- Dynamically populated/enhanced landmarks -->
           </div>
         </div>
       </section>
@@ -601,7 +510,7 @@
           <div class="flex items-center gap-2.5 flex-wrap">
             <span class="px-2.5 py-0.5 rounded bg-[#56664C] text-[#F4F1E9] text-xs font-extrabold font-mono">DAY 4</span>
             <span class="text-sm font-bold text-[#56664C]">11/16 一</span>
-            <span class="text-xs text-[#7A7D74] bg-[#A3A196]/20 px-2 py-0.5 rounded-full">快樂回家</span>
+            <span class="text-xs text-[#7A7D74] bg-[#A3A196]/20 px-2 py-0.5 rounded-full">退房啦～</span>
           </div>
           <button id="day-4-chevron" class="chevron-icon p-1 text-[#7A7D74] group-hover:text-[#2C3028]">
             <i data-lucide="chevron-down" class="w-4 h-4"></i>
@@ -611,7 +520,13 @@
         <div id="day-4-content" class="accordion-content pt-5 space-y-4">
           <div class="bg-[#ECE9DF] p-4 rounded-xl text-sm font-medium whitespace-pre-line leading-relaxed text-[#2C3028] border border-[#A3A196]/40">
             🧳 11:00 前退房！
-            🚆 採買台北特色伴手禮、午餐巡禮後踏上歸途，快樂回家！
+            ⛵ 大稻埕碼頭、老街、文青小店漫遊
+            🍰 永樂市場美食、加福奇士蛋糕起酥伴手禮
+            🍵 抹茶店品茗
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="day-4-landmarks">
+            <!-- Dynamically populated/enhanced landmarks -->
           </div>
         </div>
       </section>
@@ -644,12 +559,277 @@
   </div>
 
   <script>
-    lucide.createIcons();
+    // ================= ITINERARY DATA & GEOLOCATION HUBS =================
+    const TRIP_DATA = {
+      meta: {
+        title: "台北住宿行程規劃",
+        subtitle: "11／13 五 至 11／16 一"
+      },
+      stays: {
+        stayA: { name: "Warm Houses 暖寓", address: "台北市中山區民權東路二段", lat: 25.0601, lng: 121.5332, zone: "zhongshan" },
+        stayB: { name: "拾光行旅", address: "台北市大同區", lat: 25.0515, lng: 121.5130, zone: "datong" }
+      },
+      anchorPresets: {
+        stayA: { name: "Warm Houses 暖寓", address: "台北市中山區民權東路二段 Warm Houses 暖寓", lat: 25.0601, lng: 121.5332, zone: "zhongshan" },
+        stayB: { name: "拾光行旅", address: "拾光行旅", lat: 25.0515, lng: 121.5130, zone: "datong" },
+        taipei101: { name: "台北 101", address: "台北101大樓", lat: 25.0339, lng: 121.5645, zone: "xinyi" },
+        zhongshan: { name: "中山站/赤峰街", address: "捷運中山站", lat: 25.0531, lng: 121.5204, zone: "zhongshan" },
+        mainStation: { name: "台北車站", address: "台北車站", lat: 25.0478, lng: 121.5170, zone: "zhongzheng" }
+      },
+      days: [
+        {
+          id: "day-1",
+          landmarks: [
+            { id: "lm-d1-1", name: "Warm Houses 暖寓", address: "台北市中山區民權東路二段", query: "Warm Houses 暖寓", lat: 25.0601, lng: 121.5332, zone: "zhongshan", note: "三人房・16:00後入住" },
+            { id: "lm-d1-2", name: "饗 ajoy", address: "台北101大樓86樓", query: "饗 ajoy", lat: 25.0339, lng: 121.5645, zone: "xinyi", note: "夢幻午餐餐券" },
+            { id: "lm-d1-3", name: "阿夢咖啡廳", address: "西門站搭公車到三元街 10分鐘", query: "阿夢咖啡廳", lat: 25.0298, lng: 121.5123, zone: "wanhua", note: "義大利麵・私廚料理" },
+            { id: "lm-d1-4", name: "青春雞 潮流怪怪店", address: "101附近 信義 吳興街", query: "青春雞 潮流怪怪店 有賣炸雞", lat: 25.0295, lng: 121.5660, zone: "xinyi", note: "潮流炸雞專賣" }
+          ]
+        },
+        {
+          id: "day-2",
+          landmarks: [
+            { id: "lm-d2-1", name: "臨江 / 通化夜市", address: "捷運信義安和站", query: "臨江/通化夜市", lat: 25.0305, lng: 121.5540, zone: "daan", note: "必吃米其林街頭小吃" },
+            { id: "lm-d2-2", name: "東輝韓食館", address: "行天宮站（需預約訂位）", query: "東輝韓食館", lat: 25.0608, lng: 121.5330, zone: "zhongshan", note: "馬鈴薯豬骨・銅板烤肉CP值高" },
+            { id: "lm-d2-3", name: "よる-Yoru by Dennis Wang", address: "行天宮搭41公車", query: "よる-Yoru by Dennis Wang", lat: 25.0487, lng: 121.5398, zone: "zhongshan", note: "質感私廚推薦" },
+            { id: "lm-d2-4", name: "阿洋義式冰淇淋", address: "台北市中山區", query: "阿洋義式冰淇淋", lat: 25.0538, lng: 121.5208, zone: "zhongshan", note: "濃郁手工義式Gelato" },
+            { id: "lm-d2-5", name: "塩琉", address: "台北市中正區重慶南路", query: "塩琉", lat: 25.0440, lng: 121.5140, zone: "zhongzheng", note: "人氣拉麵名店" },
+            { id: "lm-d2-6", name: "士林 東京家庭義大利麵", address: "台北市士林區", query: "士林 東京家庭義大利麵", lat: 25.0910, lng: 121.5260, zone: "shilin", note: "遠了點・道地家庭風" }
+          ]
+        },
+        {
+          id: "day-3",
+          landmarks: [
+            { id: "lm-d3-1", name: "徐州路2號庭園會館", address: "台北市中正區徐州路2號", query: "徐州路2號庭園會館", lat: 25.0414, lng: 121.5218, zone: "zhongzheng", note: "11:30 - 14:30 頒獎典禮" },
+            { id: "lm-d3-2", name: "拾光行旅", address: "台北市大同區", query: "拾光行旅", lat: 25.0515, lng: 121.5130, zone: "datong", note: "15:00後入住・折抵後$180" },
+            { id: "lm-d3-3", name: "寧夏夜市", address: "台北市大同區寧夏路", query: "寧夏夜市", lat: 25.0553, lng: 121.5152, zone: "datong", note: "大稻埕美食精華夜市" },
+            { id: "lm-d3-4", name: "Aki matcha bar", address: "台北市大同區赤峰周邊", query: "Aki matcha bar", lat: 25.0535, lng: 121.5145, zone: "datong", note: "專業抹茶店" }
+          ]
+        },
+        {
+          id: "day-4",
+          landmarks: [
+            { id: "lm-d4-1", name: "加福奇士蛋糕專門店", address: "台北市大同區延平北路二段", query: "加福奇士蛋糕專門店", lat: 25.0560, lng: 121.5100, zone: "datong", note: "起酥蛋糕老名店・伴手禮" },
+            { id: "lm-d4-2", name: "永樂市場", address: "台北市大同區迪化街一段21號", query: "永樂市場", lat: 25.0545, lng: 121.5103, zone: "datong", note: "傳統市場小吃美食" },
+            { id: "lm-d4-3", name: "品 PIN THÉ SAVOR", address: "城隍廟對面（迪化街一段）", query: "品 PIN THÉ SAVOR", lat: 25.0558, lng: 121.5101, zone: "datong", note: "特色茶香・文青小店" }
+          ]
+        }
+      ]
+    };
+
+    // Current active anchor
+    let currentAnchor = {
+      key: 'stayA',
+      name: TRIP_DATA.anchorPresets.stayA.name,
+      address: TRIP_DATA.anchorPresets.stayA.address,
+      lat: TRIP_DATA.anchorPresets.stayA.lat,
+      lng: TRIP_DATA.anchorPresets.stayA.lng,
+      zone: TRIP_DATA.anchorPresets.stayA.zone
+    };
+    let filterNearbyOnly = false;
+
+    // ================= DISTANCE CALCULATION (HAVERSINE) =================
+    function getDistanceKm(lat1, lon1, lat2, lon2) {
+      if (!lat1 || !lon1 || !lat2 || !lon2) return null;
+      const R = 6371; // Earth radius in km
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = 
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    }
+
+    function formatDistance(distKm) {
+      if (distKm === null || isNaN(distKm)) return null;
+      if (distKm < 0.1) return '就在身邊 (<100m)';
+      if (distKm < 1) return `步行約 ${(distKm * 1000).toFixed(0)} 公尺`;
+      return `約 ${distKm.toFixed(1)} 公里`;
+    }
+
+    // ================= SET ANCHOR POINT =================
+    function setAnchor(presetKey) {
+      // Update UI button highlights
+      document.querySelectorAll('.anchor-btn').forEach(btn => {
+        btn.classList.remove('bg-[#56664C]', 'text-white');
+        btn.classList.add('bg-[#F4F1E9]', 'text-[#7A7D74]');
+      });
+      const activeBtn = document.getElementById(`anchor-${presetKey}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-[#F4F1E9]', 'text-[#7A7D74]');
+        activeBtn.classList.add('bg-[#56664C]', 'text-white');
+      }
+
+      if (presetKey === 'gps') {
+        if (!navigator.geolocation) {
+          showToast('您的瀏覽器不支援 GPS 定位');
+          return;
+        }
+        showToast('正在獲取目前 GPS 位置...');
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            currentAnchor = {
+              key: 'gps',
+              name: '我的目前位置 (GPS)',
+              address: `${pos.coords.latitude.toFixed(4)},${pos.coords.longitude.toFixed(4)}`,
+              lat: pos.coords.latitude,
+              lng: pos.coords.longitude,
+              zone: 'gps'
+            };
+            document.getElementById('currentAnchorLabel').textContent = '我的目前位置 (GPS)';
+            renderAllLandmarks();
+            showToast('已切換為 GPS 目前出發點！');
+          },
+          (err) => {
+            showToast('無法取得定位，請確認權限或選擇預設地標');
+            setAnchor('stayA');
+          },
+          { enableHighAccuracy: true, timeout: 8000 }
+        );
+        return;
+      }
+
+      const preset = TRIP_DATA.anchorPresets[presetKey];
+      if (preset) {
+        currentAnchor = {
+          key: presetKey,
+          name: preset.name,
+          address: preset.address,
+          lat: preset.lat,
+          lng: preset.lng,
+          zone: preset.zone
+        };
+        document.getElementById('currentAnchorLabel').textContent = preset.name;
+        renderAllLandmarks();
+        showToast(`已連線出發點：「${preset.name}」`);
+      }
+    }
+
+    function toggleNearbyFilter() {
+      filterNearbyOnly = !filterNearbyOnly;
+      const btn = document.getElementById('filterNearbyBtn');
+      const text = document.getElementById('filterNearbyText');
+      if (filterNearbyOnly) {
+        btn.classList.remove('bg-white/70', 'text-[#56664C]');
+        btn.classList.add('bg-[#56664C]', 'text-white');
+        text.textContent = '顯示所有地點';
+        showToast('已為您過濾顯示目前定位點附近的推薦地點！');
+      } else {
+        btn.classList.remove('bg-[#56664C]', 'text-white');
+        btn.classList.add('bg-white/70', 'text-[#56664C]');
+        text.textContent = '高亮推薦最近地點';
+        showToast('已切換顯示所有地點');
+      }
+      renderAllLandmarks();
+    }
+
+    // ================= RENDER LANDMARKS WITH LIVE DISTANCE & ROUTES =================
+    function renderAllLandmarks() {
+      TRIP_DATA.days.forEach(day => {
+        const container = document.getElementById(`${day.id}-landmarks`);
+        if (!container) return;
+
+        // Calculate distance for all landmarks
+        const enhanced = day.landmarks.map(lm => {
+          let dist = null;
+          if (currentAnchor.lat && currentAnchor.lng && lm.lat && lm.lng) {
+            dist = getDistanceKm(currentAnchor.lat, currentAnchor.lng, lm.lat, lm.lng);
+          }
+          const isSameZone = (currentAnchor.zone && lm.zone && currentAnchor.zone === lm.zone);
+          const isNearby = (dist !== null && dist <= 2.2) || isSameZone;
+          return { ...lm, dist, isNearby };
+        });
+
+        // Filter if requested
+        const listToRender = filterNearbyOnly ? enhanced.filter(item => item.isNearby) : enhanced;
+
+        if (listToRender.length === 0) {
+          container.innerHTML = `
+            <div class="col-span-full py-4 text-center text-xs text-[#7A7D74] bg-white/40 rounded-xl border border-dashed border-[#A3A196]/60">
+              📍 此出發點附近暫無本日指定地點，可切換其他定位點或點擊上方「顯示所有地點」。
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = listToRender.map(lm => {
+          const distStr = formatDistance(lm.dist);
+          // Direction URL from current anchor to landmark
+          const dirUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(currentAnchor.address || currentAnchor.name)}&destination=${encodeURIComponent(lm.name + ' ' + (lm.address || ''))}`;
+          const searchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lm.query || lm.name)}`;
+
+          return `
+            <div class="p-3 bg-white/75 rounded-xl border ${lm.isNearby ? 'border-[#56664C] shadow-sm ring-1 ring-[#56664C]/30 bg-white' : 'border-[#A3A196]/50'} flex flex-col justify-between gap-2.5 transition-all">
+              <div>
+                <div class="flex items-start justify-between gap-1">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <h4 class="font-bold text-sm text-[#2C3028]">${escapeHtml(lm.name)}</h4>
+                    ${lm.isNearby ? `
+                      <span class="recommend-badge px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#56664C]/15 text-[#56664C] flex items-center gap-0.5">
+                        <i data-lucide="sparkles" class="w-3 h-3"></i> 近距離推薦
+                      </span>
+                    ` : ''}
+                  </div>
+                  <span class="w-2 h-2 rounded-full ${lm.isNearby ? 'bg-emerald-600' : 'bg-[#56664C]'} mt-1 flex-shrink-0"></span>
+                </div>
+                
+                ${lm.note ? `
+                  <p class="text-xs font-semibold text-[#56664C] mt-0.5">${escapeHtml(lm.note)}</p>
+                ` : ''}
+
+                ${lm.address ? `
+                  <p class="text-xs text-[#7A7D74] mt-0.5 leading-snug">${escapeHtml(lm.address)}</p>
+                ` : ''}
+
+                ${distStr ? `
+                  <div class="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#ECE9DF] text-[11px] font-mono text-[#2C3028] font-bold">
+                    <i data-lucide="footprints" class="w-3 h-3 text-[#56664C]"></i>
+                    <span>距離：${distStr}</span>
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- Action Buttons: Route Direction & Map & Copy -->
+              <div class="flex items-center gap-1.5 pt-2 border-t border-[#A3A196]/30">
+                <!-- Direct Navigation Route Button -->
+                <a href="${dirUrl}" target="_blank" rel="noopener" class="btn-spring flex-1 py-1 px-2 rounded-lg bg-[#56664C] hover:bg-[#56664C]/90 text-white text-xs font-bold inline-flex items-center justify-center gap-1 shadow-2xs" title="以目前出發點規劃 Google Maps 導航路線">
+                  <i data-lucide="navigation" class="w-3.5 h-3.5"></i>
+                  <span>連線導航</span>
+                </a>
+                
+                <!-- Open Single Place Map -->
+                <a href="${searchUrl}" target="_blank" rel="noopener" class="btn-spring py-1 px-2 rounded-lg bg-[#56664C]/15 hover:bg-[#56664C] hover:text-white text-[#56664C] text-xs font-bold inline-flex items-center justify-center gap-1" title="在地圖中查看地點資訊">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 地圖
+                </a>
+
+                <!-- Copy address -->
+                <button onclick="copyAddress('${escapeHtml(lm.name + ' ' + (lm.address || ''))}')" title="複製地址" class="btn-spring p-1.5 rounded-lg border border-[#A3A196]/50 text-[#7A7D74] hover:text-[#2C3028]">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        lucide.createIcons();
+      });
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
 
     function scrollToEl(id) {
       const el = document.getElementById(id);
       if (el) {
-        // Automatically expand section if collapsed
         const content = el.querySelector('.accordion-content');
         if (content && content.classList.contains('collapsed')) {
           content.classList.remove('collapsed');
@@ -709,6 +889,26 @@
         }
       });
     }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      if (toast && toastMsg) {
+        toastMsg.textContent = msg;
+        toast.classList.remove('opacity-0', 'translate-y-3');
+        toast.classList.add('opacity-100', 'translate-y-0');
+        setTimeout(() => {
+          toast.classList.add('opacity-0', 'translate-y-3');
+          toast.classList.remove('opacity-100', 'translate-y-0');
+        }, 2500);
+      }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      renderAllLandmarks();
+    });
   </script>
 </body>
 </html>
