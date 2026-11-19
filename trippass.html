@@ -2466,10 +2466,10 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     }
     .tab-nav-btn {
       white-space: nowrap;
-      min-height: 42px;
-      padding: 9px 16px;
-      border-radius: 12px;
-      font-size: 14px;
+      min-height: 38px;
+      padding: 7px 12px;
+      border-radius: 10px;
+      font-size: 13.5px;
       font-weight: 700;
       border: 1.5px solid var(--color-border);
       background: var(--color-paper);
@@ -2477,7 +2477,10 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      gap: 4px;
+      line-height: 1.25;
+      flex-shrink: 0;
     }
     .tab-nav-btn:hover {
       color: var(--color-primary-dark);
@@ -2537,8 +2540,8 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     }
     body.large-text-mode .tab-nav-btn {
       font-size: 15px !important;
-      min-height: 46px !important;
-      padding: 10px 16px !important;
+      min-height: 42px !important;
+      padding: 8px 14px !important;
     }
     body.large-text-mode article,
     body.large-text-mode section,
@@ -2694,9 +2697,9 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
         </button>
 
         <!-- 地圖與即時定位快捷鈕 -->
-        <button id="btn-toggle-map" onclick="switchTab('map')" title="開啟地圖與即時定位" class="btn-spring flex items-center gap-1.5 px-3 py-2 rounded-xl bg-paper border border-borderClr text-ink text-xs sm:text-sm font-bold shadow-2xs hover:border-[#B84A1A] hover:text-[#963810]">
+        <button id="btn-toggle-map" onclick="switchTab('map')" title="開啟地圖與即時定位" class="btn-spring flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-paper border border-borderClr text-ink text-xs sm:text-sm font-bold shadow-2xs hover:border-[#B84A1A] hover:text-[#963810]">
           <i data-lucide="map-pin" class="w-4 h-4 text-[#D4622A]"></i>
-          <span class="hidden sm:inline">地圖與定位</span>
+          <span><span class="inline sm:hidden">地圖</span><span class="hidden sm:inline">地圖與定位</span></span>
         </button>
 
         <!-- 列印按鈕 (保留右上角) -->
@@ -2708,23 +2711,20 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     </div>
   </header>
 
-  <!-- ================= STICKY TAB NAVIGATION (總行程規劃放第一個・手機友善分區切換) ================= -->
-  <nav class="sticky top-16 z-30 bg-[#F5F0E6]/95 backdrop-blur-md border-b border-[#E6DDD2] py-2.5 px-3 no-print shadow-xs">
-    <div class="max-w-4xl mx-auto flex items-center gap-2 overflow-x-auto no-scrollbar">
+  <!-- ================= STICKY TAB NAVIGATION (自動換行・精簡 6 大分頁・移除橫向滑動) ================= -->
+  <nav class="sticky top-16 z-30 bg-[#F5F0E6]/95 backdrop-blur-md border-b border-[#E6DDD2] py-2 px-3 no-print shadow-xs">
+    <div class="max-w-4xl mx-auto flex flex-wrap items-center gap-2">
       <button type="button" class="tab-nav-btn active" data-tab="all" onclick="switchTab('all')">
-        <strong>總行程規劃</strong>
+        <strong>總行程</strong>
       </button>
       <button type="button" class="tab-nav-btn" data-tab="day1" onclick="switchTab('day1')">
-        <span>Day 1</span> <strong>九份山海</strong>
+        <strong>Day 1 九份</strong>
       </button>
       <button type="button" class="tab-nav-btn" data-tab="day2" onclick="switchTab('day2')">
-        <span>Day 2</span> <strong>野柳金山</strong>
+        <strong>Day 2 野柳</strong>
       </button>
       <button type="button" class="tab-nav-btn" data-tab="day3" onclick="switchTab('day3')">
-        <span>Day 3</span> <strong>陽明山・大稻埕</strong>
-      </button>
-      <button type="button" class="tab-nav-btn" data-tab="map" onclick="switchTab('map')">
-        <strong>地圖與即時定位</strong>
+        <strong>Day 3 陽明山</strong>
       </button>
       <button type="button" class="tab-nav-btn" data-tab="cost" onclick="switchTab('cost')">
         <strong>旅費明細</strong>
@@ -2742,28 +2742,28 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
   <!-- ================= MAIN APP CONTENT (分區切換・老花友善・大字高對比) ================= -->
   <main class="w-full max-w-3xl mx-auto px-3 sm:px-4 py-4 space-y-4">
 
-    <!-- 行程快速看板 (Hero Banner) -->
-    <header class="p-5 sm:p-6 bg-paper rounded-2xl border border-borderClr shadow-sm">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full pill-capsule-a text-xs font-bold font-mono uppercase mb-1.5">
-            4 人同行 • 方案一（瑞芳＋台北大同）
-          </div>
-          <h2 class="text-xl sm:text-2xl font-black text-ink tracking-tight">
-            北台灣山海 3 日遊（12/9～12/11）
-          </h2>
-        </div>
-        <div class="p-3 bg-[#FAF6F0] rounded-xl text-right sm:min-w-[170px] border border-[#E6DDD2]">
-          <span class="text-xs text-muted block">每人交通＋住宿平均</span>
-          <strong class="text-xl sm:text-2xl font-black text-[#963810] font-mono">約 $2,350</strong>
-          <span class="text-[11px] text-[#9E3C12] block font-medium mt-0.5">兩晚折滿 $4,600</span>
-        </div>
-      </div>
-    </header>
-
-    <!-- ================= TAB PANE 0: 總行程規劃 (預設顯示・按鈕放第一個) ================= -->
+    <!-- ================= TAB PANE 0: 總行程規劃 (預設顯示・包含總覽看板) ================= -->
     <div id="pane-all" class="tab-pane active space-y-6">
       
+      <!-- 行程快速看板 (Hero Banner - 僅在「總行程」分頁顯示) -->
+      <header id="overview-hero-card" class="p-5 sm:p-6 bg-paper rounded-2xl border border-borderClr shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full pill-capsule-a text-xs font-bold font-mono uppercase mb-1.5">
+              4 人同行 • 方案一（瑞芳＋台北大同）
+            </div>
+            <h2 class="text-xl sm:text-2xl font-black text-ink tracking-tight">
+              北台灣山海 3 日遊（12/9～12/11）
+            </h2>
+          </div>
+          <div class="p-3 bg-[#FAF6F0] rounded-xl text-right sm:min-w-[170px] border border-[#E6DDD2]">
+            <span class="text-xs text-muted block">每人交通＋住宿平均</span>
+            <strong class="text-xl sm:text-2xl font-black text-[#963810] font-mono">約 $2,350</strong>
+            <span class="text-[11px] text-[#9E3C12] block font-medium mt-0.5">兩晚折滿 $4,600</span>
+          </div>
+        </div>
+      </header>
+
       <div class="p-4 bg-[#FDECE2] rounded-xl border border-[#D4622A]/30">
         <h3 class="text-lg font-bold text-ink">總行程規劃（三日連貫版）</h3>
         <p class="text-xs text-muted">包含 Day 1 至 Day 3 完整動線與 Taiwan PASS 台鐵套票使用指南</p>
@@ -4496,6 +4496,28 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
       document.querySelectorAll('.tab-pane').forEach(pane => {
         pane.classList.remove('active');
       });
+
+      // Update header map button active state
+      const mapBtn = document.getElementById('btn-toggle-map');
+      if (mapBtn) {
+        if (tabId === 'map') {
+          mapBtn.classList.add('bg-[#B84A1A]', 'text-white', 'border-[#B84A1A]');
+          mapBtn.classList.remove('bg-paper', 'text-ink', 'border-borderClr');
+          const icon = mapBtn.querySelector('[data-lucide="map-pin"]');
+          if (icon) {
+            icon.classList.remove('text-[#D4622A]');
+            icon.classList.add('text-white');
+          }
+        } else {
+          mapBtn.classList.remove('bg-[#B84A1A]', 'text-white', 'border-[#B84A1A]');
+          mapBtn.classList.add('bg-paper', 'text-ink', 'border-borderClr');
+          const icon = mapBtn.querySelector('[data-lucide="map-pin"]');
+          if (icon) {
+            icon.classList.add('text-[#D4622A]');
+            icon.classList.remove('text-white');
+          }
+        }
+      }
 
       const targetPane = document.getElementById('pane-' + tabId);
       if (targetPane) {
