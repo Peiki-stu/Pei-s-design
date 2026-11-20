@@ -2606,11 +2606,17 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
 
     .day-header {
       display: flex;
-      align-items: baseline;
-      gap: 12px;
-      padding-bottom: 10px;
+      flex-direction: column;
+      gap: 4px;
+      padding-bottom: 12px;
       margin-bottom: 20px;
       border-bottom: 1px solid var(--line-subtle);
+    }
+
+    .day-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .day-label {
@@ -2621,11 +2627,18 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
       font-family: var(--font-mono, monospace);
     }
 
+    .day-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+
     .day-title {
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 700;
       margin: 0;
       color: var(--text-main);
+      line-height: 1.4;
     }
 
     .schedule-row {
@@ -2660,21 +2673,65 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     }
 
     .item-desc {
-      font-size: 0.92rem;
+      font-size: 0.9375rem;
       color: var(--text-muted);
       margin: 0;
-      line-height: 1.65;
+      line-height: 1.68;
     }
 
-    /* 手機版自動縮小左欄寬度 */
+    /* 全域防掉字與標點避頭尾優化 */
+    .day-title, .item-title {
+      text-wrap: balance;
+      line-break: strict;
+    }
+
+    .item-desc {
+      text-wrap: pretty;
+      line-break: strict;
+      letter-spacing: 0.03em;
+    }
+
+    /* 手機版專屬排版 (時間移至上方，標題與內文吃滿 100% 寬度) */
     @media (max-width: 600px) {
-      .schedule-row {
-        grid-template-columns: 56px 1fr;
-        gap: 12px;
+      .day-block {
+        margin-bottom: 40px;
       }
+
+      /* 標題與日期住宿拆開，不硬擠同一行 */
       .day-header {
         flex-direction: column;
         gap: 4px;
+        padding-bottom: 12px;
+        margin-bottom: 20px;
+      }
+
+      .day-title {
+        font-size: 1.125rem; /* 18px */
+        line-height: 1.45;
+      }
+
+      /* 取消左右雙欄，改為上下堆疊，內文吃滿整行 */
+      .schedule-row {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        margin-bottom: 22px;
+      }
+
+      .time-col {
+        font-size: 0.82rem; /* 13px，當輕量眉標 */
+        letter-spacing: 0.05em;
+        padding-top: 0;
+      }
+
+      .item-title {
+        font-size: 1rem; /* 16px */
+        margin-bottom: 4px;
+      }
+
+      .item-desc {
+        font-size: 0.9375rem; /* 15px */
+        line-height: 1.75;
       }
     }
 
@@ -2878,8 +2935,11 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
           <!-- DAY 1 -->
           <div class="day-block">
             <div class="day-header">
-              <span class="day-label">DAY 1</span>
-              <h3 class="day-title">12/9（三）瑞芳・金瓜石・九份（宿瑞芳井上天花）</h3>
+              <div class="day-meta">
+                <span class="day-label">DAY 1</span>
+                <span class="day-sub">12/9（三）宿瑞芳井上天花</span>
+              </div>
+              <h3 class="day-title">瑞芳・金瓜石・九份</h3>
             </div>
 
             <div class="schedule-row">
@@ -2926,8 +2986,11 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
           <!-- DAY 2 -->
           <div class="day-block">
             <div class="day-header">
-              <span class="day-label">DAY 2</span>
-              <h3 class="day-title">12/10（四）野柳・金山・台北大同（宿拾光行旅）</h3>
+              <div class="day-meta">
+                <span class="day-label">DAY 2</span>
+                <span class="day-sub">12/10（四）宿台北大同拾光行旅</span>
+              </div>
+              <h3 class="day-title">野柳・金山・台北大同</h3>
             </div>
 
             <div class="schedule-row">
@@ -2974,15 +3037,18 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
           <!-- DAY 3 -->
           <div class="day-block">
             <div class="day-header">
-              <span class="day-label">DAY 3</span>
-              <h3 class="day-title">12/11（五）陽明山・大稻埕・返程高雄</h3>
+              <div class="day-meta">
+                <span class="day-label">DAY 3</span>
+                <span class="day-sub">12/11（五）返程高雄</span>
+              </div>
+              <h3 class="day-title">陽明山・大稻埕・返程高雄</h3>
             </div>
 
             <div class="schedule-row">
               <div class="time-col">08:30</div>
               <div class="content-col">
                 <p class="item-title">輕裝上陽明山</p>
-                <p class="item-desc">行李免費寄放拾光行旅。捷運至劍潭站轉紅 5 公車至陽明山總站，再轉 108 遊園公車。逛小油坑（免爬山看硫磺噴氣孔）與冷水坑免費溫泉泡腳池。</p>
+                <p class="item-desc">行李免費寄放拾光行旅。捷運至劍潭站轉紅 5 公車至陽明山總站，再轉 108 遊園公車。<br>逛小油坑（免爬山看硫磺噴氣孔）與冷水坑免費溫泉泡腳池。</p>
               </div>
             </div>
 
@@ -2990,7 +3056,7 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
               <div class="time-col">12:30</div>
               <div class="content-col">
                 <p class="item-title">大稻埕午餐與採買</p>
-                <p class="item-desc">搭紅 5 下山回大橋頭取行李。吃慈聖宮葉家肉粥、許仔豬腳麵線；買加福起酥蛋糕、合興壹玖肆柒鬆糕、妙口四神湯肉包。</p>
+                <p class="item-desc">搭紅 5 下山回大橋頭取行李。吃慈聖宮葉家肉粥、許仔豬腳麵線；<br>買加福起酥蛋糕、合興壹玖肆柒鬆糕、妙口四神湯肉包。</p>
               </div>
             </div>
 
