@@ -1824,6 +1824,7 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="color-scheme" content="light only">
   <title>四人北台灣大眾運輸行程車票懶人包 | 12/9～12/11</title>
   
   <!-- Tailwind CSS -->
@@ -2165,29 +2166,39 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     }
 
     /* ==========================================================================
-       Warm Persimmon & Earth Tones Design Tokens (高易讀性「暖柿子橘」大地色系)
+       Warm Persimmon & Clean Art-Paper Design Tokens (乾淨美術紙米白 ＆ 暖柿子橘大地色系)
        ========================================================================== */
     :root {
+      /* 防止手機瀏覽器（Chrome / LINE）強制反白成純黑死黑 */
+      color-scheme: light only;
+
+      /* 淺色模式：乾淨紙張米白（去黃、提亮、如美術紙質感） */
+      --bg-page: #FAF9F5;                /* 主背景：去黃的極淺米白（近純白美術紙） */
+      --text-main: #2B2E29;              /* 主標題：柔和深炭綠 */
+      --text-muted: #666B62;             /* 內文說明：清透中灰綠 */
+      --text-time: #8B7E74;              /* 左欄時間：低飽和暖灰棕 */
+      --line-subtle: rgba(43, 46, 41, 0.12); /* 極細分隔線 */
+
       /* 暖柿子橘大地色系核心色碼規範 */
       --color-primary: #B84A1A;          /* 主色：暖柿子橘（選中頁籤、列印、DAY標籤） */
       --color-primary-dark: #963810;     /* 主色加深：深焙柿橘（Hover、重點數字） */
       --color-accent: #D4622A;           /* 點綴亮橘：圖示、箭頭、裝飾線條 */
-      --color-page: #F5F0E6;             /* 頁面最外層背景：柔和奶油紙色 */
-      --color-page-dark: #1F1B18;
+      --color-page: var(--bg-page);      /* 頁面最外層背景：乾淨美術紙米白 */
+      --color-page-dark: #1C1E1B;        /* 暖炭灰，徹底告別純黑死黑 */
       --color-paper: #FFFFFF;            /* 主要行程卡片底色：純白 */
-      --color-paper-dark: #2B2520;
-      --color-secondary-bg: #FAF6F0;     /* 內文次要區塊與交通標籤底色 */
-      --color-border: #E6DDD2;           /* 邊框與分隔線：柔和暖線 */
-      --color-border-dark: #4C433C;
-      --color-ink: #2D241E;              /* 大標題：深咖啡黑 */
-      --color-body: #4E433B;             /* 內文說明：暖深灰 */
-      --color-muted: #7D7066;            /* 次要輔助文字 */
+      --color-paper-dark: #242722;
+      --color-secondary-bg: #F5F4EE;     /* 內文次要區塊與交通標籤底色：清爽微暖底 */
+      --color-border: #E8E5DC;           /* 邊框與分隔線：清透柔和線條 */
+      --color-border-dark: #3A3D36;
+      --color-ink: var(--text-main);     /* 大標題：柔和深炭綠 */
+      --color-body: #474B43;             /* 內文說明：清爽深灰 */
+      --color-muted: var(--text-muted);  /* 次要輔助文字 */
       
       /* 淺色膠囊標籤 */
       --color-capsule-a-bg: #FDECE2;     /* 淺色膠囊標籤 A（同色系）：底色 */
       --color-capsule-a-text: #9E3C12;   /* 淺色膠囊標籤 A（同色系）：文字 */
-      --color-capsule-b-bg: #F5ECD7;     /* 淺色膠囊標籤 B（區隔分類用）：底色 */
-      --color-capsule-b-text: #8A5A19;   /* 淺色膠囊標籤 B（區隔分類用）：文字（暖薑黃） */
+      --color-capsule-b-bg: #F3EFE6;     /* 淺色膠囊標籤 B（區隔分類用）：底色 */
+      --color-capsule-b-text: #7D5C28;   /* 淺色膠囊標籤 B（區隔分類用）：文字（暖薑黃） */
 
       /* 向下相容映射 */
       --color-olive: var(--color-primary);
@@ -2197,20 +2208,29 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
       --spring-modal: cubic-bezier(0.18, 1.25, 0.4, 1);
     }
 
+    /* 深色模式備援（做法 B）：暖炭灰取代死黑，不刺眼 */
     [data-theme="dark"], body.dark-mode {
-      --color-page: var(--color-page-dark);
-      --color-paper: var(--color-paper-dark);
-      --color-secondary-bg: #38312B;
-      --color-border: var(--color-border-dark);
-      --color-ink: #F7F4EF;
-      --color-body: #DED6CE;
-      --color-muted: #A89E94;
+      --bg-page: #1C1E1B;
+      --text-main: #ECEAE4;
+      --text-muted: #A3A89F;
+      --text-time: #B5A89A;
+      --line-subtle: rgba(236, 234, 228, 0.14);
+      --color-page: #1C1E1B;
+      --color-paper: #242722;
+      --color-secondary-bg: #2B2E28;
+      --color-border: #3A3D36;
+      --color-ink: #ECEAE4;
+      --color-body: #D4D7CF;
+      --color-muted: #A3A89F;
+    }
+
+    html, body {
+      background-color: var(--bg-page) !important;
+      color: var(--text-main) !important;
     }
 
     body {
       margin: 0;
-      background-color: var(--color-page) !important;
-      color: var(--color-body) !important;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang TC", "Helvetica Neue", Helvetica, "Microsoft JhengHei", sans-serif;
       scroll-behavior: smooth;
     }
@@ -2572,7 +2592,7 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     .editorial-schedule {
       max-width: 760px;
       margin: 0 auto;
-      color: #2f332d;
+      color: var(--text-main);
       line-height: 1.7;
     }
 
@@ -2590,7 +2610,7 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
       gap: 12px;
       padding-bottom: 10px;
       margin-bottom: 20px;
-      border-bottom: 1px solid rgba(47, 51, 45, 0.15);
+      border-bottom: 1px solid var(--line-subtle);
     }
 
     .day-label {
@@ -2605,7 +2625,7 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
       font-size: 1.15rem;
       font-weight: 700;
       margin: 0;
-      color: #2c3e2d;
+      color: var(--text-main);
     }
 
     .schedule-row {
@@ -2622,7 +2642,7 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     .time-col {
       font-size: 0.9rem;
       font-variant-numeric: tabular-nums;
-      color: #8c7a6b;
+      color: var(--text-time);
       font-weight: 600;
       font-family: var(--font-mono, monospace);
       padding-top: 2px;
@@ -2635,13 +2655,13 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     .item-title {
       font-size: 1rem;
       font-weight: 600;
-      color: #2f332d;
+      color: var(--text-main);
       margin: 0 0 4px 0;
     }
 
     .item-desc {
       font-size: 0.92rem;
-      color: #5c6358;
+      color: var(--text-muted);
       margin: 0;
       line-height: 1.65;
     }
@@ -2731,19 +2751,11 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     document.addEventListener('DOMContentLoaded', syncBody);
   }
   try {
-    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
-    if (mq) {
-      var cur = document.documentElement.getAttribute('data-theme');
-      if (!cur) {
-        syncTheme(mq.matches ? 'dark' : 'light');
-      } else {
-        syncTheme(cur);
-      }
-      if (mq.addEventListener) {
-        mq.addEventListener('change', function(e) {
-          syncTheme(e.matches ? 'dark' : 'light');
-        });
-      }
+    var cur = document.documentElement.getAttribute('data-theme');
+    if (!cur) {
+      syncTheme('light');
+    } else {
+      syncTheme(cur);
     }
   } catch (e) {}
   window.addEventListener('message', function(e) {
@@ -2757,7 +2769,7 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
 <body class="min-h-screen text-ink antialiased selection:bg-[#B84A1A] selection:text-white pb-28">
 
   <!-- ================= TOP MAIN APP BAR ================= -->
-  <header class="sticky top-0 z-40 w-full bg-[#F5F0E6]/95 backdrop-blur-md border-b border-[#E6DDD2] shadow-sm transition-all duration-200 no-print">
+  <header class="sticky top-0 z-40 w-full bg-[#FAF9F5]/95 backdrop-blur-md border-b border-[#E8E5DC] shadow-sm transition-all duration-200 no-print">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
       
       <!-- Brand & Title -->
@@ -2802,7 +2814,7 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
   </header>
 
   <!-- ================= STICKY TAB NAVIGATION (自動換行・精簡 6 大分頁・移除橫向滑動) ================= -->
-  <nav class="sticky top-16 z-30 bg-[#F5F0E6]/95 backdrop-blur-md border-b border-[#E6DDD2] py-2 px-3 no-print shadow-xs">
+  <nav class="sticky top-16 z-30 bg-[#FAF9F5]/95 backdrop-blur-md border-b border-[#E8E5DC] py-2 px-3 no-print shadow-xs">
     <div class="max-w-4xl mx-auto flex flex-wrap items-center gap-2">
       <button type="button" class="tab-nav-btn active" data-tab="all" onclick="switchTab('all')">
         <strong>總行程</strong>
@@ -4636,8 +4648,8 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
       document.documentElement.setAttribute('data-theme', t);
       if (typeof updateViz === 'function') updateViz();
     };
-    if (!document.documentElement.hasAttribute('data-theme') && window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
-      applyTheme('dark');
+    if (!document.documentElement.hasAttribute('data-theme')) {
+      applyTheme('light');
     }
     window.addEventListener('message', e => {
       if (e.data?.type === 'set-theme' || e.data?.type === 'APPLY_THEME') applyTheme(e.data.theme);
