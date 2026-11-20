@@ -2592,62 +2592,51 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     .editorial-schedule {
       max-width: 760px;
       margin: 0 auto;
-      color: var(--text-main, #2B2E29);
-      line-height: 1.5; /* 收緊整體行距 */
+      line-height: 1.5;
     }
 
     .day-block {
-      margin-bottom: 32px;
+      margin-bottom: 44px;
     }
 
     .day-block:last-child {
       margin-bottom: 0;
     }
 
+    /* 日期標題：大留白＋底部極細淡色橫線 */
     .day-header {
       display: flex;
-      flex-direction: column;
-      gap: 4px;
+      align-items: baseline;
+      gap: 12px;
       padding-bottom: 10px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       border-bottom: 1px solid var(--line-subtle);
-    }
-
-    .day-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .day-label {
       font-size: 0.8rem;
       letter-spacing: 0.12em;
-      color: #B84A1A;
-      font-weight: 700;
-      font-family: var(--font-mono, monospace);
-    }
-
-    .day-sub {
-      font-size: 0.82rem;
-      color: var(--text-muted, #666B62);
-      letter-spacing: 0.02em;
+      color: var(--text-time);
+      font-weight: 600;
+      flex-shrink: 0;
     }
 
     .day-title {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       font-weight: 700;
       margin: 0;
-      color: var(--text-main, #2B2E29);
+      color: var(--text-main);
       line-height: 1.4;
       text-wrap: balance;
       line-break: strict;
     }
 
+    /* 行程列：左欄固定寬度等寬時間，右欄粗體主標＋淡色內文 */
     .schedule-row {
       display: grid;
       grid-template-columns: 72px 1fr;
       gap: 14px;
-      margin-bottom: 16px; /* 項目間距同步收緊 */
+      margin-bottom: 16px;
     }
 
     .schedule-row:last-child {
@@ -2657,9 +2646,8 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     .time-col {
       font-size: 0.88rem;
       font-variant-numeric: tabular-nums;
-      color: var(--text-time, #8B7E74);
+      color: var(--text-time);
       font-weight: 500;
-      font-family: var(--font-mono, monospace);
       padding-top: 2px;
     }
 
@@ -2670,7 +2658,7 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     .item-title {
       font-size: 1rem;
       font-weight: 600;
-      color: var(--text-main, #2B2E29);
+      color: var(--text-main);
       margin: 0 0 3px 0;
       line-height: 1.4;
       text-wrap: balance;
@@ -2679,70 +2667,44 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
 
     .item-desc {
       font-size: 0.92rem;
-      color: var(--text-muted, #666B62);
+      color: var(--text-muted);
       margin: 0;
-      line-height: 1.52; /* 內文緊湊但不擠 */
+      line-height: 1.52;
       text-wrap: pretty;
       line-break: strict;
     }
 
-    /* 附近溫泉小字樣式：無框線、低調附註 */
+    /* 附近溫泉小字附註 */
     .nearby-note {
       font-size: 0.8rem;
-      color: #8B7E74;
+      color: var(--text-time);
       margin: 4px 0 0 0;
       line-height: 1.45;
       text-wrap: pretty;
-      line-break: strict;
     }
 
-    /* 手機版專屬排版 (時間移至上方，標題與內文吃滿 100% 寬度) */
+    /* 手機版：時間改上方、釋放滿版寬度防掉字 */
     @media (max-width: 600px) {
-      .day-block {
-        margin-bottom: 32px;
+      .editorial-schedule {
+        padding: 0 20px;
       }
-
-      /* 標題與日期住宿拆開，不硬擠同一行 */
       .day-header {
         flex-direction: column;
         gap: 4px;
-        padding-bottom: 10px;
-        margin-bottom: 16px;
       }
-
-      .day-title {
-        font-size: 1.125rem; /* 18px */
-        line-height: 1.4;
-      }
-
-      /* 取消左右雙欄，改為上下堆疊，內文吃滿整行 */
       .schedule-row {
         display: flex;
         flex-direction: column;
         gap: 2px;
         margin-bottom: 18px;
       }
-
       .time-col {
-        font-size: 0.8rem; /* 13px，當輕量眉標 */
-        letter-spacing: 0.05em;
+        font-size: 0.8rem;
         padding-top: 0;
       }
-
-      .item-title {
-        font-size: 1rem; /* 16px */
-        margin-bottom: 3px;
-      }
-
       .item-desc {
-        font-size: 0.9375rem; /* 15px */
+        font-size: 0.9375rem;
         line-height: 1.55;
-      }
-
-      .nearby-note {
-        font-size: 0.8rem;
-        line-height: 1.45;
-        margin-top: 3px;
       }
     }
 
@@ -2946,11 +2908,8 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
           <!-- DAY 1 -->
           <div class="day-block">
             <div class="day-header">
-              <div class="day-meta">
-                <span class="day-label">DAY 1</span>
-                <span class="day-sub">12/9（三）宿瑞芳井上天花</span>
-              </div>
-              <h3 class="day-title">瑞芳・金瓜石・九份</h3>
+              <span class="day-label">DAY 1</span>
+              <h3 class="day-title">12/9（三）瑞芳・金瓜石・九份（宿瑞芳井上天花）</h3>
             </div>
 
             <div class="schedule-row">
@@ -2997,11 +2956,8 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
           <!-- DAY 2 -->
           <div class="day-block">
             <div class="day-header">
-              <div class="day-meta">
-                <span class="day-label">DAY 2</span>
-                <span class="day-sub">12/10（四）宿台北大同拾光行旅</span>
-              </div>
-              <h3 class="day-title">野柳・金山・台北大同</h3>
+              <span class="day-label">DAY 2</span>
+              <h3 class="day-title">12/10（四）野柳・金山・台北大同（宿拾光行旅）</h3>
             </div>
 
             <div class="schedule-row">
@@ -3025,7 +2981,7 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
               <div class="content-col">
                 <p class="item-title">金山老街午餐</p>
                 <p class="item-desc">搭 790 / 862 公車 15 分至金山，漳聖宮廟口端鴨肉、吃阿玉蔴粩與雪豹地瓜冰。</p>
-                <p class="nearby-note">附近溫泉：中山溫泉公園免費泡腳池（老街步行 3 分）、金包里公共浴室、舊金山總督溫泉（車程約 5 分，可單純泡湯）。</p>
+                <p class="nearby-note">附近溫泉：中山溫泉公園免費泡腳池（老街步行 3 分）、舊金山總督溫泉（湯屋／露天風呂）、沐舍溫泉渡假酒店（個人湯屋）。</p>
               </div>
             </div>
 
@@ -3049,19 +3005,16 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
           <!-- DAY 3 -->
           <div class="day-block">
             <div class="day-header">
-              <div class="day-meta">
-                <span class="day-label">DAY 3</span>
-                <span class="day-sub">12/11（五）返程高雄</span>
-              </div>
-              <h3 class="day-title">陽明山・大稻埕・返程高雄</h3>
+              <span class="day-label">DAY 3</span>
+              <h3 class="day-title">12/11（五）陽明山・大稻埕・返程高雄</h3>
             </div>
 
             <div class="schedule-row">
               <div class="time-col">08:30</div>
               <div class="content-col">
                 <p class="item-title">輕裝上陽明山</p>
-                <p class="item-desc">行李免費寄放拾光行旅。捷運至劍潭站轉紅 5 公車至陽明山總站，再轉 108 遊園公車。<br>逛小油坑（免爬山看硫磺噴氣孔）與冷水坑免費溫泉泡腳池。</p>
-                <p class="nearby-note">附近溫泉：冷水坑公共溫泉浴室（泡腳池旁，免費男女分池裸湯）、前山公園公共浴室（陽明山公車總站旁，免費男女公共浴池，可自備毛巾）。</p>
+                <p class="item-desc">行李免費寄放拾光行旅。捷運至劍潭站轉紅 5 公車至陽明山總站，再轉 108 遊園公車。逛小油坑（免爬山看硫磺噴孔）與冷水坑免費溫泉泡腳池。</p>
+                <p class="nearby-note">附近溫泉：陽明山中國麗緻大飯店（白磺泉湯屋）、行義路溫泉區皇池／川湯（下山順路，雙人湯屋）。</p>
               </div>
             </div>
 
@@ -3069,14 +3022,14 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
               <div class="time-col">12:30</div>
               <div class="content-col">
                 <p class="item-title">大稻埕午餐與採買</p>
-                <p class="item-desc">搭紅 5 下山回大橋頭取行李。吃慈聖宮葉家肉粥、許仔豬腳麵線；<br>買加福起酥蛋糕、合興壹玖肆柒鬆糕、妙口四神湯肉包。</p>
+                <p class="item-desc">搭紅 5 下山回大橋頭取行李。吃慈聖宮葉家肉粥、許仔豬腳麵線；買加福起酥蛋糕、合興壹玖肆柒鬆糕、妙口四神湯肉包。</p>
               </div>
             </div>
 
             <div class="schedule-row">
               <div class="time-col">15:30</div>
               <div class="content-col">
-                <p class="item-title">台北車站返高</p>
+                <p class="item-title">台北車站返高雄</p>
                 <p class="item-desc">搭乘新自強 EMU3000 或普悠瑪直達車，約 19:30～21:00 返抵新左營。</p>
               </div>
             </div>
@@ -3111,292 +3064,155 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
 
     <!-- ================= TAB PANE 1: DAY 1 (九份山海) ================= -->
     <div id="pane-day1" class="tab-pane space-y-4">
-      
-      <!-- Day 1 Top Strip -->
-      <div class="p-4 bg-[#FAF6F0] rounded-xl border border-[#E6DDD2] flex flex-wrap items-center justify-between gap-2">
-        <div class="flex items-center gap-2">
-          <span class="px-2.5 py-1 rounded-md bg-[#B84A1A] text-white text-sm font-bold font-mono">DAY 1</span>
-          <strong class="text-base text-ink">12/9（三）：高雄出發 ➔ 金瓜石山海 ➔ 九份夜景</strong>
-        </div>
-        <div class="text-xs text-muted flex items-center gap-3">
-          <span>住宿：瑞芳「井上天花」</span>
-          <span>啟用：台鐵 3 日周遊券</span>
-        </div>
-      </div>
+      <article class="p-5 sm:p-7 bg-paper rounded-2xl border border-borderClr shadow-sm">
+        <section class="editorial-schedule">
+          <!-- DAY 1 -->
+          <div class="day-block" style="margin-bottom: 0;">
+            <div class="day-header">
+              <span class="day-label">DAY 1</span>
+              <h3 class="day-title">12/9（三）瑞芳・金瓜石・九份（宿瑞芳井上天花）</h3>
+            </div>
 
-      <!-- Station 1 -->
-      <article class="p-5 sm:p-6 bg-paper rounded-2xl border border-borderClr shadow-sm space-y-3">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="pill-capsule-a">上午 08:52</span>
-          <span class="transit-badge">台鐵新自強直達</span>
-          <span class="pill-capsule-b">瑞芳站寄放行李</span>
-        </div>
-        <h3 class="station-title">高雄新左營 ➔ 台北車站 ➔ 瑞芳車站</h3>
-        <div class="station-text space-y-2 text-ink">
-          <p>
-            • <strong>建議班次：</strong>首選 <span class="transit-badge">178 次普悠瑪</span>（08:52 新左營發車 ➔ 13:45 抵台北），或 <span class="transit-badge">116 次新自強</span>（09:31 發車 ➔ 14:00 抵台北）。在台北站轉乘宜蘭線區間車，約 45 分鐘抵達瑞芳車站。
-          </p>
-          <p>
-            • <strong>行李策略：</strong>出瑞芳火車站後，步行 <strong>5 分鐘</strong> 即可抵達今晚民宿「井上天花」免費寄放行李，免扛大行李上九份山城！
-          </p>
-          <div class="p-3 bg-[#FAF6F0] rounded-xl border border-[#E6DDD2] text-ink">
-            <strong class="text-[#963810]">瑞芳站前美食（午餐推薦）：</strong>林記福州胡椒餅、阿霞龍鳳腿、豐味肉羹（車站對面美食廣場，步行 3 分鐘）。
+            <div class="schedule-row">
+              <div class="time-col">08:52</div>
+              <div class="content-col">
+                <p class="item-title">新左營出發</p>
+                <p class="item-desc">搭乘 178 次普悠瑪或 116 次新自強直達台北，轉乘宜蘭線區間車抵瑞芳。</p>
+              </div>
+            </div>
+
+            <div class="schedule-row">
+              <div class="time-col">寄放</div>
+              <div class="content-col">
+                <p class="item-title">瑞芳放行李與午餐</p>
+                <p class="item-desc">出站步行 5 分鐘至井上天花寄放行李，站前美食廣場吃林記胡椒餅、阿霞龍鳳腿。</p>
+              </div>
+            </div>
+
+            <div class="schedule-row">
+              <div class="time-col">13:30</div>
+              <div class="content-col">
+                <p class="item-title">金瓜石山海漫步</p>
+                <p class="item-desc">站前搭 788 / 965 公車（約 25 分）至勸濟堂，走報時山棧道看陰陽海、祈堂老街彩虹階梯。</p>
+              </div>
+            </div>
+
+            <div class="schedule-row">
+              <div class="time-col">16:30</div>
+              <div class="content-col">
+                <p class="item-title">九份老街夜景</p>
+                <p class="item-desc">搭公車下坡 10 分至老街，看阿妹茶樓紅燈籠夜景，吃阿柑姨芋圓、阿蘭草仔粿。</p>
+              </div>
+            </div>
+
+            <div class="schedule-row">
+              <div class="time-col">20:00</div>
+              <div class="content-col">
+                <p class="item-title">返回瑞芳民宿</p>
+                <p class="item-desc">搭公車約 15 分鐘回井上天花休息。</p>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
       </article>
-
-      <!-- Station 2 -->
-      <article class="p-5 sm:p-6 bg-paper rounded-2xl border border-borderClr shadow-sm space-y-3">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="pill-capsule-a">下午 13:30</span>
-          <span class="transit-badge">788 / 965 公車（25分）</span>
-          <span class="pill-capsule-b">山海自然景觀</span>
-        </div>
-        <h3 class="station-title">金瓜石山海步道</h3>
-        <div class="station-text space-y-2 text-ink">
-          <p>
-            • <strong>乘車動線：</strong>瑞芳站前「區民廣場」搭乘 <span class="transit-badge">788 或 965 公車</span>（班次密集約 15 分一班，自刷悠遊卡），於「勸濟堂」或「瓜山國小」站下車。
-          </p>
-          <p>
-            • <strong>必訪絕景（輕鬆好走）：</strong>
-          </p>
-          <ul class="pl-4 space-y-1.5 list-disc">
-            <li><strong>報時山棧道：</strong>全台最短的海景步道！下公車步行約 10 分鐘即登頂，木棧道平緩好走，360 度無死角眺望陰陽海、水湳洞與茶壺山。</li>
-            <li><strong>祈堂老街＆彩虹階梯：</strong>避開遊客喧囂的舊礦山聚落，順著彩色階梯漫步拍照，安靜又極具特色。</li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- Station 3 -->
-      <article class="p-5 sm:p-6 bg-paper rounded-2xl border border-borderClr shadow-sm space-y-3">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="pill-capsule-a">傍晚 16:30</span>
-          <span class="transit-badge">公車下坡（10分）</span>
-          <span class="pill-capsule-b">老街點燈夜景</span>
-        </div>
-        <h3 class="station-title">九份老街（黃昏夕陽 ＋ 點燈晚餐）</h3>
-        <div class="station-text space-y-2 text-ink">
-          <p>
-            • <strong>乘車動線：</strong>金瓜石搭乘 <span class="transit-badge">788 或 965 公車</span> 下坡約 10 分鐘，於「九份老街」站下車。
-          </p>
-          <p>
-            • <strong>經典必訪視角：</strong>豎崎路阿妹茶樓紅燈籠街道、昇平戲院古早木門、海悅樓觀景台遠眺海灣夜景。
-          </p>
-          <div class="p-3 bg-[#FAF6F0] rounded-xl border border-[#E6DDD2] text-ink space-y-1">
-            <span class="font-bold block text-[#963810]">九份排隊美食名單：</span>
-            <p>1. <strong>阿柑姨芋圓：</strong>走至最頂端，點一碗綜合芋圓坐在大片玻璃景觀窗前看海景。</p>
-            <p>2. <strong>阿蘭草仔粿：</strong>菜脯米與甜紅豆（必買外帶點心）。</p>
-            <p>3. <strong>金枝紅糟肉圓、護理長的店蜂蜜滷味：</strong>老街傳統好味道。</p>
-          </div>
-        </div>
-      </article>
-
-      <!-- Station 4 -->
-      <article class="p-5 sm:p-6 bg-paper rounded-2xl border border-borderClr shadow-sm space-y-3">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="pill-capsule-a">晚上 20:00</span>
-          <span class="transit-badge">788 / 965 公車（15分）</span>
-          <span class="pill-capsule-b">返回民宿休息</span>
-        </div>
-        <h3 class="station-title">九份老街 ➔ 返回瑞芳「井上天花」</h3>
-        <div class="station-text space-y-2 text-ink">
-          <p>
-            • <strong>輕鬆返程：</strong>九份下山公車班次非常頻繁（末班車至 21:30~22:00），搭乘約 15 分鐘即抵達瑞芳車站。
-          </p>
-          <p>
-            • <strong>免搬行李優勢：</strong>下車步行 5 分鐘直接入住「井上天花」，行李早已妥善放好，大家可以舒服泡澡洗漱，好好睡一覺迎接北海岸！
-          </p>
-        </div>
-      </article>
-
     </div>
 
 
     <!-- ================= TAB PANE 2: DAY 2 (野柳金山) ================= -->
     <div id="pane-day2" class="tab-pane space-y-4">
-      
-      <!-- Day 2 Top Strip -->
-      <div class="p-4 bg-[#FAF6F0] rounded-xl border border-[#E6DDD2] flex flex-wrap items-center justify-between gap-2">
-        <div class="flex items-center gap-2">
-          <span class="px-2.5 py-1 rounded-md bg-[#B84A1A] text-white text-sm font-bold font-mono">DAY 2</span>
-          <strong class="text-base text-ink">12/10（四）：野柳地質奇岩 ➔ 金山老街鴨肉 ➔ 台北大同夜市</strong>
-        </div>
-        <div class="text-xs text-muted flex items-center gap-3">
-          <span>住宿：台北大同「拾光行旅」</span>
-          <span class="pill-capsule-a font-bold">今晨開通「北北基 2 日券」</span>
-        </div>
-      </div>
+      <article class="p-5 sm:p-7 bg-paper rounded-2xl border border-borderClr shadow-sm">
+        <section class="editorial-schedule">
+          <!-- DAY 2 -->
+          <div class="day-block" style="margin-bottom: 0;">
+            <div class="day-header">
+              <span class="day-label">DAY 2</span>
+              <h3 class="day-title">12/10（四）野柳・金山・台北大同（宿拾光行旅）</h3>
+            </div>
 
-      <!-- Station 1 -->
-      <article class="p-5 sm:p-6 bg-paper rounded-2xl border border-borderClr shadow-sm space-y-3">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="pill-capsule-a">上午 08:45</span>
-          <span class="transit-badge">788 轉 790 / 862 公車</span>
-          <span class="pill-capsule-b">野柳遊客中心寄物</span>
-        </div>
-        <h3 class="station-title">瑞芳 ➔ 基隆轉運站 ➔ 野柳地質公園</h3>
-        <div class="station-text space-y-2 text-ink">
-          <p>
-            • <strong>乘車動線：</strong>瑞芳站前搭乘 <span class="transit-badge">788 公車</span>（約 40 分，刷北北基 2 日券）直達基隆轉運站，同站轉乘 <span class="transit-badge">790 或 862 公車</span>（約 35 分，刷 2 日券）至「野柳」站下車，步行約 10 分鐘抵達入口。
-          </p>
-          <p>
-            • <strong>行李寄放：</strong>抵達後將大行李存放在「野柳遊客中心」大型投幣置物櫃，一身輕鬆進園散步！
-          </p>
-          <p>
-            • <strong>必看海岸奇岩（門票 $120，純戶外）：</strong>女王頭、俏皮公主、蜂窩岩、海蝕平台與豆腐岩，世界級鬼斧神工海岸美景。
-          </p>
-        </div>
-      </article>
+            <div class="schedule-row">
+              <div class="time-col">08:45</div>
+              <div class="content-col">
+                <p class="item-title">前往野柳地質公園</p>
+                <p class="item-desc">開通北北基 2 日券。瑞芳搭 788 公車至基隆轉運站，轉 790 / 862 公車直達野柳。</p>
+              </div>
+            </div>
 
-      <!-- Station 2 -->
-      <article class="p-5 sm:p-6 bg-paper rounded-2xl border border-borderClr shadow-sm space-y-3">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="pill-capsule-a">中午 12:30</span>
-          <span class="transit-badge">790 / 862 / 716 公車（15分）</span>
-          <span class="pill-capsule-b">金山廟口鴨肉午餐</span>
-        </div>
-        <h3 class="station-title">金山老街（金包里老街）美食聚落</h3>
-        <div class="station-text space-y-2 text-ink">
-          <p>
-            • <strong>乘車動線：</strong>野柳站搭乘 <span class="transit-badge">790、862 或 716 公車</span>（車程約 15 分，刷 2 日券），於「金山區公所（老街）」站下車。
-          </p>
-          <div class="p-3 bg-[#FAF6F0] rounded-xl border border-[#E6DDD2] text-ink space-y-1">
-            <span class="font-bold block text-[#963810]">金山老街排隊名店推薦：</span>
-            <p>1. <strong>金包里鴨肉：</strong>漳聖宮開漳聖王廟口前自己端菜，肉質甜嫩香醇，是在地最道地的老街體驗！</p>
-            <p>2. <strong>阿玉蔴粩：</strong>多種口味香酥不黏牙，最佳伴手禮。</p>
-            <p>3. <strong>雪豹冰城地瓜冰、獅子林餅舖一口酥、王肉包</strong>。</p>
+            <div class="schedule-row">
+              <div class="time-col">寄放</div>
+              <div class="content-col">
+                <p class="item-title">野柳寄行李與看奇岩</p>
+                <p class="item-desc">大行李寄放野柳遊客中心置物櫃，參觀女王頭、俏皮公主與豆腐岩。</p>
+              </div>
+            </div>
+
+            <div class="schedule-row">
+              <div class="time-col">12:30</div>
+              <div class="content-col">
+                <p class="item-title">金山老街午餐</p>
+                <p class="item-desc">搭 790 / 862 公車 15 分至金山，漳聖宮廟口端鴨肉、吃阿玉蔴粩與雪豹地瓜冰。</p>
+                <p class="nearby-note">附近溫泉：中山溫泉公園免費泡腳池（老街步行 3 分）、舊金山總督溫泉（湯屋／露天風呂）、沐舍溫泉渡假酒店（個人湯屋）。</p>
+              </div>
+            </div>
+
+            <div class="schedule-row">
+              <div class="time-col">15:30</div>
+              <div class="content-col">
+                <p class="item-title">進台北市區入住</p>
+                <p class="item-desc">搭國光客運 1815 直達車（約 75 分）至台北車站，轉捷運到大橋頭站入住拾光行旅（無電梯）。</p>
+              </div>
+            </div>
+
+            <div class="schedule-row">
+              <div class="time-col">18:00</div>
+              <div class="content-col">
+                <p class="item-title">延三夜市與碼頭河岸</p>
+                <p class="item-desc">民宿正對面吃大橋頭筒仔米糕、施家鮮肉湯圓，飯後散步至碼頭吹晚風。</p>
+              </div>
+            </div>
           </div>
-          <p>
-            • <strong>周邊散步：</strong>吃飽後若時間充裕，可順著老街步行 15 分鐘至「獅頭山公園步道」遠眺著名的燭台雙嶼。
-          </p>
-          <p class="nearby-note">
-            附近溫泉：中山溫泉公園免費泡腳池（老街步行 3 分）、金包里公共浴室、舊金山總督溫泉（車程約 5 分，可單純泡湯）。
-          </p>
-        </div>
+        </section>
       </article>
-
-      <!-- Station 3 -->
-      <article class="p-5 sm:p-6 bg-paper rounded-2xl border border-borderClr shadow-sm space-y-3">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="pill-capsule-a">下午 15:30</span>
-          <span class="transit-badge">國光客運 1815 直達車（75分）</span>
-          <span class="pill-capsule-b">捷運大橋頭站入住</span>
-        </div>
-        <h3 class="station-title">金山 ➔ 台北車站 ➔ 台北大同「拾光行旅」</h3>
-        <div class="station-text space-y-2 text-ink">
-          <p>
-            • <strong>乘車動線：</strong>金山老街搭乘 <span class="transit-badge">國光客運 1815 直達車</span>（平日班次密集，車程約 75 分直達台北車站，另刷悠遊卡約 $125）。北車轉乘捷運橘線至「大橋頭站」（刷 2 日券），由 1 號出口步行 3 分鐘即達民宿。
-          </p>
-          <p>
-            • <strong>行李提醒：</strong>拾光行旅為質樸文青街屋<strong>無電梯</strong>，建議四人以登機箱或軟袋為主，重物可寄放 1 樓，上下樓輕鬆不費力。
-          </p>
-        </div>
-      </article>
-
-      <!-- Station 4 -->
-      <article class="p-5 sm:p-6 bg-paper rounded-2xl border border-borderClr shadow-sm space-y-3">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="pill-capsule-a">晚上 18:00</span>
-          <span class="transit-badge">步行出門即達</span>
-          <span class="pill-capsule-b">延三夜市在地美食</span>
-        </div>
-        <h3 class="station-title">延三夜市在地老味道 ＆ 碼頭河岸晚風</h3>
-        <div class="station-text space-y-2 text-ink">
-          <div class="p-3 bg-[#FAF6F0] rounded-xl border border-[#E6DDD2] text-ink space-y-1">
-            <span class="font-bold block text-[#963810]">民宿對面！延三夜市在地美食推薦：</span>
-            <p>• <strong>大橋頭老牌筒仔米糕：</strong>米粒香 Q 淋甜辣醬超對味。</p>
-            <p>• <strong>施家鮮肉湯圓：</strong>外皮軟糯、爆漿鮮肉內餡。</p>
-            <p>• <strong>高麗菜飯原汁排骨湯、魏祥記純糖麻糬</strong>。</p>
-          </div>
-          <p>
-            • <strong>河岸漫步：</strong>晚餐後散步 10～15 分鐘至碼頭河岸貨櫃市集，坐在河畔吹晚風喝飲品，眺望淡水河兩岸夜景超放鬆。
-          </p>
-        </div>
-      </article>
-
     </div>
 
 
     <!-- ================= TAB PANE 3: DAY 3 (陽明山大同) ================= -->
     <div id="pane-day3" class="tab-pane space-y-4">
-      
-      <!-- Day 3 Top Strip -->
-      <div class="p-4 bg-[#FAF6F0] rounded-xl border border-[#E6DDD2] flex flex-wrap items-center justify-between gap-2">
-        <div class="flex items-center gap-2">
-          <span class="px-2.5 py-1 rounded-md bg-[#B84A1A] text-white text-sm font-bold font-mono">DAY 3</span>
-          <strong class="text-base text-ink">12/11（五）：陽明山地熱自然 ➔ 大稻埕 ➔ 台北車站返高</strong>
-        </div>
-        <div class="text-xs text-muted flex items-center gap-3">
-          <span>北北基 2 日券（捷運/公車）</span>
-          <span>台鐵周遊券（南下長途）</span>
-        </div>
-      </div>
+      <article class="p-5 sm:p-7 bg-paper rounded-2xl border border-borderClr shadow-sm">
+        <section class="editorial-schedule">
+          <!-- DAY 3 -->
+          <div class="day-block" style="margin-bottom: 0;">
+            <div class="day-header">
+              <span class="day-label">DAY 3</span>
+              <h3 class="day-title">12/11（五）陽明山・大稻埕・返程高雄</h3>
+            </div>
 
-      <!-- Day 3 Station 1 -->
-      <article class="p-5 sm:p-6 bg-paper rounded-2xl border border-borderClr shadow-sm space-y-3">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="pill-capsule-a">上午 08:30</span>
-          <span class="transit-badge">捷運轉紅 5 ➔ 108 遊園公車</span>
-          <span class="pill-capsule-b">免爬坡地熱與泡腳池</span>
-        </div>
-        <h3 class="station-title">拾光行旅 ➔ 捷運劍潭站 ➔ 陽明山國家公園</h3>
-        <div class="station-text space-y-2 text-ink">
-          <p>
-            • <strong>行李免費寄放：</strong>退房後直接將行李寄放在「拾光行旅」，一身輕裝出發陽明山！
-          </p>
-          <p>
-            • <strong>乘車動線：</strong>大橋頭站搭捷運至民權西路轉紅線至「劍潭站」（約 15 分，刷 2 日券）。由 1 號出口搭乘 <span class="transit-badge">紅 5 公車</span>（約 35 分，刷 2 日券）至陽明山總站，同站轉乘 <span class="transit-badge">108 陽明山遊園公車</span>。
-          </p>
-          <div class="p-3 bg-[#FAF6F0] rounded-xl border border-[#E6DDD2] text-ink space-y-1">
-            <span class="font-bold block text-[#963810]">精選 2 大景點（下車即達免爬山、最省體力）：</span>
-            <p>1. <strong>小油坑站：</strong>下公車走 2 分鐘即達！近距離觀賞後火山硫磺噴氣孔與陣陣白煙地熱，景觀震撼且不用爬陡坡。</p>
-            <p>2. <strong>冷水坑站：</strong>享受<strong>免費公共溫泉泡腳池</strong>（12 月微涼泡腳超級暖和舒暢），順訪牛奶湖觀景台與菁山吊橋。</p>
+            <div class="schedule-row">
+              <div class="time-col">08:30</div>
+              <div class="content-col">
+                <p class="item-title">輕裝上陽明山</p>
+                <p class="item-desc">行李免費寄放拾光行旅。捷運至劍潭站轉紅 5 公車至陽明山總站，再轉 108 遊園公車。逛小油坑（免爬山看硫磺噴孔）與冷水坑免費溫泉泡腳池。</p>
+                <p class="nearby-note">附近溫泉：陽明山中國麗緻大飯店（白磺泉湯屋）、行義路溫泉區皇池／川湯（下山順路，雙人湯屋）。</p>
+              </div>
+            </div>
+
+            <div class="schedule-row">
+              <div class="time-col">12:30</div>
+              <div class="content-col">
+                <p class="item-title">大稻埕午餐與採買</p>
+                <p class="item-desc">搭紅 5 下山回大橋頭取行李。吃慈聖宮葉家肉粥、許仔豬腳麵線；買加福起酥蛋糕、合興壹玖肆柒鬆糕、妙口四神湯肉包。</p>
+              </div>
+            </div>
+
+            <div class="schedule-row">
+              <div class="time-col">15:30</div>
+              <div class="content-col">
+                <p class="item-title">台北車站返高雄</p>
+                <p class="item-desc">搭乘新自強 EMU3000 或普悠瑪直達車，約 19:30～21:00 返抵新左營。</p>
+              </div>
+            </div>
           </div>
-          <p class="nearby-note">
-            附近溫泉：冷水坑公共溫泉浴室（泡腳池旁，免費男女分池裸湯）、前山公園公共浴室（陽明山公車總站旁，免費男女公共浴池，可自備毛巾）。
-          </p>
-        </div>
+        </section>
       </article>
-
-      <!-- Day 3 Station 2 -->
-      <article class="p-5 sm:p-6 bg-paper rounded-2xl border border-borderClr shadow-sm space-y-3">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="pill-capsule-a">中午 12:30</span>
-          <span class="transit-badge">紅 5 公車下山 ➔ 大橋頭取行李</span>
-          <span class="pill-capsule-b">榕樹下老台北午餐</span>
-        </div>
-        <h3 class="station-title">大稻埕</h3>
-        <div class="station-text space-y-2 text-ink">
-          <p>
-            • <strong>乘車動線：</strong>搭乘 <span class="transit-badge">紅 5 公車</span> 下山至劍潭站，轉捷運回「大橋頭站」領取寄放的行李。
-          </p>
-          <div class="p-3 bg-[#FAF6F0] rounded-xl border border-[#E6DDD2] text-ink space-y-1.5">
-            <span class="font-bold block text-[#963810]">慈聖宮美食 ＆ 台式伴手禮起酥蛋糕（大稻埕商圈，步行 5 分鐘）：</span>
-            <p>• <strong>慈聖宮美食：</strong>葉家肉粥、許仔豬腳麵線、原汁排骨湯（大榕樹下品嚐，滿滿台灣老台北廟口情懷）。</p>
-            <p>• <strong>台式伴手禮起酥蛋糕：</strong>加福奇士蛋糕專門店（延平北路二段 72 號），金黃酥脆酥皮包裹鹹甜鬆軟蛋糕，熱騰騰出爐香濃誘人，大稻埕老字號必買名產。</p>
-            <p>• <strong>迪化街散步伴手禮：</strong>合興壹玖肆柒手作鬆糕、妙口四神湯肉包、傳統南北貨與茶葉，送禮自用皆宜。</p>
-          </div>
-        </div>
-      </article>
-
-      <!-- Day 3 Station 3 -->
-      <article class="p-5 sm:p-6 bg-paper rounded-2xl border border-borderClr shadow-sm space-y-3">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="pill-capsule-a">下午 15:30</span>
-          <span class="transit-badge">台鐵新自強直達</span>
-          <span class="pill-capsule-b">返抵高雄新左營</span>
-        </div>
-        <h3 class="station-title">台北車站 ➔ 高雄新左營車站（返程）</h3>
-        <div class="station-text space-y-2 text-ink">
-          <p>
-            • <strong>乘車動線：</strong>大橋頭站搭乘捷運約 10 分鐘抵達「台北車站」，持事先以 Taiwan PASS 劃好座位的車票進站乘車。
-          </p>
-          <p>
-            • <strong>建議班次：</strong>預訂週五下午 <span class="transit-badge">EMU3000 新自強號或普悠瑪</span> 南下直達車（車程約 4～4.5 小時），約 19:30～21:00 順利返抵新左營，圓滿完成 3 天豐富山海行！
-          </p>
-        </div>
-      </article>
-
     </div>
 
     <!-- ================= TAB PANE 4: 地圖連結與即時定位 ================= -->
