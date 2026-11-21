@@ -551,6 +551,13 @@ window.getCssVar = window.getCssVar || function(name, fallback) {
  * 2. LIGHT TOKENS (:root)
  * ============================================================ */
 :root {
+    color-scheme: light only;
+    --bg-page: #FAF9F5;
+    --card-bg: #FFFFFF;
+    --text-main: #2B2E29;
+    --text-muted: #666B62;
+    --text-time: #8B7E74;
+    --line-subtle: rgba(43, 46, 41, 0.14);
   color-scheme: light;
   --body-bg: transparent;
   --ff-sans: 'Google Sans Flex', 'Google Sans Text', 'Google Sans', sans-serif;
@@ -1679,6 +1686,462 @@ svg text { stroke: none; paint-order: fill; }
   }
 }
 
+
+    /* ================= EDITORIAL SCHEDULE WITH CLEAN BORDERS ================= */
+    .trip-header {
+      max-width: 760px;
+      margin: 0 auto 32px auto;
+      padding: 28px 20px 0 20px;
+    }
+
+    .trip-header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+    }
+
+    .trip-date {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-main, #2B2E29);
+      margin: 0 0 6px 0;
+      line-height: 1.15;
+    }
+
+    .trip-year {
+      font-size: 0.68em;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #8B8278;
+      margin-right: 4px;
+      vertical-align: 0.06em;
+    }
+
+    .trip-title {
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 1.15rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      color: #8B8278;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    /* 4人手繪插畫：蓋印章動畫效果，融入米白背景，緊鄰標題旁 */
+    @keyframes stampDrop {
+      0% {
+        opacity: 0;
+        transform: scale(1.65) rotate(-14deg);
+      }
+      70% {
+        opacity: 0.95;
+        transform: scale(0.95) rotate(-3deg);
+      }
+      100% {
+        opacity: 0.88;
+        transform: scale(1) rotate(-4deg);
+      }
+    }
+
+    .trip-avatar,
+    .stamp-icon {
+      width: 84px !important;
+      height: 84px !important;
+      object-fit: contain;
+      aspect-ratio: 1 / 1;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      mix-blend-mode: multiply;
+      flex-shrink: 0;
+      cursor: pointer;
+      opacity: 0;
+      animation: stampDrop 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+      transform-origin: center center;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+    }
+
+    .trip-avatar:hover,
+    .stamp-icon:hover {
+      transform: scale(1.04) rotate(-2deg);
+    }
+
+    .trip-avatar:hover {
+      opacity: 0.98;
+      transform: scale(1.04) rotate(-2deg);
+    }
+
+    .trip-avatar:active {
+      transform: scale(0.96) rotate(-5deg);
+    }
+
+    /* ================= 上下雙列極簡導覽列 ================= */
+    header.sticky {
+      background: rgba(250, 249, 245, 0.96);
+      border-bottom: 1px solid rgba(43, 46, 41, 0.1) !important;
+      box-shadow: 0 1px 3px rgba(43, 46, 41, 0.03) !important;
+    }
+
+    .nav-row-main {
+      height: 48px;
+    }
+
+    .nav-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #1F2922;
+    }
+
+    .nav-brand .brand-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    /* 導覽列按鈕共用樣式（極簡純文字底線頁籤） */
+    .tab-nav-btn {
+      white-space: nowrap;
+      min-height: auto !important;
+      padding: 10px 8px 8px 8px !important;
+      border: none !important;
+      border-bottom: 2px solid transparent !important;
+      background: transparent !important;
+      color: #666B62 !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      font-size: 0.86rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.3;
+      flex-shrink: 0;
+      transition: color 0.18s ease, border-color 0.18s ease;
+    }
+
+    .tab-nav-btn:hover {
+      color: #9E4A2A !important;
+      border-bottom-color: rgba(158, 74, 42, 0.3) !important;
+      transform: none !important;
+    }
+
+    .tab-nav-btn.active {
+      background: transparent !important;
+      color: #9E4A2A !important;
+      border-bottom: 2px solid #9E4A2A !important;
+      box-shadow: none !important;
+      font-weight: 700 !important;
+      transform: none !important;
+    }
+
+    /* 第二列（三日行程專屬列）：三欄 Grid 平均分配，文字置中 */
+    .nav-row-days {
+      width: 100%;
+    }
+
+    .day-tabs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      text-align: center;
+      width: 100%;
+    }
+
+    .day-tab {
+      width: 100%;
+      padding: 9px 4px 7px 4px !important;
+      font-size: 0.86rem;
+      justify-content: center;
+    }
+
+    /* 頂部工具按鈕與分隔線 */
+    .nav-tool-divider {
+      display: inline-block;
+      width: 1px;
+      height: 13px;
+      background-color: rgba(43, 46, 41, 0.14);
+      margin: 0 3px;
+      flex-shrink: 0;
+    }
+
+    .quick-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(43, 46, 41, 0.16);
+      background: rgba(250, 249, 245, 0.8);
+      color: #5A5F56;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      line-height: 1.2;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .quick-action-btn:hover {
+      color: #9E4A2A;
+      border-color: rgba(158, 74, 42, 0.4);
+      background: rgba(158, 74, 42, 0.05);
+    }
+
+    .quick-action-btn i {
+      color: #8B8278;
+    }
+
+    .quick-action-btn:hover i {
+      color: #9E4A2A;
+    }
+
+    /* ================= 五層字級與色階規範（桌機與手機嚴格通用） ================= */
+    .editorial-schedule {
+      max-width: 760px;
+      margin: 0 auto;
+      line-height: 1.52;
+    }
+
+    .day-block {
+      margin-bottom: 36px;
+    }
+
+    .day-block:last-child {
+      margin-bottom: 0;
+    }
+
+    /* L1: 頁面日期大標題（1.25rem 約 20px / 粗體 700 / 深炭綠 #1F2922） */
+    .day-header {
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--line-subtle, rgba(43, 46, 41, 0.14));
+    }
+
+    .day-header-top {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .day-label {
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      color: #9E4A2A;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .day-title {
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 1.25rem !important;
+      font-weight: 700 !important;
+      color: #1F2922 !important;
+      line-height: 1.35 !important;
+      margin: 0 !important;
+      text-wrap: balance;
+      line-break: strict;
+      text-align: left;
+    }
+
+    /* L5: 頂部住宿票券行（0.78rem 約 12.5px / 字重 400~500 / 低調暖灰 #8B8278） */
+    .day-meta {
+      font-size: 0.78rem !important;
+      font-weight: 400 !important;
+      line-height: 1.5 !important;
+      color: #8B8278 !important;
+      margin: 4px 0 0 0 !important;
+      letter-spacing: 0.02em;
+      text-align: left;
+    }
+
+    /* 卡片外框：細外框＋白色底色＋無雜訊陰影 */
+    .schedule-card {
+      background: #FFFFFF;
+      border: 1px solid var(--line-subtle, rgba(43, 46, 41, 0.14));
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .schedule-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .schedule-card:hover {
+      border-color: rgba(43, 46, 41, 0.26);
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 68px 1fr;
+      gap: 14px;
+    }
+
+    /* L5: 時間標記（0.78rem 約 12.5px / 字重 500 / 低調暖灰 #8B8278 / 等寬數字） */
+    .time-col {
+      font-size: 0.78rem !important;
+      font-weight: 500 !important;
+      line-height: 1.5 !important;
+      color: #8B8278 !important;
+      font-variant-numeric: tabular-nums;
+      padding-top: 3px;
+      letter-spacing: 0.01em;
+      text-align: left;
+    }
+
+    .content-col {
+      min-width: 0;
+    }
+
+    /* L2: 卡片內地點主標題（1.08rem 約 17.5px / 粗體 700 / 行高 1.35 / 暖磚橘棕 #9E4A2A / 下方留白 10px） */
+    .item-title {
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 1.08rem !important;
+      font-weight: 700 !important;
+      line-height: 1.35 !important;
+      color: #9E4A2A !important;
+      margin: 0 0 10px 0 !important;
+      text-wrap: balance;
+      line-break: strict;
+      text-align: left;
+    }
+
+    /* L4: 一般內文說明（0.88rem 約 14px / 正常字重 400 / 行高 1.6 / 柔和中灰 #5C6158） */
+    .item-desc {
+      font-size: 0.88rem !important;
+      font-weight: 400 !important;
+      line-height: 1.6 !important;
+      color: #5C6158 !important;
+      margin: 0 !important;
+      text-wrap: pretty;
+      line-break: strict;
+      text-align: left;
+    }
+
+    .item-desc + .item-desc {
+      margin-top: 8px !important;
+    }
+
+    /* L3: 內文小標（0.88rem 約 14px / 粗體 600 / 深灰 #2B2E29） */
+    .item-desc strong {
+      font-size: 0.88rem !important;
+      font-weight: 600 !important;
+      color: #2B2E29 !important;
+    }
+
+    /* L5: 附近溫泉附註（0.78rem 約 12.5px / 字重 400 / 低調暖灰 #8B8278 / 上方 10px 間距與淡線 8px padding） */
+    .nearby-note {
+      font-size: 0.78rem !important;
+      font-weight: 400 !important;
+      line-height: 1.5 !important;
+      color: #8B8278 !important;
+      margin: 10px 0 0 0 !important;
+      padding-top: 8px !important;
+      border-top: 1px solid rgba(43, 46, 41, 0.08) !important;
+      text-wrap: pretty;
+      line-break: strict;
+      text-align: left;
+    }
+
+    /* 手機版響應式空間優化（維持五層字級色彩標準） */
+    @media (max-width: 600px) {
+      .nav-row-main {
+        height: 44px;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+      .nav-brand {
+        font-size: 0.88rem;
+      }
+      .nav-row-main .tab-nav-btn {
+        font-size: 0.82rem;
+        padding: 8px 4px 6px 4px !important;
+      }
+      .day-tab {
+        font-size: 0.84rem;
+        padding: 8px 2px 6px 2px !important;
+      }
+      .quick-action-btn {
+        padding: 3px 6px;
+      }
+
+      /* 釋放文字寬度：頁面外層左右留白 14px */
+      main {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+      }
+      .editorial-schedule {
+        padding: 0 14px;
+      }
+
+      /* 標題區收緊 */
+      .trip-header {
+        padding: 16px 14px 0 14px;
+        margin-bottom: 18px;
+      }
+      .trip-header-inner {
+        gap: 12px;
+      }
+      .trip-date {
+        font-size: 1.55rem;
+        margin: 0 0 2px 0;
+        line-height: 1.15;
+      }
+      .trip-title {
+        font-size: 0.92rem;
+        letter-spacing: 0.16em;
+      }
+      .trip-avatar,
+      .stamp-icon {
+        width: 74px !important;
+        height: 74px !important;
+      }
+
+      /* 行程卡片內距 18px 16px，卡片與卡片間距 16px */
+      .schedule-card {
+        padding: 18px 16px;
+        margin-bottom: 16px;
+        border-radius: 14px;
+      }
+
+      .schedule-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .time-col {
+        padding-top: 0;
+      }
+
+      .day-block {
+        margin-bottom: 28px;
+      }
+      .day-header {
+        padding-bottom: 10px;
+        margin-bottom: 14px;
+      }
+      .day-header-top {
+        flex-direction: column;
+        gap: 2px;
+      }
+      .day-label {
+        font-size: 0.78rem;
+      }
+    }
+
 </style>
 <style id="lumi-surface-button-fallbacks">
 .widget-container {
@@ -1820,12 +2283,472 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     background-color: ButtonText !important;
   }
 }
+
+    /* ================= EDITORIAL SCHEDULE WITH CLEAN BORDERS ================= */
+    .trip-header {
+      max-width: 760px;
+      margin: 0 auto 32px auto;
+      padding: 28px 20px 0 20px;
+    }
+
+    .trip-header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+    }
+
+    .trip-date {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-main, #2B2E29);
+      margin: 0 0 6px 0;
+      line-height: 1.15;
+    }
+
+    .trip-year {
+      font-size: 0.68em;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #8B8278;
+      margin-right: 4px;
+      vertical-align: 0.06em;
+    }
+
+    .trip-title {
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 1.15rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      color: #8B8278;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    /* 4人手繪插畫：蓋印章動畫效果，融入米白背景，緊鄰標題旁 */
+    @keyframes stampDrop {
+      0% {
+        opacity: 0;
+        transform: scale(1.65) rotate(-14deg);
+      }
+      70% {
+        opacity: 0.95;
+        transform: scale(0.95) rotate(-3deg);
+      }
+      100% {
+        opacity: 0.88;
+        transform: scale(1) rotate(-4deg);
+      }
+    }
+
+    .trip-avatar,
+    .stamp-icon {
+      width: 84px !important;
+      height: 84px !important;
+      object-fit: contain;
+      aspect-ratio: 1 / 1;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      mix-blend-mode: multiply;
+      flex-shrink: 0;
+      cursor: pointer;
+      opacity: 0;
+      animation: stampDrop 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+      transform-origin: center center;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+    }
+
+    .trip-avatar:hover,
+    .stamp-icon:hover {
+      transform: scale(1.04) rotate(-2deg);
+    }
+
+    .trip-avatar:hover {
+      opacity: 0.98;
+      transform: scale(1.04) rotate(-2deg);
+    }
+
+    .trip-avatar:active {
+      transform: scale(0.96) rotate(-5deg);
+    }
+
+    /* ================= 上下雙列極簡導覽列 ================= */
+    header.sticky {
+      background: rgba(250, 249, 245, 0.96);
+      border-bottom: 1px solid rgba(43, 46, 41, 0.1) !important;
+      box-shadow: 0 1px 3px rgba(43, 46, 41, 0.03) !important;
+    }
+
+    .nav-row-main {
+      height: 48px;
+    }
+
+    .nav-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #1F2922;
+    }
+
+    .nav-brand .brand-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    /* 導覽列按鈕共用樣式（極簡純文字底線頁籤） */
+    .tab-nav-btn {
+      white-space: nowrap;
+      min-height: auto !important;
+      padding: 10px 8px 8px 8px !important;
+      border: none !important;
+      border-bottom: 2px solid transparent !important;
+      background: transparent !important;
+      color: #666B62 !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      font-size: 0.86rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.3;
+      flex-shrink: 0;
+      transition: color 0.18s ease, border-color 0.18s ease;
+    }
+
+    .tab-nav-btn:hover {
+      color: #9E4A2A !important;
+      border-bottom-color: rgba(158, 74, 42, 0.3) !important;
+      transform: none !important;
+    }
+
+    .tab-nav-btn.active {
+      background: transparent !important;
+      color: #9E4A2A !important;
+      border-bottom: 2px solid #9E4A2A !important;
+      box-shadow: none !important;
+      font-weight: 700 !important;
+      transform: none !important;
+    }
+
+    /* 第二列（三日行程專屬列）：三欄 Grid 平均分配，文字置中 */
+    .nav-row-days {
+      width: 100%;
+    }
+
+    .day-tabs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      text-align: center;
+      width: 100%;
+    }
+
+    .day-tab {
+      width: 100%;
+      padding: 9px 4px 7px 4px !important;
+      font-size: 0.86rem;
+      justify-content: center;
+    }
+
+    /* 頂部工具按鈕與分隔線 */
+    .nav-tool-divider {
+      display: inline-block;
+      width: 1px;
+      height: 13px;
+      background-color: rgba(43, 46, 41, 0.14);
+      margin: 0 3px;
+      flex-shrink: 0;
+    }
+
+    .quick-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(43, 46, 41, 0.16);
+      background: rgba(250, 249, 245, 0.8);
+      color: #5A5F56;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      line-height: 1.2;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .quick-action-btn:hover {
+      color: #9E4A2A;
+      border-color: rgba(158, 74, 42, 0.4);
+      background: rgba(158, 74, 42, 0.05);
+    }
+
+    .quick-action-btn i {
+      color: #8B8278;
+    }
+
+    .quick-action-btn:hover i {
+      color: #9E4A2A;
+    }
+
+    /* ================= 五層字級與色階規範（桌機與手機嚴格通用） ================= */
+    .editorial-schedule {
+      max-width: 760px;
+      margin: 0 auto;
+      line-height: 1.52;
+    }
+
+    .day-block {
+      margin-bottom: 36px;
+    }
+
+    .day-block:last-child {
+      margin-bottom: 0;
+    }
+
+    /* L1: 頁面日期大標題（1.25rem 約 20px / 粗體 700 / 深炭綠 #1F2922） */
+    .day-header {
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--line-subtle, rgba(43, 46, 41, 0.14));
+    }
+
+    .day-header-top {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .day-label {
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      color: #9E4A2A;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .day-title {
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 1.25rem !important;
+      font-weight: 700 !important;
+      color: #1F2922 !important;
+      line-height: 1.35 !important;
+      margin: 0 !important;
+      text-wrap: balance;
+      line-break: strict;
+      text-align: left;
+    }
+
+    /* L5: 頂部住宿票券行（0.78rem 約 12.5px / 字重 400~500 / 低調暖灰 #8B8278） */
+    .day-meta {
+      font-size: 0.78rem !important;
+      font-weight: 400 !important;
+      line-height: 1.5 !important;
+      color: #8B8278 !important;
+      margin: 4px 0 0 0 !important;
+      letter-spacing: 0.02em;
+      text-align: left;
+    }
+
+    /* 卡片外框：細外框＋白色底色＋無雜訊陰影 */
+    .schedule-card {
+      background: #FFFFFF;
+      border: 1px solid var(--line-subtle, rgba(43, 46, 41, 0.14));
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .schedule-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .schedule-card:hover {
+      border-color: rgba(43, 46, 41, 0.26);
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 68px 1fr;
+      gap: 14px;
+    }
+
+    /* L5: 時間標記（0.78rem 約 12.5px / 字重 500 / 低調暖灰 #8B8278 / 等寬數字） */
+    .time-col {
+      font-size: 0.78rem !important;
+      font-weight: 500 !important;
+      line-height: 1.5 !important;
+      color: #8B8278 !important;
+      font-variant-numeric: tabular-nums;
+      padding-top: 3px;
+      letter-spacing: 0.01em;
+      text-align: left;
+    }
+
+    .content-col {
+      min-width: 0;
+    }
+
+    /* L2: 卡片內地點主標題（1.08rem 約 17.5px / 粗體 700 / 行高 1.35 / 暖磚橘棕 #9E4A2A / 下方留白 10px） */
+    .item-title {
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 1.08rem !important;
+      font-weight: 700 !important;
+      line-height: 1.35 !important;
+      color: #9E4A2A !important;
+      margin: 0 0 10px 0 !important;
+      text-wrap: balance;
+      line-break: strict;
+      text-align: left;
+    }
+
+    /* L4: 一般內文說明（0.88rem 約 14px / 正常字重 400 / 行高 1.6 / 柔和中灰 #5C6158） */
+    .item-desc {
+      font-size: 0.88rem !important;
+      font-weight: 400 !important;
+      line-height: 1.6 !important;
+      color: #5C6158 !important;
+      margin: 0 !important;
+      text-wrap: pretty;
+      line-break: strict;
+      text-align: left;
+    }
+
+    .item-desc + .item-desc {
+      margin-top: 8px !important;
+    }
+
+    /* L3: 內文小標（0.88rem 約 14px / 粗體 600 / 深灰 #2B2E29） */
+    .item-desc strong {
+      font-size: 0.88rem !important;
+      font-weight: 600 !important;
+      color: #2B2E29 !important;
+    }
+
+    /* L5: 附近溫泉附註（0.78rem 約 12.5px / 字重 400 / 低調暖灰 #8B8278 / 上方 10px 間距與淡線 8px padding） */
+    .nearby-note {
+      font-size: 0.78rem !important;
+      font-weight: 400 !important;
+      line-height: 1.5 !important;
+      color: #8B8278 !important;
+      margin: 10px 0 0 0 !important;
+      padding-top: 8px !important;
+      border-top: 1px solid rgba(43, 46, 41, 0.08) !important;
+      text-wrap: pretty;
+      line-break: strict;
+      text-align: left;
+    }
+
+    /* 手機版響應式空間優化（維持五層字級色彩標準） */
+    @media (max-width: 600px) {
+      .nav-row-main {
+        height: 44px;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+      .nav-brand {
+        font-size: 0.88rem;
+      }
+      .nav-row-main .tab-nav-btn {
+        font-size: 0.82rem;
+        padding: 8px 4px 6px 4px !important;
+      }
+      .day-tab {
+        font-size: 0.84rem;
+        padding: 8px 2px 6px 2px !important;
+      }
+      .quick-action-btn {
+        padding: 3px 6px;
+      }
+
+      /* 釋放文字寬度：頁面外層左右留白 14px */
+      main {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+      }
+      .editorial-schedule {
+        padding: 0 14px;
+      }
+
+      /* 標題區收緊 */
+      .trip-header {
+        padding: 16px 14px 0 14px;
+        margin-bottom: 18px;
+      }
+      .trip-header-inner {
+        gap: 12px;
+      }
+      .trip-date {
+        font-size: 1.55rem;
+        margin: 0 0 2px 0;
+        line-height: 1.15;
+      }
+      .trip-title {
+        font-size: 0.92rem;
+        letter-spacing: 0.16em;
+      }
+      .trip-avatar,
+      .stamp-icon {
+        width: 74px !important;
+        height: 74px !important;
+      }
+
+      /* 行程卡片內距 18px 16px，卡片與卡片間距 16px */
+      .schedule-card {
+        padding: 18px 16px;
+        margin-bottom: 16px;
+        border-radius: 14px;
+      }
+
+      .schedule-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .time-col {
+        padding-top: 0;
+      }
+
+      .day-block {
+        margin-bottom: 28px;
+      }
+      .day-header {
+        padding-bottom: 10px;
+        margin-bottom: 14px;
+      }
+      .day-header-top {
+        flex-direction: column;
+        gap: 2px;
+      }
+      .day-label {
+        font-size: 0.78rem;
+      }
+    }
+
 </style>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="color-scheme" content="light only">
-  <title>四人北台灣大眾運輸行程車票懶人包 | 12/9～12/11</title>
+  <title>山海行旅 ｜ 北台灣大眾運輸台鐵旅遊懶人包（12/9～12/11）</title>
+  <!-- Google Fonts: Zen Maru Gothic (日系圓體) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -2533,52 +3456,84 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
       box-shadow: 0 6px 18px rgba(184, 74, 26, 0.3);
     }
 
-    /* Large-Text Mode: 不跑版為前提的舒適放大 */
-    body.large-text-mode {
-      --lumi-font-scale: 1.12;
+        /* ================= 放大加粗閱讀模式（限定內容區，保證版面不跑版） ================= */
+    /* 按鈕啟用狀態（暖磚橘棕 #9E4A2A 搭配極淡底色） */
+    #font-toggle-btn.active,
+    body.large-text-mode #font-toggle-btn {
+      color: #9E4A2A !important;
+      border-color: #9E4A2A !important;
+      background: rgba(158, 74, 42, 0.08) !important;
+      font-weight: 700 !important;
     }
-    body.large-text-mode .station-title {
-      font-size: clamp(22px, 5.2vw, 26px) !important;
-      line-height: 1.35 !important;
-      word-break: break-word !important;
-      overflow-wrap: break-word !important;
-    }
-    body.large-text-mode .station-text {
-      font-size: clamp(16.5px, 4vw, 18.5px) !important;
-      line-height: 1.7 !important;
-      word-break: break-word !important;
-      overflow-wrap: break-word !important;
-    }
-    body.large-text-mode .station-pill {
-      font-size: 14px !important;
-      padding: 5px 11px !important;
-    }
-    body.large-text-mode .transit-badge {
-      font-size: 17.5px !important;
-      padding: 6px 14px !important;
-      font-weight: 900 !important;
-    }
-    body.large-text-mode .tab-nav-btn {
-      font-size: 15px !important;
-      min-height: 42px !important;
-      padding: 8px 14px !important;
-    }
-    body.large-text-mode article,
-    body.large-text-mode section,
-    body.large-text-mode div {
-      min-width: 0;
-      box-sizing: border-box;
-    }
-    body.large-text-mode .ticket-table {
-      font-size: 14px !important;
-    }
-    body.large-text-mode .ticket-table th,
-    body.large-text-mode .ticket-table td {
-      padding: 8px 6px !important;
-      word-break: break-word !important;
+    #font-toggle-btn.active i,
+    body.large-text-mode #font-toggle-btn i {
+      color: #9E4A2A !important;
     }
 
-    /* 減少動態相容（prefers-reduced-motion） */
+    /* 頂部導覽列、大日期標題與印章插畫嚴格維持原尺寸不動 */
+    body.large-text-mode .nav-row-main,
+    body.large-text-mode .nav-row-days,
+    body.large-text-mode .nav-brand,
+    body.large-text-mode .tab-nav-btn,
+    body.large-text-mode .trip-header,
+    body.large-text-mode .trip-date,
+    body.large-text-mode .trip-title,
+    body.large-text-mode .trip-avatar,
+    body.large-text-mode .stamp-icon {
+      font-size: unset;
+    }
+
+    /* 1. 行程地點主標（.item-title）：字級放大約 15%（約 1.22rem），字重 700 */
+    body.large-text-mode .item-title {
+      font-size: 1.22rem !important;
+      font-weight: 700 !important;
+      line-height: 1.38 !important;
+    }
+
+    /* 2. 一般內文（.item-desc）：字級放大至 1.05rem（約 17px），字重加粗為 500，行高 1.65 */
+    body.large-text-mode .item-desc {
+      font-size: 1.05rem !important;
+      font-weight: 500 !important;
+      line-height: 1.65 !important;
+      color: #4A4F46 !important;
+    }
+
+    /* 3. 內文小標（.item-desc strong）：字重加粗為 700，拉開層次 */
+    body.large-text-mode .item-desc strong {
+      font-size: 1.05rem !important;
+      font-weight: 700 !important;
+      color: #1F2922 !important;
+    }
+
+    /* 4. 備註與時間（.time-col、.nearby-note）：字級放大至 0.9rem，字重 500 */
+    body.large-text-mode .time-col {
+      font-size: 0.9rem !important;
+      font-weight: 500 !important;
+    }
+
+    body.large-text-mode .nearby-note {
+      font-size: 0.9rem !important;
+      font-weight: 500 !important;
+      line-height: 1.6 !important;
+    }
+
+    body.large-text-mode .day-meta {
+      font-size: 0.88rem !important;
+      font-weight: 500 !important;
+    }
+
+    /* 桌機版左欄時間寬度微調至 80px 避免換行 */
+    body.large-text-mode .schedule-grid {
+      grid-template-columns: 80px 1fr !important;
+    }
+
+    @media (max-width: 600px) {
+      body.large-text-mode .schedule-grid {
+        display: flex !important;
+        flex-direction: column !important;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, ::before, ::after {
         animation-duration: 0.001s !important;
@@ -2634,16 +3589,28 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     }
 
     /* 4人手繪插畫頭像 */
-    .trip-avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 18px;
+    .trip-avatar,
+    .stamp-icon {
+      width: 84px !important;
+      height: 84px !important;
       object-fit: contain;
       aspect-ratio: 1 / 1;
-      border: 1px solid var(--line-subtle, rgba(43, 46, 41, 0.12));
-      box-shadow: 0 2px 10px rgba(43, 46, 41, 0.06);
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      mix-blend-mode: multiply;
       flex-shrink: 0;
-      background-color: #FFFFFF;
+      cursor: pointer;
+      opacity: 0;
+      animation: stampDrop 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+      transform-origin: center center;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+    }
+
+    .trip-avatar:hover,
+    .stamp-icon:hover {
+      transform: scale(1.04) rotate(-2deg);
     }
 
     @media (max-width: 600px) {
@@ -2657,143 +3624,14 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
       .trip-title {
         font-size: 1.05rem;
       }
-      .trip-avatar {
-        width: 56px;
-        height: 56px;
-        border-radius: 14px;
+      .trip-avatar,
+      .stamp-icon {
+        width: 74px !important;
+        height: 74px !important;
       }
     }
 
-    /* ================= EDITORIAL SCHEDULE (雜誌刊物風時刻表) ================= */
-    .editorial-schedule {
-      max-width: 760px;
-      margin: 0 auto;
-      line-height: 1.5;
-    }
-
-    .day-block {
-      margin-bottom: 44px;
-    }
-
-    .day-block:last-child {
-      margin-bottom: 0;
-    }
-
-    /* 日期標題：大留白＋底部極細淡色橫線 */
-    .day-header {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-      border-bottom: 1px solid var(--line-subtle);
-    }
-
-    .day-label {
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
-      color: var(--text-time);
-      font-weight: 600;
-      flex-shrink: 0;
-    }
-
-    .day-title {
-      font-size: 1.125rem;
-      font-weight: 700;
-      margin: 0;
-      color: var(--text-main);
-      line-height: 1.4;
-      text-wrap: balance;
-      line-break: strict;
-    }
-
-    /* 行程列：左欄固定寬度等寬時間，右欄粗體主標＋淡色內文 */
-    .schedule-row {
-      display: grid;
-      grid-template-columns: 72px 1fr;
-      gap: 14px;
-      margin-bottom: 22px;
-    }
-
-    .schedule-row:last-child {
-      margin-bottom: 0;
-    }
-
-    .time-col {
-      font-size: 0.88rem;
-      font-variant-numeric: tabular-nums;
-      color: var(--text-time);
-      font-weight: 500;
-      padding-top: 2px;
-    }
-
-    .content-col {
-      min-width: 0;
-    }
-
-    .item-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-main);
-      margin: 0 0 5px 0;
-      line-height: 1.4;
-      text-wrap: balance;
-      line-break: strict;
-    }
-
-    .item-desc {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      margin: 0 0 6px 0;
-      line-height: 1.52;
-      text-wrap: pretty;
-      line-break: strict;
-    }
-
-    .item-desc:last-child {
-      margin-bottom: 0;
-    }
-
-    .item-desc strong {
-      color: var(--text-main, #2B2E29);
-      font-weight: 600;
-    }
-
-    /* 附近溫泉小字附註 */
-    .nearby-note {
-      font-size: 0.8rem;
-      color: var(--text-time);
-      margin: 6px 0 0 0;
-      line-height: 1.45;
-      text-wrap: pretty;
-      line-break: strict;
-    }
-
-    /* 手機版：時間改上方、釋放滿版寬度防掉字 */
-    @media (max-width: 600px) {
-      .editorial-schedule {
-        padding: 0 20px;
-      }
-      .day-header {
-        flex-direction: column;
-        gap: 4px;
-      }
-      .schedule-row {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        margin-bottom: 22px;
-      }
-      .time-col {
-        font-size: 0.8rem;
-        padding-top: 0;
-      }
-      .item-desc {
-        font-size: 0.9375rem;
-        line-height: 1.55;
-        margin-bottom: 6px;
-      }
-    }
+    
 
     /* Print Stylesheet (僅印出總行程規劃與台鐵套票精簡版使用方式，純淨無動畫無陰影) */
     @media print {
@@ -2845,7 +3683,463 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
         page-break-inside: avoid;
       }
     }
-  </style>
+  
+    /* ================= EDITORIAL SCHEDULE WITH CLEAN BORDERS ================= */
+    .trip-header {
+      max-width: 760px;
+      margin: 0 auto 32px auto;
+      padding: 28px 20px 0 20px;
+    }
+
+    .trip-header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+    }
+
+    .trip-date {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-main, #2B2E29);
+      margin: 0 0 6px 0;
+      line-height: 1.15;
+    }
+
+    .trip-year {
+      font-size: 0.68em;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #8B8278;
+      margin-right: 4px;
+      vertical-align: 0.06em;
+    }
+
+    .trip-title {
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 1.15rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      color: #8B8278;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    /* 4人手繪插畫：蓋印章動畫效果，融入米白背景，緊鄰標題旁 */
+    @keyframes stampDrop {
+      0% {
+        opacity: 0;
+        transform: scale(1.65) rotate(-14deg);
+      }
+      70% {
+        opacity: 0.95;
+        transform: scale(0.95) rotate(-3deg);
+      }
+      100% {
+        opacity: 0.88;
+        transform: scale(1) rotate(-4deg);
+      }
+    }
+
+    .trip-avatar,
+    .stamp-icon {
+      width: 84px !important;
+      height: 84px !important;
+      object-fit: contain;
+      aspect-ratio: 1 / 1;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      mix-blend-mode: multiply;
+      flex-shrink: 0;
+      cursor: pointer;
+      opacity: 0;
+      animation: stampDrop 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+      transform-origin: center center;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+    }
+
+    .trip-avatar:hover,
+    .stamp-icon:hover {
+      transform: scale(1.04) rotate(-2deg);
+    }
+
+    .trip-avatar:hover {
+      opacity: 0.98;
+      transform: scale(1.04) rotate(-2deg);
+    }
+
+    .trip-avatar:active {
+      transform: scale(0.96) rotate(-5deg);
+    }
+
+    /* ================= 上下雙列極簡導覽列 ================= */
+    header.sticky {
+      background: rgba(250, 249, 245, 0.96);
+      border-bottom: 1px solid rgba(43, 46, 41, 0.1) !important;
+      box-shadow: 0 1px 3px rgba(43, 46, 41, 0.03) !important;
+    }
+
+    .nav-row-main {
+      height: 48px;
+    }
+
+    .nav-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #1F2922;
+    }
+
+    .nav-brand .brand-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    /* 導覽列按鈕共用樣式（極簡純文字底線頁籤） */
+    .tab-nav-btn {
+      white-space: nowrap;
+      min-height: auto !important;
+      padding: 10px 8px 8px 8px !important;
+      border: none !important;
+      border-bottom: 2px solid transparent !important;
+      background: transparent !important;
+      color: #666B62 !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      font-size: 0.86rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.3;
+      flex-shrink: 0;
+      transition: color 0.18s ease, border-color 0.18s ease;
+    }
+
+    .tab-nav-btn:hover {
+      color: #9E4A2A !important;
+      border-bottom-color: rgba(158, 74, 42, 0.3) !important;
+      transform: none !important;
+    }
+
+    .tab-nav-btn.active {
+      background: transparent !important;
+      color: #9E4A2A !important;
+      border-bottom: 2px solid #9E4A2A !important;
+      box-shadow: none !important;
+      font-weight: 700 !important;
+      transform: none !important;
+    }
+
+    /* 第二列（三日行程專屬列）：三欄 Grid 平均分配，文字置中 */
+    .nav-row-days {
+      width: 100%;
+    }
+
+    .day-tabs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      text-align: center;
+      width: 100%;
+    }
+
+    .day-tab {
+      width: 100%;
+      padding: 9px 4px 7px 4px !important;
+      font-size: 0.86rem;
+      justify-content: center;
+    }
+
+    /* 頂部工具按鈕與分隔線 */
+    .nav-tool-divider {
+      display: inline-block;
+      width: 1px;
+      height: 13px;
+      background-color: rgba(43, 46, 41, 0.14);
+      margin: 0 3px;
+      flex-shrink: 0;
+    }
+
+    .quick-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(43, 46, 41, 0.16);
+      background: rgba(250, 249, 245, 0.8);
+      color: #5A5F56;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      line-height: 1.2;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .quick-action-btn:hover {
+      color: #9E4A2A;
+      border-color: rgba(158, 74, 42, 0.4);
+      background: rgba(158, 74, 42, 0.05);
+    }
+
+    .quick-action-btn i {
+      color: #8B8278;
+    }
+
+    .quick-action-btn:hover i {
+      color: #9E4A2A;
+    }
+
+    /* ================= 五層字級與色階規範（桌機與手機嚴格通用） ================= */
+    .editorial-schedule {
+      max-width: 760px;
+      margin: 0 auto;
+      line-height: 1.52;
+    }
+
+    .day-block {
+      margin-bottom: 36px;
+    }
+
+    .day-block:last-child {
+      margin-bottom: 0;
+    }
+
+    /* L1: 頁面日期大標題（1.25rem 約 20px / 粗體 700 / 深炭綠 #1F2922） */
+    .day-header {
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--line-subtle, rgba(43, 46, 41, 0.14));
+    }
+
+    .day-header-top {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .day-label {
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      color: #9E4A2A;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .day-title {
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 1.25rem !important;
+      font-weight: 700 !important;
+      color: #1F2922 !important;
+      line-height: 1.35 !important;
+      margin: 0 !important;
+      text-wrap: balance;
+      line-break: strict;
+      text-align: left;
+    }
+
+    /* L5: 頂部住宿票券行（0.78rem 約 12.5px / 字重 400~500 / 低調暖灰 #8B8278） */
+    .day-meta {
+      font-size: 0.78rem !important;
+      font-weight: 400 !important;
+      line-height: 1.5 !important;
+      color: #8B8278 !important;
+      margin: 4px 0 0 0 !important;
+      letter-spacing: 0.02em;
+      text-align: left;
+    }
+
+    /* 卡片外框：細外框＋白色底色＋無雜訊陰影 */
+    .schedule-card {
+      background: #FFFFFF;
+      border: 1px solid var(--line-subtle, rgba(43, 46, 41, 0.14));
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .schedule-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .schedule-card:hover {
+      border-color: rgba(43, 46, 41, 0.26);
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 68px 1fr;
+      gap: 14px;
+    }
+
+    /* L5: 時間標記（0.78rem 約 12.5px / 字重 500 / 低調暖灰 #8B8278 / 等寬數字） */
+    .time-col {
+      font-size: 0.78rem !important;
+      font-weight: 500 !important;
+      line-height: 1.5 !important;
+      color: #8B8278 !important;
+      font-variant-numeric: tabular-nums;
+      padding-top: 3px;
+      letter-spacing: 0.01em;
+      text-align: left;
+    }
+
+    .content-col {
+      min-width: 0;
+    }
+
+    /* L2: 卡片內地點主標題（1.08rem 約 17.5px / 粗體 700 / 行高 1.35 / 暖磚橘棕 #9E4A2A / 下方留白 10px） */
+    .item-title {
+      font-family: 'Zen Maru Gothic', sans-serif !important;
+      font-size: 1.08rem !important;
+      font-weight: 700 !important;
+      line-height: 1.35 !important;
+      color: #9E4A2A !important;
+      margin: 0 0 10px 0 !important;
+      text-wrap: balance;
+      line-break: strict;
+      text-align: left;
+    }
+
+    /* L4: 一般內文說明（0.88rem 約 14px / 正常字重 400 / 行高 1.6 / 柔和中灰 #5C6158） */
+    .item-desc {
+      font-size: 0.88rem !important;
+      font-weight: 400 !important;
+      line-height: 1.6 !important;
+      color: #5C6158 !important;
+      margin: 0 !important;
+      text-wrap: pretty;
+      line-break: strict;
+      text-align: left;
+    }
+
+    .item-desc + .item-desc {
+      margin-top: 8px !important;
+    }
+
+    /* L3: 內文小標（0.88rem 約 14px / 粗體 600 / 深灰 #2B2E29） */
+    .item-desc strong {
+      font-size: 0.88rem !important;
+      font-weight: 600 !important;
+      color: #2B2E29 !important;
+    }
+
+    /* L5: 附近溫泉附註（0.78rem 約 12.5px / 字重 400 / 低調暖灰 #8B8278 / 上方 10px 間距與淡線 8px padding） */
+    .nearby-note {
+      font-size: 0.78rem !important;
+      font-weight: 400 !important;
+      line-height: 1.5 !important;
+      color: #8B8278 !important;
+      margin: 10px 0 0 0 !important;
+      padding-top: 8px !important;
+      border-top: 1px solid rgba(43, 46, 41, 0.08) !important;
+      text-wrap: pretty;
+      line-break: strict;
+      text-align: left;
+    }
+
+    /* 手機版響應式空間優化（維持五層字級色彩標準） */
+    @media (max-width: 600px) {
+      .nav-row-main {
+        height: 44px;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+      .nav-brand {
+        font-size: 0.88rem;
+      }
+      .nav-row-main .tab-nav-btn {
+        font-size: 0.82rem;
+        padding: 8px 4px 6px 4px !important;
+      }
+      .day-tab {
+        font-size: 0.84rem;
+        padding: 8px 2px 6px 2px !important;
+      }
+      .quick-action-btn {
+        padding: 3px 6px;
+      }
+
+      /* 釋放文字寬度：頁面外層左右留白 14px */
+      main {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+      }
+      .editorial-schedule {
+        padding: 0 14px;
+      }
+
+      /* 標題區收緊 */
+      .trip-header {
+        padding: 16px 14px 0 14px;
+        margin-bottom: 18px;
+      }
+      .trip-header-inner {
+        gap: 12px;
+      }
+      .trip-date {
+        font-size: 1.55rem;
+        margin: 0 0 2px 0;
+        line-height: 1.15;
+      }
+      .trip-title {
+        font-size: 0.92rem;
+        letter-spacing: 0.16em;
+      }
+      .trip-avatar,
+      .stamp-icon {
+        width: 74px !important;
+        height: 74px !important;
+      }
+
+      /* 行程卡片內距 18px 16px，卡片與卡片間距 16px */
+      .schedule-card {
+        padding: 18px 16px;
+        margin-bottom: 16px;
+        border-radius: 14px;
+      }
+
+      .schedule-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .time-col {
+        padding-top: 0;
+      }
+
+      .day-block {
+        margin-bottom: 28px;
+      }
+      .day-header {
+        padding-bottom: 10px;
+        margin-bottom: 14px;
+      }
+      .day-header-top {
+        flex-direction: column;
+        gap: 2px;
+      }
+      .day-label {
+        font-size: 0.78rem;
+      }
+    }
+
+</style>
 <script id="lumi-os-theme-init">
 (function() {
   function syncBody() {
@@ -2886,63 +4180,65 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
 <body class="min-h-screen text-ink antialiased selection:bg-[#B84A1A] selection:text-white pb-28">
 
   <!-- ================= TOP MAIN APP BAR ================= -->
-  <header class="sticky top-0 z-40 w-full bg-[#FAF9F5]/95 backdrop-blur-md border-b border-[#E8E5DC] shadow-sm transition-all duration-200 no-print">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
-      
-      <!-- Brand & Title -->
-      <div class="flex items-center gap-3">
-        <img src="avatar-4travelers.jpg" alt="山海行旅" class="w-10 h-10 sm:w-11 sm:h-11 aspect-square object-contain rounded-xl border border-[#E6DDD2] shadow-2xs bg-white flex-shrink-0">
-        <div>
-          <h1 class="text-base sm:text-xl font-bold tracking-tight text-ink leading-tight">山海行旅</h1>
-        </div>
-      </div>
+    <!-- ================= STICKY HEADER (上下雙列極簡導覽結構) ================= -->
+  <header class="sticky top-0 z-40 w-full bg-[#FAF9F5]/96 backdrop-blur-md border-b border-[rgba(43,46,41,0.1)] shadow-2xs transition-all duration-200 no-print" aria-label="全站導覽">
+    
+    <!-- 第一列（頂部主列）：左側山海行旅，右側總行程、旅費、備案、地圖與小工具按鈕 -->
+    <div class="nav-row-main max-w-4xl mx-auto px-3 sm:px-5 h-12 flex items-center justify-between gap-2 border-b border-[rgba(43,46,41,0.06)]">
+      <!-- Brand Title -->
+      <span class="nav-brand font-bold text-ink tracking-tight flex-shrink-0 text-sm sm:text-base">
+        <svg class="brand-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9E4A2A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M2.5 14.5L8 5L13.5 14.5" />
+          <path d="M12 12L16.5 6.5L21.5 14.5" />
+          <path d="M2.5 19C5.3 17.2 8.1 17.2 10.9 19C13.7 20.8 16.5 20.8 19.3 19C20.4 18.2 21.2 18.2 21.8 18.8" />
+        </svg>
+        <span>山海行旅</span>
+      </span>
 
-      <!-- Action Buttons Deck -->
-      <div class="flex items-center gap-2">
-        <!-- 老花友善大字模式開關 -->
-        <button id="largeTextBtn" onclick="toggleLargeText()" title="切換字體放大模式，方便閱讀" class="btn-spring flex items-center gap-1.5 px-3 py-2 rounded-xl bg-paper border border-borderClr text-ink text-xs sm:text-sm font-bold shadow-2xs hover:border-[#B84A1A] hover:text-[#963810]">
-          <i data-lucide="zoom-in" class="w-4 h-4 text-[#D4622A]"></i>
-          <span>大字模式 (A+)</span>
+      <!-- 主功能頁籤與工具 -->
+      <div class="flex items-center gap-1 sm:gap-2.5 flex-shrink-0">
+        <button type="button" class="tab-nav-btn active" data-tab="all" onclick="switchTab('all')">
+          總行程
+        </button>
+        <button type="button" class="tab-nav-btn" data-tab="cost" onclick="switchTab('cost')">
+          旅費
+        </button>
+        <button type="button" class="tab-nav-btn" data-tab="backups" onclick="switchTab('backups')">
+          備案
+        </button>
+        <button type="button" class="tab-nav-btn" data-tab="map" onclick="switchTab('map')">
+          地圖
         </button>
 
-        <!-- 地圖與即時定位快捷鈕 -->
-        <button id="btn-toggle-map" onclick="switchTab('map')" title="開啟地圖與即時定位" class="btn-spring flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-paper border border-borderClr text-ink text-xs sm:text-sm font-bold shadow-2xs hover:border-[#B84A1A] hover:text-[#963810]">
-          <i data-lucide="map-pin" class="w-4 h-4 text-[#D4622A]"></i>
-          <span><span class="inline sm:hidden">地圖</span><span class="hidden sm:inline">地圖與定位</span></span>
+        <!-- 工具按鈕分隔線與小圖示 -->
+        <span class="nav-tool-divider"></span>
+        <button id="font-toggle-btn" class="quick-action-btn" title="切換放大加粗閱讀模式" onclick="toggleLargeText()">
+          <i data-lucide="type" class="w-3.5 h-3.5"></i>
+          <span class="hidden md:inline">大字</span>
         </button>
-
-        <!-- 列印按鈕 (保留右上角) -->
-        <button onclick="window.print()" title="列印總行程規劃與套票指南" class="btn-spring flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#B84A1A] text-white text-xs sm:text-sm font-bold shadow-sm hover:bg-[#963810]">
-          <i data-lucide="printer" class="w-4 h-4 text-white"></i>
-          <span>列印</span>
+        <button id="print-btn" class="quick-action-btn" title="友善列印總行程與重要指引">
+          <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+          <span class="hidden md:inline">列印</span>
         </button>
       </div>
     </div>
+
+    <!-- 第二列（三日行程專屬列）：Day 1 九份 / Day 2 野柳 / Day 3 陽明山 -->
+    <nav class="nav-row-days max-w-4xl mx-auto px-2 sm:px-4" aria-label="三日行程導覽">
+      <div class="day-tabs-grid">
+        <button type="button" class="tab-nav-btn day-tab" data-tab="day1" onclick="switchTab('day1')">
+          Day 1 九份
+        </button>
+        <button type="button" class="tab-nav-btn day-tab" data-tab="day2" onclick="switchTab('day2')">
+          Day 2 野柳
+        </button>
+        <button type="button" class="tab-nav-btn day-tab" data-tab="day3" onclick="switchTab('day3')">
+          Day 3 陽明山
+        </button>
+      </div>
+    </nav>
+
   </header>
-
-  <!-- ================= STICKY TAB NAVIGATION (自動換行・精簡 6 大分頁・移除橫向滑動) ================= -->
-  <nav class="sticky top-16 z-30 bg-[#FAF9F5]/95 backdrop-blur-md border-b border-[#E8E5DC] py-2 px-3 no-print shadow-xs">
-    <div class="max-w-4xl mx-auto flex flex-wrap items-center gap-2">
-      <button type="button" class="tab-nav-btn active" data-tab="all" onclick="switchTab('all')">
-        <strong>總行程</strong>
-      </button>
-      <button type="button" class="tab-nav-btn" data-tab="day1" onclick="switchTab('day1')">
-        <strong>Day 1 九份</strong>
-      </button>
-      <button type="button" class="tab-nav-btn" data-tab="day2" onclick="switchTab('day2')">
-        <strong>Day 2 野柳</strong>
-      </button>
-      <button type="button" class="tab-nav-btn" data-tab="day3" onclick="switchTab('day3')">
-        <strong>Day 3 陽明山</strong>
-      </button>
-      <button type="button" class="tab-nav-btn" data-tab="cost" onclick="switchTab('cost')">
-        <strong>旅費明細</strong>
-      </button>
-      <button type="button" class="tab-nav-btn" data-tab="backups" onclick="switchTab('backups')">
-        <strong>備案</strong>
-      </button>
-    </div>
-  </nav>
 
   <!-- Toast Notification -->
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
@@ -2961,321 +4257,425 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
             <p class="trip-date"><span class="trip-year">2026.</span>12.09 — 12.11</p>
             <h1 class="trip-title">山海行旅</h1>
           </div>
-          <img src="avatar-4travelers.jpg" alt="山海行旅" class="trip-avatar">
+          <img src="avatar-4travelers.jpg" alt="山海行旅" class="trip-avatar stamp-icon" />
         </div>
       </header>
 
-            <!-- Editorial Schedule (雜誌刊物風時刻表) -->
+      <!-- Editorial Schedule (雜誌刊物風時刻表) -->
       <section class="editorial-schedule">
           <!-- DAY 1 -->
           <div class="day-block">
             <div class="day-header">
-              <span class="day-label">DAY 1</span>
-              <h3 class="day-title">12/9（三）瑞芳・金瓜石・九份（宿瑞芳井上天花）</h3>
+              <div class="day-header-top">
+                <span class="day-label">DAY 1</span>
+                <h3 class="day-title">12/9（三）瑞芳・金瓜石・九份（宿瑞芳井上天花）</h3>
+              </div>
+              <p class="day-meta">住宿：瑞芳「井上天花」 ｜ 票券：啟用台鐵 3 日周遊券</p>
             </div>
 
-            <div class="schedule-row">
-              <div class="time-col">08:52</div>
-              <div class="content-col">
-                <p class="item-title">高雄新左營出發至台北車站與瑞芳車站</p>
-                <p class="item-desc"><strong>建議班次：</strong>首選 178 次普悠瑪（08:52 新左營發車、13:45 抵台北），或 116 次新自強（09:31 發車、14:00 抵台北）。在台北站轉乘宜蘭線區間車，約 45 分鐘抵達瑞芳車站。</p>
-                <p class="item-desc"><strong>行李策略：</strong>出瑞芳火車站後，步行 5 分鐘即可抵達今晚民宿「井上天花」免費寄放行李，免扛大行李上九份山城。</p>
-                <p class="item-desc"><strong>瑞芳站前美食（午餐推薦）：</strong>林記福州胡椒餅、阿霞龍鳳腿、豐味肉羹（車站對面美食廣場，步行 3 分鐘）。</p>
+            <!-- Day 1 Slot 1: 08:52 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">08:52</div>
+                <div class="content-col">
+                  <h4 class="item-title">高雄新左營出發至台北車站與瑞芳車站</h4>
+                  <p class="item-desc"><strong>建議班次：</strong>首選 178 次普悠瑪（08:52 新左營發車、13:45 抵台北），或 116 次新自強（09:31 發車、14:00 抵台北）。在台北站轉乘宜蘭線區間車，約 45 分鐘抵達瑞芳車站。</p>
+                  <p class="item-desc"><strong>井上天花步行動線（約 3~5 分）：</strong>出瑞芳站西出口大廳後往左走，沿途經屈臣氏 ➔ 7-11 ➔ 瑞芳分局 ➔ 過大路口至「埔頭車站」站牌，右轉過藍色「瑞峰橋」，過橋即見二號抽水站與 OK 便利商店，民宿就在附近（若拖大行李或遇雨天約 8~10 分鐘，抵達後請聯絡民宿；亦可在車站左巷租借 YouBike 沿鐵軌經涵洞過橋歸還，2~3 分鐘內免費；搭公車則於「埔頭車站」下車過橋即達）。</p>
+                  <p class="item-desc"><strong>接待大廳與行李策略：</strong>平日接待時間為 10:00～15:00（專人服務），提早抵達可在營業時間內先免費寄放行李；若房間已整理好可直接提早辦理入住！正式入住時間為 15:00～19:00，全天無門禁，建議抵達時先至民宿辦妥入住程序，時間更自由充裕。</p>
+                  <p class="item-desc"><strong>訂金與尾款結算提醒：</strong>原價 $2,800，折抵 $2,300 後實付 $500。訂金已預付 $840，入住當天核銷身分證平日補助 $800 ＋ PASS 住宿券 $1,500。現場結算尾款/差額<strong>僅限「現金」或「轉帳」</strong>（現場無刷卡與電子支付服務），請預先備妥足額現金。</p>
+                  <p class="item-desc"><strong>瑞芳站前美食（午餐推薦）：</strong>林記福州胡椒餅、阿霞龍鳳腿、豐味肉羹（車站對面美食廣場，步行 3 分鐘）。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">13:30</div>
-              <div class="content-col">
-                <p class="item-title">金瓜石山海步道漫步</p>
-                <p class="item-desc"><strong>乘車動線：</strong>瑞芳站前區民廣場搭乘 788 或 965 公車（班次密集約 15 分鐘一班，自刷悠遊卡），於「勸濟堂」或「瓜山國小」站下車（車程約 25 分鐘）。</p>
-                <p class="item-desc"><strong>報時山棧道：</strong>全台最短的海景步道，下公車步行約 10 分鐘即登頂，木棧道平緩好走，360 度無死角眺望陰陽海、水湳洞與茶壺山。</p>
-                <p class="item-desc"><strong>祈堂老街與彩虹階梯：</strong>避開遊客喧囂的舊礦山聚落，順著彩色階梯漫步拍照，安靜又極具特色。</p>
+            <!-- Day 1 Slot 2: 13:30 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">13:30</div>
+                <div class="content-col">
+                  <h4 class="item-title">金瓜石山海步道漫步</h4>
+                  <p class="item-desc"><strong>乘車動線：</strong>瑞芳站前區民廣場搭乘 788 或 965 公車（班次密集約 15 分鐘一班，自刷悠遊卡），於「勸濟堂」或「瓜山國小」站下車（車程約 25 分鐘）。</p>
+                  <p class="item-desc"><strong>報時山棧道：</strong>全台最短的海景步道！下公車步行約 10 分鐘即登頂，木棧道平緩好走，360 度無死角眺望陰陽海、水湳洞與茶壺山。</p>
+                  <p class="item-desc"><strong>祈堂老街與彩虹階梯：</strong>避開遊客喧囂的舊礦山聚落，順著彩色階梯漫步拍照，安靜又極具特色。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">16:30</div>
-              <div class="content-col">
-                <p class="item-title">九份老街黃昏夕陽與點燈夜景</p>
-                <p class="item-desc"><strong>乘車動線：</strong>金瓜石搭乘 788 或 965 公車下坡約 10 分鐘，於「九份老街」站下車。</p>
-                <p class="item-desc"><strong>經典必訪視角：</strong>豎崎路阿妹茶樓紅燈籠街道、昇平戲院古早木門、海悅樓觀景台遠眺海灣夜景。</p>
-                <p class="item-desc"><strong>九份排隊美食名單：</strong>阿柑姨芋圓（走至最頂端，點一碗綜合芋圓坐在大片玻璃景觀窗前看海景）、阿蘭草仔粿（菜脯米與甜紅豆，必買外帶點心）、金枝紅糟肉圓、護理長的店蜂蜜滷味。</p>
+            <!-- Day 1 Slot 3: 16:30 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">16:30</div>
+                <div class="content-col">
+                  <h4 class="item-title">九份老街黃昏夕陽與點燈夜景</h4>
+                  <p class="item-desc"><strong>乘車動線：</strong>金瓜石搭乘 788 或 965 公車下坡約 10 分鐘，於「九份老街」站下車。</p>
+                  <p class="item-desc"><strong>經典必訪視角：</strong>豎崎路阿妹茶樓紅燈籠街道、昇平戲院古早木門、海悅樓觀景台遠眺海灣夜景。</p>
+                  <p class="item-desc"><strong>阿柑姨芋圓：</strong>走至最頂端，點一碗綜合芋圓坐在大片玻璃景觀窗前看海景。</p>
+                  <p class="item-desc"><strong>阿蘭草仔粿：</strong>菜脯米與甜紅豆（必買外帶點心）。</p>
+                  <p class="item-desc"><strong>在地老字號：</strong>金枝紅糟肉圓、護理長的店蜂蜜滷味。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">20:00</div>
-              <div class="content-col">
-                <p class="item-title">九份老街返回瑞芳井上天花民宿</p>
-                <p class="item-desc"><strong>輕鬆返程：</strong>九份下山公車班次非常頻繁（末班車至 21:30～22:00），搭乘約 15 分鐘即抵達瑞芳車站。</p>
-                <p class="item-desc"><strong>免搬行李優勢：</strong>下車步行 5 分鐘直接入住「井上天花」，行李早已妥善放好，大家可以舒服泡澡洗漱，好好睡一覺迎接北海岸。</p>
+            <!-- Day 1 Slot 4: 20:00 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">20:00</div>
+                <div class="content-col">
+                  <h4 class="item-title">九份老街返回瑞芳井上天花民宿</h4>
+                  <p class="item-desc"><strong>輕鬆返程：</strong>九份下山公車班次非常頻繁（末班車至 21:30～22:00），搭乘約 15 分鐘抵達瑞芳車站（或於埔頭車站下車過瑞峰橋直達民宿）。</p>
+                  <p class="item-desc"><strong>免搬行李優勢：</strong>民宿全天無門禁，白天已辦好手續且行李早已妥善放好，回房即可舒服泡澡洗漱，好好睡一覺迎接明日北海岸奇岩與金山溫泉。</p>
+                </div>
               </div>
-            </div>
+            </article>
           </div>
 
           <!-- DAY 2 -->
           <div class="day-block">
             <div class="day-header">
-              <span class="day-label">DAY 2</span>
-              <h3 class="day-title">12/10（四）野柳・金山・台北大同（宿拾光行旅）</h3>
+              <div class="day-header-top">
+                <span class="day-label">DAY 2</span>
+                <h3 class="day-title">12/10（四）野柳・金山・台北大同（宿拾光行旅）</h3>
+              </div>
+              <p class="day-meta">住宿：台北大同「拾光行旅」 ｜ 票券：今晨開通北北基 2 日券</p>
             </div>
 
-            <div class="schedule-row">
-              <div class="time-col">08:45</div>
-              <div class="content-col">
-                <p class="item-title">瑞芳出發經基隆轉運站至野柳地質公園</p>
-                <p class="item-desc"><strong>乘車動線：</strong>今晨開通北北基 2 日券。瑞芳站前搭乘 788 公車（約 40 分鐘，刷北北基 2 日券）直達基隆轉運站，同站轉乘 790 或 862 公車（約 35 分鐘，刷 2 日券）至「野柳」站下車，步行約 10 分鐘抵達入口。</p>
-                <p class="item-desc"><strong>行李寄放：</strong>抵達後將大行李存放在「野柳遊客中心」大型投幣置物櫃，一身輕鬆進園散步。</p>
-                <p class="item-desc"><strong>必看海岸奇岩（門票 $120，純戶外）：</strong>女王頭、俏皮公主、蜂窩岩、海蝕平台與豆腐岩，世界級鬼斧神工海岸美景。</p>
+            <!-- Day 2 Slot 1: 08:45 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">08:45</div>
+                <div class="content-col">
+                  <h4 class="item-title">瑞芳出發經基隆轉運站至野柳地質公園</h4>
+                  <p class="item-desc"><strong>乘車動線：</strong>今晨開通北北基 2 日券。瑞芳站前搭乘 788 公車（約 40 分鐘，刷北北基 2 日券）直達基隆轉運站，同站轉乘 790 或 862 公車（約 35 分鐘，刷 2 日券）至「野柳」站下車，步行約 10 分鐘抵達入口。</p>
+                  <p class="item-desc"><strong>行李寄放：</strong>抵達後將大行李存放在「野柳遊客中心」大型投幣置物櫃，一身輕鬆進園散步！</p>
+                  <p class="item-desc"><strong>必看海岸奇岩（門票 $120，純戶外）：</strong>女王頭、俏皮公主、蜂窩岩、海蝕平台與豆腐岩，世界級鬼斧神工海岸美景。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">12:30</div>
-              <div class="content-col">
-                <p class="item-title">金山老街（金包里老街）美食聚落</p>
-                <p class="item-desc"><strong>乘車動線：</strong>野柳站搭乘 790、862 或 716 公車（車程約 15 分鐘，刷 2 日券），於「金山區公所（老街）」站下車。</p>
-                <p class="item-desc"><strong>金山老街排隊名店推薦：</strong>金包里鴨肉（漳聖宮開漳聖王廟口前自己端菜，肉質甜嫩香醇，是在地最道地的老街體驗）、阿玉蔴粩（多種口味香酥不黏牙，最佳伴手禮）、雪豹冰城地瓜冰、獅子林餅舖一口酥、王肉包。</p>
-                <p class="item-desc"><strong>周邊散步：</strong>吃飽後若時間充裕，可順著老街步行 15 分鐘至「獅頭山公園步道」遠眺著名的燭台雙嶼。</p>
-                <p class="nearby-note">附近溫泉：中山溫泉公園免費泡腳池（老街步行 3 分鐘）、舊金山總督溫泉（湯屋／露天風呂）、沐舍溫泉渡假酒店（個人湯屋）。</p>
+            <!-- Day 2 Slot 2: 12:30 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">12:30</div>
+                <div class="content-col">
+                  <h4 class="item-title">金山老街（金包里老街）美食聚落</h4>
+                  <p class="item-desc"><strong>乘車動線：</strong>野柳站搭乘 790、862 或 716 公車（車程約 15 分鐘，刷 2 日券），於「金山區公所（老街）」站下車。</p>
+                  <p class="item-desc"><strong>金包里鴨肉：</strong>漳聖宮開漳聖王廟口前自己端菜，肉質甜嫩香醇，是在地最道地的老街體驗！</p>
+                  <p class="item-desc"><strong>阿玉蔴粩：</strong>多種口味香酥不黏牙，最佳伴手禮。</p>
+                  <p class="item-desc"><strong>老街名點：</strong>雪豹冰城地瓜冰、獅子林餅舖一口酥、王肉包。</p>
+                  <p class="item-desc"><strong>周邊散步：</strong>吃飽後若時間充裕，可順著老街步行 15 分鐘至「獅頭山公園步道」遠眺著名的燭台雙嶼。</p>
+                  <p class="nearby-note">附近溫泉：中山溫泉公園免費泡腳池（老街步行 3 分）、舊金山總督溫泉（湯屋／露天風呂）、沐舍溫泉渡假酒店（個人湯屋）。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">15:30</div>
-              <div class="content-col">
-                <p class="item-title">金山搭車直達台北車站入住台北大同拾光行旅</p>
-                <p class="item-desc"><strong>乘車動線：</strong>金山老街搭乘國光客運 1815 直達車（平日班次密集，車程約 75 分鐘直達台北車站，另刷悠遊卡約 $125）。北車轉乘捷運橘線至「大橋頭站」（刷 2 日券），由 1 號出口步行 3 分鐘即達民宿。</p>
-                <p class="item-desc"><strong>行李提醒：</strong>拾光行旅為質樸文青街屋無電梯，建議四人以登機箱或軟袋為主，重物可寄放 1 樓，上下樓輕鬆不費力。</p>
+            <!-- Day 2 Slot 3: 15:30 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">15:30</div>
+                <div class="content-col">
+                  <h4 class="item-title">金山搭車直達台北車站入住台北大同拾光行旅</h4>
+                  <p class="item-desc"><strong>乘車動線：</strong>金山老街搭乘國光客運 1815 直達車（平日班次密集，車程約 75 分鐘直達台北車站，另刷悠遊卡約 $125）。北車轉乘捷運橘線至「大橋頭站」（刷 2 日券），由 1 號出口步行 3 分鐘即達民宿。</p>
+                  <p class="item-desc"><strong>行李提醒：</strong>拾光行旅為質樸文青街屋無電梯，建議四人以登機箱或軟袋為主，重物可寄放 1 樓，上下樓輕鬆不費力。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">18:00</div>
-              <div class="content-col">
-                <p class="item-title">延三夜市在地老味道與碼頭河岸晚風</p>
-                <p class="item-desc"><strong>延三夜市在地美食推薦：</strong>大橋頭老牌筒仔米糕（米粒香 Q 淋甜辣醬超對味）、施家鮮肉湯圓（外皮軟糯、爆漿鮮肉內餡）、高麗菜飯原汁排骨湯、魏祥記純糖麻糬。</p>
-                <p class="item-desc"><strong>河岸漫步：</strong>晚餐後散步 10～15 分鐘至碼頭河岸貨櫃市集，坐在河畔吹晚風喝飲品，眺望淡水河兩岸夜景超放鬆。</p>
+            <!-- Day 2 Slot 4: 18:00 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">18:00</div>
+                <div class="content-col">
+                  <h4 class="item-title">延三夜市在地老味道與碼頭河岸晚風</h4>
+                  <p class="item-desc"><strong>大橋頭老牌筒仔米糕：</strong>米粒香 Q 淋甜辣醬超對味。</p>
+                  <p class="item-desc"><strong>施家鮮肉湯圓：</strong>外皮軟糯、爆漿鮮肉內餡。</p>
+                  <p class="item-desc"><strong>在地老味道：</strong>高麗菜飯原汁排骨湯、魏祥記純糖麻糬。</p>
+                  <p class="item-desc"><strong>河岸漫步：</strong>晚餐後散步 10～15 分鐘至碼頭河岸貨櫃市集，坐在河畔吹晚風喝飲品，眺望淡水河兩岸夜景超放鬆。</p>
+                </div>
               </div>
-            </div>
+            </article>
           </div>
 
           <!-- DAY 3 -->
           <div class="day-block">
             <div class="day-header">
-              <span class="day-label">DAY 3</span>
-              <h3 class="day-title">12/11（五）陽明山・大稻埕・返程高雄</h3>
+              <div class="day-header-top">
+                <span class="day-label">DAY 3</span>
+                <h3 class="day-title">12/11（五）陽明山・大稻埕・返程高雄</h3>
+              </div>
+              <p class="day-meta">票券：北北基 2 日券（捷運／公車） ｜ 台鐵周遊券（南下長途）</p>
             </div>
 
-            <div class="schedule-row">
-              <div class="time-col">08:30</div>
-              <div class="content-col">
-                <p class="item-title">拾光行旅出發經捷運劍潭站至陽明山國家公園</p>
-                <p class="item-desc"><strong>行李策略：</strong>退房後直接將行李免費寄放在「拾光行旅」，一身輕裝出發陽明山。</p>
-                <p class="item-desc"><strong>乘車動線：</strong>大橋頭站搭捷運至民權西路轉紅線至「劍潭站」（約 15 分鐘，刷 2 日券）。由 1 號出口搭乘紅 5 公車（約 35 分鐘，刷 2 日券）至陽明山總站，同站轉乘 108 陽明山遊園公車。</p>
-                <p class="item-desc"><strong>精選 2 大景點（下車即達免爬山、最省體力）：</strong>小油坑站下公車走 2 分鐘即達，近距離觀賞後火山硫磺噴氣孔與陣陣白煙地熱，景觀震撼且不用爬陡坡；冷水坑站享受免費公共溫泉泡腳池（12 月微涼泡腳超級暖和舒暢），順訪牛奶湖觀景台與菁山吊橋。</p>
-                <p class="nearby-note">附近溫泉：陽明山中國麗緻大飯店（白磺泉湯屋）、行義路溫泉區皇池／川湯（下山順路，雙人湯屋）。</p>
+            <!-- Day 3 Slot 1: 08:30 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">08:30</div>
+                <div class="content-col">
+                  <h4 class="item-title">拾光行旅出發經捷運劍潭站至陽明山國家公園</h4>
+                  <p class="item-desc"><strong>行李策略：</strong>退房後直接將行李免費寄放在「拾光行旅」，一身輕裝出發陽明山！</p>
+                  <p class="item-desc"><strong>乘車動線：</strong>大橋頭站搭捷運至民權西路轉紅線至「劍潭站」（約 15 分鐘，刷 2 日券）。由 1 號出口搭乘紅 5 公車（約 35 分鐘，刷 2 日券）至陽明山總站，同站轉乘 108 陽明山遊園公車。</p>
+                  <p class="item-desc"><strong>小油坑地熱（下車走 2 分免爬山）：</strong>近距離觀賞後火山硫磺噴氣孔與陣陣白煙地熱，景觀震撼且不用爬陡坡。</p>
+                  <p class="item-desc"><strong>冷水坑足湯（免爬坡最省體力）：</strong>享受免費公共溫泉泡腳池（12 月微涼泡腳超級暖和舒暢），順訪牛奶湖觀景台與菁山吊橋。</p>
+                  <p class="nearby-note">附近溫泉：陽明山中國麗緻大飯店（白磺泉湯屋）、行義路溫泉區皇池／川湯（下山順路，雙人湯屋）。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">12:30</div>
-              <div class="content-col">
-                <p class="item-title">大稻埕慈聖宮美食與老字號名產採買</p>
-                <p class="item-desc"><strong>乘車動線：</strong>搭乘紅 5 公車下山至劍潭站，轉捷運回「大橋頭站」領取寄放的行李。</p>
-                <p class="item-desc"><strong>慈聖宮美食：</strong>大稻埕商圈步行 5 分鐘，在大榕樹下品嚐葉家肉粥、許仔豬腳麵線、原汁排骨湯，滿滿台灣老台北廟口情懷。</p>
-                <p class="item-desc"><strong>台式伴手禮起酥蛋糕：</strong>加福奇士蛋糕專門店（延平北路二段 72 號），金黃酥脆酥皮包裹鹹甜鬆軟蛋糕，熱騰騰出爐香濃誘人，大稻埕老字號必買名產。</p>
-                <p class="item-desc"><strong>迪化街散步伴手禮：</strong>合興壹玖肆柒手作鬆糕、妙口四神湯肉包、傳統南北貨與茶葉，送禮自用皆宜。</p>
+            <!-- Day 3 Slot 2: 12:30 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">12:30</div>
+                <div class="content-col">
+                  <h4 class="item-title">大稻埕慈聖宮美食與老字號名產採買</h4>
+                  <p class="item-desc"><strong>乘車動線：</strong>搭乘紅 5 公車下山至劍潭站，轉捷運回「大橋頭站」領取寄放的行李。</p>
+                  <p class="item-desc"><strong>慈聖宮美食：</strong>大稻埕商圈步行 5 分鐘，在大榕樹下品嚐葉家肉粥、許仔豬腳麵線、原汁排骨湯，滿滿台灣老台北廟口情懷。</p>
+                  <p class="item-desc"><strong>加福奇士蛋糕專門店（延平北路二段 72 號）：</strong>金黃酥脆酥皮包裹鹹甜鬆軟蛋糕，熱騰騰出爐香濃誘人，大稻埕老字號必買台式名產伴手禮。</p>
+                  <p class="item-desc"><strong>迪化街散步伴手禮：</strong>合興壹玖肆柒手作鬆糕、妙口四神湯肉包、傳統南北貨與茶葉，送禮自用皆宜。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">15:30</div>
-              <div class="content-col">
-                <p class="item-title">台北車站搭乘台鐵返抵高雄新左營車站</p>
-                <p class="item-desc"><strong>乘車動線：</strong>大橋頭站搭乘捷運約 10 分鐘抵達「台北車站」，持事先以 Taiwan PASS 劃好座位的車票進站乘車。</p>
-                <p class="item-desc"><strong>建議班次：</strong>預訂週五下午 EMU3000 新自強號或普悠瑪南下直達車（車程約 4～4.5 小時），約 19:30～21:00 順利返抵新左營，圓滿完成 3 天豐富山海行。</p>
+            <!-- Day 3 Slot 3: 15:30 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">15:30</div>
+                <div class="content-col">
+                  <h4 class="item-title">台北車站搭乘台鐵返抵高雄新左營車站</h4>
+                  <p class="item-desc"><strong>乘車動線：</strong>大橋頭站搭乘捷運約 10 分鐘抵達「台北車站」，持事先以 Taiwan PASS 劃好座位的車票進站乘車。</p>
+                  <p class="item-desc"><strong>建議班次：</strong>預訂週五下午 EMU3000 新自強號或普悠瑪南下直達車（車程約 4～4.5 小時），約 19:30～21:00 順利返抵新左營，圓滿完成 3 天豐富山海行！</p>
+                </div>
               </div>
-            </div>
+            </article>
           </div>
       </section>
 
       <!-- Taiwan PASS 台鐵套票精簡版使用方式 -->
-      <section class="space-y-3">
-        <div class="flex items-center gap-2 border-b-2 border-[#D4622A] pb-2">
-          <span class="px-2 py-0.5 rounded bg-[#B84A1A] text-white text-xs font-bold font-mono">票券指南</span>
-          <h4 class="text-lg font-bold text-ink">Taiwan PASS 台鐵套票精簡版使用方式</h4>
-        </div>
-        <div class="p-4 bg-paper rounded-xl border border-borderClr space-y-2.5 text-sm text-ink">
-          <p>
-            • <strong>1. 台鐵 3 日周遊券（12/9～12/11 全程）：</strong><br>
-            出發前先在台鐵官網或 APP 免費劃好 12/9 去程（新自強/普悠瑪直達台北）與 12/11 回程直達新左營座位。出發當天至新左營站窗口憑 4 人身分證正本領取紙本 TR-PASS 與免費劃位實體車票。
-          </p>
-          <p>
-            • <strong>2. 北北基好玩卡 2 日券（12/10～12/11）：</strong><br>
-            Day 1 經台北車站轉車時，先至指定櫃檯領取實體卡，<strong>當天先不要刷卡</strong>；等到 <strong>12/10（Day 2）早上搭第一班公車時才刷卡開卡</strong>！可連續 2 天無限搭乘台北捷運、市區公車（788、790、862、965、紅 5、108 遊園公車）。
-          </p>
-          <p>
-            • <strong>3. 額外自備悠遊卡自費段：</strong><br>
-            Day 1 瑞芳區間公車（約 $45～$60）與 Day 2 金山直達台北車站之國光客運 1815（約 $125）不在 2 日券範圍，直接刷悠遊卡搭乘。
-          </p>
+      <section class="editorial-schedule" style="margin-top: 28px;">
+        <div class="day-block">
+          <div class="day-header">
+            <div class="day-header-top">
+              <span class="day-label">TICKETS</span>
+              <h3 class="day-title">Taiwan PASS 台鐵套票精簡版使用方式</h3>
+            </div>
+            <p class="day-meta">3 日台鐵周遊券 ＋ 北北基好玩卡 2 日券使用核心策略</p>
+          </div>
+          
+          <article class="schedule-card">
+            <h4 class="item-title">台鐵 3 日周遊券（12/9～12/11 全程）</h4>
+            <p class="item-desc"><strong>預先劃位：</strong>出發前先在台鐵官網或 APP 免費劃好 12/9 去程（新自強/普悠瑪直達台北）與 12/11 回程直達新左營座位。</p>
+            <p class="item-desc"><strong>取票方式：</strong>出發當天至新左營站窗口憑 4 人身分證正本領取紙本 TR-PASS 與免費劃位實體車票。</p>
+          </article>
+
+          <article class="schedule-card">
+            <h4 class="item-title">北北基好玩卡 2 日券（12/10～12/11）</h4>
+            <p class="item-desc"><strong>取卡與開卡策略：</strong>Day 1 經台北車站轉車時，先至指定櫃檯領取實體卡，<strong>當天先不要刷卡</strong>；等到 <strong>12/10（Day 2）早上搭第一班公車時才刷卡開卡</strong>！</p>
+            <p class="item-desc"><strong>無限搭乘範圍：</strong>開卡後連續 2 天無限搭乘台北捷運、市區公車（788、790、862、965、紅 5、108 遊園公車）。</p>
+          </article>
+
+          <article class="schedule-card">
+            <h4 class="item-title">額外自備悠遊卡自費段</h4>
+            <p class="item-desc"><strong>自費提醒：</strong>Day 1 瑞芳區間公車（約 $45～$60）與 Day 2 金山直達台北車站之國光客運 1815（約 $125）不在 2 日券範圍，請直接刷悠遊卡搭乘。</p>
+          </article>
         </div>
       </section>
 
     </div>
 
-    <!-- ================= TAB PANE 1: DAY 1 (九份山海) ================= -->
     <div id="pane-day1" class="tab-pane space-y-4">
       <section class="editorial-schedule">
           <!-- DAY 1 -->
           <div class="day-block">
             <div class="day-header">
-              <span class="day-label">DAY 1</span>
-              <h3 class="day-title">12/9（三）瑞芳・金瓜石・九份（宿瑞芳井上天花）</h3>
+              <div class="day-header-top">
+                <span class="day-label">DAY 1</span>
+                <h3 class="day-title">12/9（三）瑞芳・金瓜石・九份（宿瑞芳井上天花）</h3>
+              </div>
+              <p class="day-meta">住宿：瑞芳「井上天花」 ｜ 票券：啟用台鐵 3 日周遊券</p>
             </div>
 
-            <div class="schedule-row">
-              <div class="time-col">08:52</div>
-              <div class="content-col">
-                <p class="item-title">高雄新左營出發至台北車站與瑞芳車站</p>
-                <p class="item-desc"><strong>建議班次：</strong>首選 178 次普悠瑪（08:52 新左營發車、13:45 抵台北），或 116 次新自強（09:31 發車、14:00 抵台北）。在台北站轉乘宜蘭線區間車，約 45 分鐘抵達瑞芳車站。</p>
-                <p class="item-desc"><strong>行李策略：</strong>出瑞芳火車站後，步行 5 分鐘即可抵達今晚民宿「井上天花」免費寄放行李，免扛大行李上九份山城。</p>
-                <p class="item-desc"><strong>瑞芳站前美食（午餐推薦）：</strong>林記福州胡椒餅、阿霞龍鳳腿、豐味肉羹（車站對面美食廣場，步行 3 分鐘）。</p>
+            <!-- Day 1 Slot 1: 08:52 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">08:52</div>
+                <div class="content-col">
+                  <h4 class="item-title">高雄新左營出發至台北車站與瑞芳車站</h4>
+                  <p class="item-desc"><strong>建議班次：</strong>首選 178 次普悠瑪（08:52 新左營發車、13:45 抵台北），或 116 次新自強（09:31 發車、14:00 抵台北）。在台北站轉乘宜蘭線區間車，約 45 分鐘抵達瑞芳車站。</p>
+                  <p class="item-desc"><strong>井上天花步行動線（約 3~5 分）：</strong>出瑞芳站西出口大廳後往左走，沿途經屈臣氏 ➔ 7-11 ➔ 瑞芳分局 ➔ 過大路口至「埔頭車站」站牌，右轉過藍色「瑞峰橋」，過橋即見二號抽水站與 OK 便利商店，民宿就在附近（若拖大行李或遇雨天約 8~10 分鐘，抵達後請聯絡民宿；亦可在車站左巷租借 YouBike 沿鐵軌經涵洞過橋歸還，2~3 分鐘內免費；搭公車則於「埔頭車站」下車過橋即達）。</p>
+                  <p class="item-desc"><strong>接待大廳與行李策略：</strong>平日接待時間為 10:00～15:00（專人服務），提早抵達可在營業時間內先免費寄放行李；若房間已整理好可直接提早辦理入住！正式入住時間為 15:00～19:00，全天無門禁，建議抵達時先至民宿辦妥入住程序，時間更自由充裕。</p>
+                  <p class="item-desc"><strong>訂金與尾款結算提醒：</strong>原價 $2,800，折抵 $2,300 後實付 $500。訂金已預付 $840，入住當天核銷身分證平日補助 $800 ＋ PASS 住宿券 $1,500。現場結算尾款/差額<strong>僅限「現金」或「轉帳」</strong>（現場無刷卡與電子支付服務），請預先備妥足額現金。</p>
+                  <p class="item-desc"><strong>瑞芳站前美食（午餐推薦）：</strong>林記福州胡椒餅、阿霞龍鳳腿、豐味肉羹（車站對面美食廣場，步行 3 分鐘）。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">13:30</div>
-              <div class="content-col">
-                <p class="item-title">金瓜石山海步道漫步</p>
-                <p class="item-desc"><strong>乘車動線：</strong>瑞芳站前區民廣場搭乘 788 或 965 公車（班次密集約 15 分鐘一班，自刷悠遊卡），於「勸濟堂」或「瓜山國小」站下車（車程約 25 分鐘）。</p>
-                <p class="item-desc"><strong>報時山棧道：</strong>全台最短的海景步道，下公車步行約 10 分鐘即登頂，木棧道平緩好走，360 度無死角眺望陰陽海、水湳洞與茶壺山。</p>
-                <p class="item-desc"><strong>祈堂老街與彩虹階梯：</strong>避開遊客喧囂的舊礦山聚落，順著彩色階梯漫步拍照，安靜又極具特色。</p>
+            <!-- Day 1 Slot 2: 13:30 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">13:30</div>
+                <div class="content-col">
+                  <h4 class="item-title">金瓜石山海步道漫步</h4>
+                  <p class="item-desc"><strong>乘車動線：</strong>瑞芳站前區民廣場搭乘 788 或 965 公車（班次密集約 15 分鐘一班，自刷悠遊卡），於「勸濟堂」或「瓜山國小」站下車（車程約 25 分鐘）。</p>
+                  <p class="item-desc"><strong>報時山棧道：</strong>全台最短的海景步道！下公車步行約 10 分鐘即登頂，木棧道平緩好走，360 度無死角眺望陰陽海、水湳洞與茶壺山。</p>
+                  <p class="item-desc"><strong>祈堂老街與彩虹階梯：</strong>避開遊客喧囂的舊礦山聚落，順著彩色階梯漫步拍照，安靜又極具特色。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">16:30</div>
-              <div class="content-col">
-                <p class="item-title">九份老街黃昏夕陽與點燈夜景</p>
-                <p class="item-desc"><strong>乘車動線：</strong>金瓜石搭乘 788 或 965 公車下坡約 10 分鐘，於「九份老街」站下車。</p>
-                <p class="item-desc"><strong>經典必訪視角：</strong>豎崎路阿妹茶樓紅燈籠街道、昇平戲院古早木門、海悅樓觀景台遠眺海灣夜景。</p>
-                <p class="item-desc"><strong>九份排隊美食名單：</strong>阿柑姨芋圓（走至最頂端，點一碗綜合芋圓坐在大片玻璃景觀窗前看海景）、阿蘭草仔粿（菜脯米與甜紅豆，必買外帶點心）、金枝紅糟肉圓、護理長的店蜂蜜滷味。</p>
+            <!-- Day 1 Slot 3: 16:30 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">16:30</div>
+                <div class="content-col">
+                  <h4 class="item-title">九份老街黃昏夕陽與點燈夜景</h4>
+                  <p class="item-desc"><strong>乘車動線：</strong>金瓜石搭乘 788 或 965 公車下坡約 10 分鐘，於「九份老街」站下車。</p>
+                  <p class="item-desc"><strong>經典必訪視角：</strong>豎崎路阿妹茶樓紅燈籠街道、昇平戲院古早木門、海悅樓觀景台遠眺海灣夜景。</p>
+                  <p class="item-desc"><strong>阿柑姨芋圓：</strong>走至最頂端，點一碗綜合芋圓坐在大片玻璃景觀窗前看海景。</p>
+                  <p class="item-desc"><strong>阿蘭草仔粿：</strong>菜脯米與甜紅豆（必買外帶點心）。</p>
+                  <p class="item-desc"><strong>在地老字號：</strong>金枝紅糟肉圓、護理長的店蜂蜜滷味。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">20:00</div>
-              <div class="content-col">
-                <p class="item-title">九份老街返回瑞芳井上天花民宿</p>
-                <p class="item-desc"><strong>輕鬆返程：</strong>九份下山公車班次非常頻繁（末班車至 21:30～22:00），搭乘約 15 分鐘即抵達瑞芳車站。</p>
-                <p class="item-desc"><strong>免搬行李優勢：</strong>下車步行 5 分鐘直接入住「井上天花」，行李早已妥善放好，大家可以舒服泡澡洗漱，好好睡一覺迎接北海岸。</p>
+            <!-- Day 1 Slot 4: 20:00 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">20:00</div>
+                <div class="content-col">
+                  <h4 class="item-title">九份老街返回瑞芳井上天花民宿</h4>
+                  <p class="item-desc"><strong>輕鬆返程：</strong>九份下山公車班次非常頻繁（末班車至 21:30～22:00），搭乘約 15 分鐘抵達瑞芳車站（或於埔頭車站下車過瑞峰橋直達民宿）。</p>
+                  <p class="item-desc"><strong>免搬行李優勢：</strong>民宿全天無門禁，白天已辦好手續且行李早已妥善放好，回房即可舒服泡澡洗漱，好好睡一覺迎接明日北海岸奇岩與金山溫泉。</p>
+                </div>
               </div>
-            </div>
+            </article>
           </div>
       </section>
     </div>
 
-
-    <!-- ================= TAB PANE 2: DAY 2 (野柳金山) ================= -->
     <div id="pane-day2" class="tab-pane space-y-4">
       <section class="editorial-schedule">
           <!-- DAY 2 -->
           <div class="day-block">
             <div class="day-header">
-              <span class="day-label">DAY 2</span>
-              <h3 class="day-title">12/10（四）野柳・金山・台北大同（宿拾光行旅）</h3>
+              <div class="day-header-top">
+                <span class="day-label">DAY 2</span>
+                <h3 class="day-title">12/10（四）野柳・金山・台北大同（宿拾光行旅）</h3>
+              </div>
+              <p class="day-meta">住宿：台北大同「拾光行旅」 ｜ 票券：今晨開通北北基 2 日券</p>
             </div>
 
-            <div class="schedule-row">
-              <div class="time-col">08:45</div>
-              <div class="content-col">
-                <p class="item-title">瑞芳出發經基隆轉運站至野柳地質公園</p>
-                <p class="item-desc"><strong>乘車動線：</strong>今晨開通北北基 2 日券。瑞芳站前搭乘 788 公車（約 40 分鐘，刷北北基 2 日券）直達基隆轉運站，同站轉乘 790 或 862 公車（約 35 分鐘，刷 2 日券）至「野柳」站下車，步行約 10 分鐘抵達入口。</p>
-                <p class="item-desc"><strong>行李寄放：</strong>抵達後將大行李存放在「野柳遊客中心」大型投幣置物櫃，一身輕鬆進園散步。</p>
-                <p class="item-desc"><strong>必看海岸奇岩（門票 $120，純戶外）：</strong>女王頭、俏皮公主、蜂窩岩、海蝕平台與豆腐岩，世界級鬼斧神工海岸美景。</p>
+            <!-- Day 2 Slot 1: 08:45 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">08:45</div>
+                <div class="content-col">
+                  <h4 class="item-title">瑞芳出發經基隆轉運站至野柳地質公園</h4>
+                  <p class="item-desc"><strong>乘車動線：</strong>今晨開通北北基 2 日券。瑞芳站前搭乘 788 公車（約 40 分鐘，刷北北基 2 日券）直達基隆轉運站，同站轉乘 790 或 862 公車（約 35 分鐘，刷 2 日券）至「野柳」站下車，步行約 10 分鐘抵達入口。</p>
+                  <p class="item-desc"><strong>行李寄放：</strong>抵達後將大行李存放在「野柳遊客中心」大型投幣置物櫃，一身輕鬆進園散步！</p>
+                  <p class="item-desc"><strong>必看海岸奇岩（門票 $120，純戶外）：</strong>女王頭、俏皮公主、蜂窩岩、海蝕平台與豆腐岩，世界級鬼斧神工海岸美景。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">12:30</div>
-              <div class="content-col">
-                <p class="item-title">金山老街（金包里老街）美食聚落</p>
-                <p class="item-desc"><strong>乘車動線：</strong>野柳站搭乘 790、862 或 716 公車（車程約 15 分鐘，刷 2 日券），於「金山區公所（老街）」站下車。</p>
-                <p class="item-desc"><strong>金山老街排隊名店推薦：</strong>金包里鴨肉（漳聖宮開漳聖王廟口前自己端菜，肉質甜嫩香醇，是在地最道地的老街體驗）、阿玉蔴粩（多種口味香酥不黏牙，最佳伴手禮）、雪豹冰城地瓜冰、獅子林餅舖一口酥、王肉包。</p>
-                <p class="item-desc"><strong>周邊散步：</strong>吃飽後若時間充裕，可順著老街步行 15 分鐘至「獅頭山公園步道」遠眺著名的燭台雙嶼。</p>
-                <p class="nearby-note">附近溫泉：中山溫泉公園免費泡腳池（老街步行 3 分鐘）、舊金山總督溫泉（湯屋／露天風呂）、沐舍溫泉渡假酒店（個人湯屋）。</p>
+            <!-- Day 2 Slot 2: 12:30 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">12:30</div>
+                <div class="content-col">
+                  <h4 class="item-title">金山老街（金包里老街）美食聚落</h4>
+                  <p class="item-desc"><strong>乘車動線：</strong>野柳站搭乘 790、862 或 716 公車（車程約 15 分鐘，刷 2 日券），於「金山區公所（老街）」站下車。</p>
+                  <p class="item-desc"><strong>金包里鴨肉：</strong>漳聖宮開漳聖王廟口前自己端菜，肉質甜嫩香醇，是在地最道地的老街體驗！</p>
+                  <p class="item-desc"><strong>阿玉蔴粩：</strong>多種口味香酥不黏牙，最佳伴手禮。</p>
+                  <p class="item-desc"><strong>老街名點：</strong>雪豹冰城地瓜冰、獅子林餅舖一口酥、王肉包。</p>
+                  <p class="item-desc"><strong>周邊散步：</strong>吃飽後若時間充裕，可順著老街步行 15 分鐘至「獅頭山公園步道」遠眺著名的燭台雙嶼。</p>
+                  <p class="nearby-note">附近溫泉：中山溫泉公園免費泡腳池（老街步行 3 分）、舊金山總督溫泉（湯屋／露天風呂）、沐舍溫泉渡假酒店（個人湯屋）。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">15:30</div>
-              <div class="content-col">
-                <p class="item-title">金山搭車直達台北車站入住台北大同拾光行旅</p>
-                <p class="item-desc"><strong>乘車動線：</strong>金山老街搭乘國光客運 1815 直達車（平日班次密集，車程約 75 分鐘直達台北車站，另刷悠遊卡約 $125）。北車轉乘捷運橘線至「大橋頭站」（刷 2 日券），由 1 號出口步行 3 分鐘即達民宿。</p>
-                <p class="item-desc"><strong>行李提醒：</strong>拾光行旅為質樸文青街屋無電梯，建議四人以登機箱或軟袋為主，重物可寄放 1 樓，上下樓輕鬆不費力。</p>
+            <!-- Day 2 Slot 3: 15:30 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">15:30</div>
+                <div class="content-col">
+                  <h4 class="item-title">金山搭車直達台北車站入住台北大同拾光行旅</h4>
+                  <p class="item-desc"><strong>乘車動線：</strong>金山老街搭乘國光客運 1815 直達車（平日班次密集，車程約 75 分鐘直達台北車站，另刷悠遊卡約 $125）。北車轉乘捷運橘線至「大橋頭站」（刷 2 日券），由 1 號出口步行 3 分鐘即達民宿。</p>
+                  <p class="item-desc"><strong>行李提醒：</strong>拾光行旅為質樸文青街屋無電梯，建議四人以登機箱或軟袋為主，重物可寄放 1 樓，上下樓輕鬆不費力。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">18:00</div>
-              <div class="content-col">
-                <p class="item-title">延三夜市在地老味道與碼頭河岸晚風</p>
-                <p class="item-desc"><strong>延三夜市在地美食推薦：</strong>大橋頭老牌筒仔米糕（米粒香 Q 淋甜辣醬超對味）、施家鮮肉湯圓（外皮軟糯、爆漿鮮肉內餡）、高麗菜飯原汁排骨湯、魏祥記純糖麻糬。</p>
-                <p class="item-desc"><strong>河岸漫步：</strong>晚餐後散步 10～15 分鐘至碼頭河岸貨櫃市集，坐在河畔吹晚風喝飲品，眺望淡水河兩岸夜景超放鬆。</p>
+            <!-- Day 2 Slot 4: 18:00 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">18:00</div>
+                <div class="content-col">
+                  <h4 class="item-title">延三夜市在地老味道與碼頭河岸晚風</h4>
+                  <p class="item-desc"><strong>大橋頭老牌筒仔米糕：</strong>米粒香 Q 淋甜辣醬超對味。</p>
+                  <p class="item-desc"><strong>施家鮮肉湯圓：</strong>外皮軟糯、爆漿鮮肉內餡。</p>
+                  <p class="item-desc"><strong>在地老味道：</strong>高麗菜飯原汁排骨湯、魏祥記純糖麻糬。</p>
+                  <p class="item-desc"><strong>河岸漫步：</strong>晚餐後散步 10～15 分鐘至碼頭河岸貨櫃市集，坐在河畔吹晚風喝飲品，眺望淡水河兩岸夜景超放鬆。</p>
+                </div>
               </div>
-            </div>
+            </article>
           </div>
       </section>
     </div>
 
-
-    <!-- ================= TAB PANE 3: DAY 3 (陽明山大同) ================= -->
     <div id="pane-day3" class="tab-pane space-y-4">
       <section class="editorial-schedule">
           <!-- DAY 3 -->
           <div class="day-block">
             <div class="day-header">
-              <span class="day-label">DAY 3</span>
-              <h3 class="day-title">12/11（五）陽明山・大稻埕・返程高雄</h3>
+              <div class="day-header-top">
+                <span class="day-label">DAY 3</span>
+                <h3 class="day-title">12/11（五）陽明山・大稻埕・返程高雄</h3>
+              </div>
+              <p class="day-meta">票券：北北基 2 日券（捷運／公車） ｜ 台鐵周遊券（南下長途）</p>
             </div>
 
-            <div class="schedule-row">
-              <div class="time-col">08:30</div>
-              <div class="content-col">
-                <p class="item-title">拾光行旅出發經捷運劍潭站至陽明山國家公園</p>
-                <p class="item-desc"><strong>行李策略：</strong>退房後直接將行李免費寄放在「拾光行旅」，一身輕裝出發陽明山。</p>
-                <p class="item-desc"><strong>乘車動線：</strong>大橋頭站搭捷運至民權西路轉紅線至「劍潭站」（約 15 分鐘，刷 2 日券）。由 1 號出口搭乘紅 5 公車（約 35 分鐘，刷 2 日券）至陽明山總站，同站轉乘 108 陽明山遊園公車。</p>
-                <p class="item-desc"><strong>精選 2 大景點（下車即達免爬山、最省體力）：</strong>小油坑站下公車走 2 分鐘即達，近距離觀賞後火山硫磺噴氣孔與陣陣白煙地熱，景觀震撼且不用爬陡坡；冷水坑站享受免費公共溫泉泡腳池（12 月微涼泡腳超級暖和舒暢），順訪牛奶湖觀景台與菁山吊橋。</p>
-                <p class="nearby-note">附近溫泉：陽明山中國麗緻大飯店（白磺泉湯屋）、行義路溫泉區皇池／川湯（下山順路，雙人湯屋）。</p>
+            <!-- Day 3 Slot 1: 08:30 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">08:30</div>
+                <div class="content-col">
+                  <h4 class="item-title">拾光行旅出發經捷運劍潭站至陽明山國家公園</h4>
+                  <p class="item-desc"><strong>行李策略：</strong>退房後直接將行李免費寄放在「拾光行旅」，一身輕裝出發陽明山！</p>
+                  <p class="item-desc"><strong>乘車動線：</strong>大橋頭站搭捷運至民權西路轉紅線至「劍潭站」（約 15 分鐘，刷 2 日券）。由 1 號出口搭乘紅 5 公車（約 35 分鐘，刷 2 日券）至陽明山總站，同站轉乘 108 陽明山遊園公車。</p>
+                  <p class="item-desc"><strong>小油坑地熱（下車走 2 分免爬山）：</strong>近距離觀賞後火山硫磺噴氣孔與陣陣白煙地熱，景觀震撼且不用爬陡坡。</p>
+                  <p class="item-desc"><strong>冷水坑足湯（免爬坡最省體力）：</strong>享受免費公共溫泉泡腳池（12 月微涼泡腳超級暖和舒暢），順訪牛奶湖觀景台與菁山吊橋。</p>
+                  <p class="nearby-note">附近溫泉：陽明山中國麗緻大飯店（白磺泉湯屋）、行義路溫泉區皇池／川湯（下山順路，雙人湯屋）。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">12:30</div>
-              <div class="content-col">
-                <p class="item-title">大稻埕慈聖宮美食與老字號名產採買</p>
-                <p class="item-desc"><strong>乘車動線：</strong>搭乘紅 5 公車下山至劍潭站，轉捷運回「大橋頭站」領取寄放的行李。</p>
-                <p class="item-desc"><strong>慈聖宮美食：</strong>大稻埕商圈步行 5 分鐘，在大榕樹下品嚐葉家肉粥、許仔豬腳麵線、原汁排骨湯，滿滿台灣老台北廟口情懷。</p>
-                <p class="item-desc"><strong>台式伴手禮起酥蛋糕：</strong>加福奇士蛋糕專門店（延平北路二段 72 號），金黃酥脆酥皮包裹鹹甜鬆軟蛋糕，熱騰騰出爐香濃誘人，大稻埕老字號必買名產。</p>
-                <p class="item-desc"><strong>迪化街散步伴手禮：</strong>合興壹玖肆柒手作鬆糕、妙口四神湯肉包、傳統南北貨與茶葉，送禮自用皆宜。</p>
+            <!-- Day 3 Slot 2: 12:30 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">12:30</div>
+                <div class="content-col">
+                  <h4 class="item-title">大稻埕慈聖宮美食與老字號名產採買</h4>
+                  <p class="item-desc"><strong>乘車動線：</strong>搭乘紅 5 公車下山至劍潭站，轉捷運回「大橋頭站」領取寄放的行李。</p>
+                  <p class="item-desc"><strong>慈聖宮美食：</strong>大稻埕商圈步行 5 分鐘，在大榕樹下品嚐葉家肉粥、許仔豬腳麵線、原汁排骨湯，滿滿台灣老台北廟口情懷。</p>
+                  <p class="item-desc"><strong>加福奇士蛋糕專門店（延平北路二段 72 號）：</strong>金黃酥脆酥皮包裹鹹甜鬆軟蛋糕，熱騰騰出爐香濃誘人，大稻埕老字號必買台式名產伴手禮。</p>
+                  <p class="item-desc"><strong>迪化街散步伴手禮：</strong>合興壹玖肆柒手作鬆糕、妙口四神湯肉包、傳統南北貨與茶葉，送禮自用皆宜。</p>
+                </div>
               </div>
-            </div>
+            </article>
 
-            <div class="schedule-row">
-              <div class="time-col">15:30</div>
-              <div class="content-col">
-                <p class="item-title">台北車站搭乘台鐵返抵高雄新左營車站</p>
-                <p class="item-desc"><strong>乘車動線：</strong>大橋頭站搭乘捷運約 10 分鐘抵達「台北車站」，持事先以 Taiwan PASS 劃好座位的車票進站乘車。</p>
-                <p class="item-desc"><strong>建議班次：</strong>預訂週五下午 EMU3000 新自強號或普悠瑪南下直達車（車程約 4～4.5 小時），約 19:30～21:00 順利返抵新左營，圓滿完成 3 天豐富山海行。</p>
+            <!-- Day 3 Slot 3: 15:30 -->
+            <article class="schedule-card">
+              <div class="schedule-grid">
+                <div class="time-col">15:30</div>
+                <div class="content-col">
+                  <h4 class="item-title">台北車站搭乘台鐵返抵高雄新左營車站</h4>
+                  <p class="item-desc"><strong>乘車動線：</strong>大橋頭站搭乘捷運約 10 分鐘抵達「台北車站」，持事先以 Taiwan PASS 劃好座位的車票進站乘車。</p>
+                  <p class="item-desc"><strong>建議班次：</strong>預訂週五下午 EMU3000 新自強號或普悠瑪南下直達車（車程約 4～4.5 小時），約 19:30～21:00 順利返抵新左營，圓滿完成 3 天豐富山海行！</p>
+                </div>
               </div>
-            </div>
+            </article>
           </div>
       </section>
     </div>
 
-    <!-- ================= TAB PANE 4: 地圖連結與即時定位 ================= -->
     <div id="pane-map" class="tab-pane space-y-5">
       
       <!-- Top Strip -->
@@ -3483,7 +4883,7 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
             <a href="https://www.google.com/maps/search/?api=1&query=新北市瑞芳區井上天花" target="_blank" rel="noopener noreferrer" class="p-3 bg-[#FAF6F0] hover:bg-[#B84A1A] hover:text-white rounded-xl border border-[#E6DDD2] flex items-center justify-between text-ink transition-colors group">
               <div>
                 <strong class="text-sm block">瑞芳民宿「井上天花」</strong>
-                <span class="text-[11px] text-muted group-hover:text-white/80">Day 1 住宿（火車站後站走 5 分鐘）</span>
+                <span class="text-[11px] text-muted group-hover:text-white/80">西出口左轉過藍色瑞峰橋近OK超商（步行3~5分，接待10:00~15:00/無門禁/僅收現金或轉帳）</span>
               </div>
               <span class="text-xs px-2 py-1 rounded bg-paper group-hover:bg-white/20 font-bold">導航 ↗</span>
             </a>
@@ -3715,7 +5115,7 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
           <div class="p-3.5 bg-[#FFFFFF] rounded-xl border border-[#E6DDD2] text-right min-w-[200px]">
             <span class="text-xs text-muted block">套票＋兩晚住宿 每人應付</span>
             <strong class="text-2xl sm:text-3xl font-black text-[#963810] font-mono">$2,240</strong>
-            <span class="text-[11px] text-muted block mt-0.5">4 人總計 $8,961（加自費客運約 $2,410～$2,440）</span>
+            <span class="text-[11px] text-muted block mt-0.5">4 人總計 $8,961（加自費客運實付約 $2,410～$2,440）</span>
           </div>
         </div>
       </div>
@@ -3743,13 +5143,13 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
                 <td><strong>第一晚：瑞芳「井上天花」</strong></td>
                 <td class="text-right font-mono text-emerald-700 font-bold">$500</td>
                 <td class="text-right font-mono text-emerald-700 font-bold text-base">$125</td>
-                <td class="text-xs text-muted">原價$2,800，折抵$2,300（旅伴A補助$800＋券$1,500）</td>
+                <td class="text-xs text-muted">原價$2,800，折抵$2,300（補助$800＋PASS券$1,500）＝ 實付$500。訂金已付$840，現場結算尾款與補助折抵</td>
               </tr>
               <tr>
                 <td><strong>第二晚：台北大同「拾光行旅」</strong></td>
                 <td class="text-right font-mono text-ink font-bold">$961</td>
                 <td class="text-right font-mono text-ink font-bold text-base">$240</td>
-                <td class="text-xs text-muted">原價$3,261，折抵$2,300（旅伴B補助$800＋券$1,500）</td>
+                <td class="text-xs text-muted">原價$3,261，折抵$2,300（旅伴B補助$800＋PASS券$1,500）</td>
               </tr>
               <tr class="bg-[#FDECE2] font-bold">
                 <td class="text-[#963810]">套票＋住宿每人應付</td>
@@ -3786,10 +5186,10 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
               • <strong>1. 分開姓名訂房：</strong>12/9「井上天花」登記<strong>旅伴 A</strong>、12/10「拾光行旅」登記<strong>旅伴 B</strong>。兩館皆須透過官方管道（官網/電話/LINE）下訂，並備註使用「國旅平日補助＋PASS 住宿券」。
             </li>
             <li>
-              • <strong>2. 帶身分證正本：</strong>旅伴 A、B 先至觀光署網站完成平日住宿補助登錄，現場入住時皆須攜帶<strong>身分證正本</strong>核銷。
+              • <strong>2. 帶身分證正本與備妥現金：</strong>旅伴 A、B 先至觀光署網站完成平日住宿補助登錄，現場入住時皆須攜帶<strong>身分證正本</strong>核銷。<strong>特別注意：井上天花訂金已付 $840，折抵 $2,300 後實付 $500，現場結算尾款/差額僅限現金或轉帳（現場無刷卡與電子支付）</strong>。
             </li>
             <li>
-              • <strong>3. 行李帶登機箱：</strong>拾光行旅為老宅無電梯，建議帶 20 吋登機箱或軟袋，搬運最省力。
+              • <strong>3. 接待時間與行李：</strong>井上天花平日接待時間為 10:00～15:00（提早抵達可先寄行李或提早 check-in，無門禁）；拾光行旅為老宅無電梯，建議帶 20 吋登機箱或軟袋，搬運最省力。
             </li>
           </ul>
         </article>
@@ -4679,6 +6079,19 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
     // ==========================================================================
     // Tab Navigation & Presbyopia Large Text Handlers
     // ==========================================================================
+    
+    // Re-trigger stampDrop animation on click
+    document.addEventListener('DOMContentLoaded', function() {
+      const stamp = document.querySelector('.trip-avatar');
+      if (stamp) {
+        stamp.addEventListener('click', function() {
+          stamp.style.animation = 'none';
+          stamp.offsetHeight; /* trigger reflow */
+          stamp.style.animation = 'stampDrop 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards';
+        });
+      }
+    });
+
     function switchTab(tabId) {
       // Update nav buttons
       document.querySelectorAll('.tab-nav-btn').forEach(btn => {
@@ -4718,8 +6131,8 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
         targetPane.classList.add('active');
         // Scroll to content if below sticky nav
         const nav = document.querySelector('nav');
-        if (nav && window.scrollY > nav.offsetTop) {
-          window.scrollTo({ top: nav.offsetTop - 10, behavior: 'smooth' });
+        if (window.scrollY > 80) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       }
 
@@ -4741,16 +6154,19 @@ button.lumi-sort-btn:focus-visible, .lumi-sort-btn:focus-visible {
 
     function toggleLargeText() {
       const isLarge = document.body.classList.toggle('large-text-mode');
-      const btn = document.getElementById('largeTextBtn');
-      if (btn) {
-        btn.innerHTML = isLarge
-          ? '<i data-lucide="zoom-out" class="w-4 h-4 text-olive"></i><span>標準字體 (A-)</span>'
-          : '<i data-lucide="zoom-in" class="w-4 h-4 text-olive"></i><span>大字模式 (A+)</span>';
-        if (window.lucide && lucide.createIcons) {
-          lucide.createIcons();
-        }
+      const fontToggleBtn = document.getElementById('font-toggle-btn');
+      if (fontToggleBtn) {
+        fontToggleBtn.classList.toggle('active', isLarge);
+        fontToggleBtn.setAttribute('aria-pressed', isLarge ? 'true' : 'false');
       }
-      showToast(isLarge ? '已切換為「老花友善大字模式」（字體再放大 25%）' : '已恢復標準字體模式');
+      const oldBtn = document.getElementById('largeTextBtn');
+      if (oldBtn) {
+        oldBtn.classList.toggle('active', isLarge);
+      }
+      try {
+        localStorage.setItem('trippass_large_text', isLarge ? '1' : '0');
+      } catch (e) {}
+      showToast(isLarge ? '已開啟放大加粗閱讀模式' : '已恢復預設閱讀字體');
     }
 
     function toggleAccordion(contentId, triggerEl) {
